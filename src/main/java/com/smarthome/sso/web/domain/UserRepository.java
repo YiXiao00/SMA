@@ -1,10 +1,11 @@
-package com.company.smarthome.usersystem.web.domain;
+package com.smarthome.sso.web.domain;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-/** mongodb persistence automatically done by Spring Boot */
 public interface UserRepository extends MongoRepository<User, Integer> {
 
     User findByUserId(Integer id);
+
 
 }
