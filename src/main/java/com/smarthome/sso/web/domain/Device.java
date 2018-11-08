@@ -17,22 +17,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "user")
-public class User {
+@Document(collection = "device")
+public class Device {
 
     /** Id, unique */
     @Id
     private String userId;
+    private String type;
+    private String FiwareService;
+    private String FiwareServicepath;
+    private String SamsungID;
 
-    /** username, can be duplicated */
-    private String username;
-
-    /** pwd */
-    private String password;
-
-    public User(String username, String password){
-        this.username = username;
-        this.password=password;
+    public Device(String type, String FiS, String FiSP, String sID){
+        this.type = type;
+        this.FiwareService = FiS;
+        this.FiwareServicepath = FiSP;
+        this.SamsungID = sID;
     }
 
 }

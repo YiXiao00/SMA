@@ -16,13 +16,13 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.mongodb.blog.web"))
+                .apis(RequestHandlerSelectors.basePackage("com.smarthome.sso"))
                 .paths(PathSelectors.any())
                 .build();
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Spring Boot评论管理系统")
+                .title("")
                 .description("description here")
                 .termsOfServiceUrl("http://some.website.com/")
                 .version("1.0")
