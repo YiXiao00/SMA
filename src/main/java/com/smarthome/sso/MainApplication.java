@@ -22,14 +22,19 @@ public class MainApplication implements CommandLineRunner {
     private UserRepository uRepo;
     @Autowired
     private DeviceRespository dRepo;
+    public int idCounter;
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
     }
 
     public void run(String... args) throws Exception{
-        System.out.println("Working!");
 
+    }
 
+    public User createUserFor(UserRepository uRepo, String username, String password){
+        User u = new User(Integer.toString(idCounter),username,password);
+        idCounter++;
+        return u;
     }
 
     public void insertDevice(DeviceRespository dRepo, Device d){
@@ -65,4 +70,9 @@ public class MainApplication implements CommandLineRunner {
             uRepo.delete(u.get());
         }
     }
+
+    public void deleteAllUsers(UserRepository uRepo){
+        uRepo.deleteAll();
+    }
+
 }

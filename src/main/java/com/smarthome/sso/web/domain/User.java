@@ -16,9 +16,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Document(collection = "user")
 public class User {
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     /** Id, unique */
     @Id
@@ -30,7 +42,8 @@ public class User {
     /** pwd */
     private String password;
 
-    public User(String username, String password){
+    public User(String userID, String username, String password){
+        this.userId = userID;
         this.username = username;
         this.password=password;
     }
