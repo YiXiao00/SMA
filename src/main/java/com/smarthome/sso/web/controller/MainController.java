@@ -2,6 +2,7 @@ package com.smarthome.sso.web.controller;
 
 import com.mongodb.BasicDBObject;
 import com.smarthome.sso.web.domain.User;
+import com.smarthome.sso.web.service.DeviceService;
 import com.smarthome.sso.web.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,6 +25,8 @@ import java.util.List;
 public class MainController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private DeviceService deviceService;
 
     @RequestMapping("/user/info")
     public ResponseEntity<?> getUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception{

@@ -37,42 +37,10 @@ public class MainApplication implements CommandLineRunner {
         return u;
     }
 
-    public void insertDevice(DeviceRespository dRepo, Device d){
-        dRepo.save(d);
-    }
 
-    public void insertUser(UserRepository uRepo, User u){
-        uRepo.save(u);
-    }
 
-    public Device searchDevicesById(DeviceRespository dRepo, String id){
-        Optional<Device> d = dRepo.findById(id);
-        if(d.isPresent()) return d.get();
-        return null;
-    }
 
-    public User searchUsersByID(UserRepository uRepo, String id){
-        Optional<User> u = uRepo.findById(id);
-        if(u.isPresent()) return u.get();
-        return null;
-    }
 
-    public void deleteDevicesById(DeviceRespository dRepo, String id){
-        Optional<Device> d = dRepo.findById(id);
-        if(d.isPresent()){
-            dRepo.delete(d.get());
-        }
-    }
 
-    public void deleteUsersById(UserRepository uRepo, String id){
-        Optional<User> u = uRepo.findById(id);
-        if(u.isPresent()){
-            uRepo.delete(u.get());
-        }
-    }
-
-    public void deleteAllUsers(UserRepository uRepo){
-        uRepo.deleteAll();
-    }
 
 }
