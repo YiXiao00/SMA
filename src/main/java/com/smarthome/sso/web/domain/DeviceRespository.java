@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface DeviceRespository extends MongoRepository<Device, String> {
 
-    User findByUserId(Integer id);
+    Device findByUserId(String id);
 
 
 }

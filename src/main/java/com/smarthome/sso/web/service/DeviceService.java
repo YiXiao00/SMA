@@ -28,9 +28,9 @@ public class DeviceService {
 
 
     public void deleteDevicesById(DeviceRespository dRepo, String id){
-        Optional<Device> d = dRepo.findById(id);
-        if(d.isPresent()){
-            dRepo.delete(d.get());
+        Device device = dRepo.findByUserId(id);
+        if(device != null){
+            dRepo.delete(device);
         }
     }
 

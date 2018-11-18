@@ -6,7 +6,6 @@ import com.smarthome.sso.web.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,9 +19,9 @@ public class UserService {
     }
 
     public void deleteUsersById(String id){
-        Optional<User> u = uRepo.findById(id);
-        if(u.isPresent()){
-            uRepo.delete(u.get());
+        User u = uRepo.findByUserId(id);
+        if(u != null){
+            uRepo.delete(u);
         }
     }
 
@@ -30,12 +29,10 @@ public class UserService {
         uRepo.deleteAll();
     }
 
-
-
     public User searchUsersByID(String id){
-        Optional<User> u = uRepo.findById(id);
-        if(u.isPresent()) return u.get();
-        return null;
+        User u = uRepo.findByUserId(id);
+        return u;
+
     }
 
 

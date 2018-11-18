@@ -30,8 +30,12 @@ public class MainController {
 
     @RequestMapping("/user/info")
     public ResponseEntity<?> getUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception{
-
-        return ResponseEntity.ok("");
+        String id = String.valueOf(request.getAttribute("id"));
+        User user = userService.searchUsersByID(id);
+        if (user == null){
+            return ResponseEntity.badRequest().body("No Result Found!");
+        }
+        return ResponseEntity.ok(user);
     }
 
 
