@@ -11,17 +11,15 @@ import org.bson.BasicBSONObject;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@RestController
+@Controller
 public class MainController {
     @Autowired
     private UserService userService;
@@ -29,8 +27,9 @@ public class MainController {
     private DeviceService deviceService;
 
     @RequestMapping("/user/info")
+    @ResponseBody
     public ResponseEntity<?> getUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String id = String.valueOf(request.getAttribute("id"));
+        String id = String.valueOf(request.getParameter("id"));
         User user = userService.searchUsersByID(id);
         if (user == null){
             return ResponseEntity.badRequest().body("No Result Found!");
@@ -38,5 +37,9 @@ public class MainController {
         return ResponseEntity.ok(user);
     }
 
+    @RequestMapping("/homepage")
+    public String getHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        return "templates/home.html";
+    }
 
 }
