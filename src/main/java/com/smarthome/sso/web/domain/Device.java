@@ -9,9 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 /**
- * User Class
+ * Smart device class
  *
- * Last Modify: Frank at 181107
+ * Last Modify: Frank at 181202
  * */
 @Data
 @Builder
@@ -23,11 +23,16 @@ public class Device {
     /** Id, unique */
     @Id
     private String userId;
+
     private String type;
+
     private String FiwareService;
+
     private String FiwareServicepath;
+
     private String SamsungID;
 
+    /** Generate device without userId which will be generated automatically */
     public Device(String type, String FiS, String FiSP, String sID){
         this.type = type;
         this.FiwareService = FiS;

@@ -16,36 +16,38 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Document(collection = "user")
 public class User {
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
+    // use Lombok
+//    public String getUserId() {
+//        return userId;
+//    }
+//
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
 
     /** Id, unique */
     @Id
     private String userId;
 
-    /** username, can be duplicated */
+    /** username, unique */
     private String username;
 
     /** pwd */
     private String password;
 
-    public User(String userID, String username, String password){
-        this.userId = userID;
-        this.username = username;
-        this.password=password;
-    }
+    // use Lombok - AllArgsConstructor
+//    public User(String userID, String username, String password){
+//        this.userId = userID;
+//        this.username = username;
+//        this.password = password;
+//    }
 
 }
