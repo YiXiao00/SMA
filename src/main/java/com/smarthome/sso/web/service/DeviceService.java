@@ -13,25 +13,10 @@ import java.util.Optional;
 public class DeviceService {
 
     @Autowired
-    private DeviceRespository drepo;
+    private DeviceRespository dRepo;
 
-    public void insertDevice(DeviceRespository dRepo, Device d){
+    public void addOneDevice(Device d){
         dRepo.save(d);
-    }
-
-
-    public Device searchDevicesById(DeviceRespository dRepo, String id){
-        Optional<Device> d = dRepo.findById(id);
-        if(d.isPresent()) return d.get();
-        return null;
-    }
-
-
-    public void deleteDevicesById(DeviceRespository dRepo, String id){
-        Device device = dRepo.findByUserId(id);
-        if(device != null){
-            dRepo.delete(device);
-        }
     }
 
 }

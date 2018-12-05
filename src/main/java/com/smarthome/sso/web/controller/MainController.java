@@ -1,6 +1,7 @@
 package com.smarthome.sso.web.controller;
 
 import com.mongodb.BasicDBObject;
+import com.smarthome.sso.web.domain.Device;
 import com.smarthome.sso.web.domain.User;
 import com.smarthome.sso.web.service.DeviceService;
 import com.smarthome.sso.web.service.UserService;
@@ -99,6 +100,25 @@ public class MainController {
             s = s + u.getUsername() +", ";
         }
         return ResponseEntity.ok(s);
+    }
+
+    @PostMapping("/device/add")
+    @ResponseBody
+    public ResponseEntity<?> addDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String username = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        String type = String.valueOf(request.getParameter("type"));
+        User foundUser = userService.findOneUserByUsername(username);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+        }
+        Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).build();
+        deviceService.addOneDevice(newDevice);
+        return ResponseEntity.ok("Added new device to user "+foundUser.getUserId()+" of type "+type);
+
     }
 
     @RequestMapping(value="/homepage", method = {RequestMethod.POST, RequestMethod.GET})

@@ -22,22 +22,25 @@ public class Device {
 
     /** Id, unique */
     @Id
+    private String deviceId;
+
     private String userId;
 
     private String type;
 
-    private String FiwareService;
+ //   private String FiwareService;
 
-    private String FiwareServicepath;
+ //   private String FiwareServicepath;
 
-    private String SamsungID;
+ //   private String SamsungID;
 
-    /** Generate device without userId which will be generated automatically */
-    public Device(String type, String FiS, String FiSP, String sID){
+    /** Generate device without deviceId which will be generated automatically */
+    public Device(String userId, String type, String FiS, String FiSP, String sID){
+        this.userId = userId;
         this.type = type;
-        this.FiwareService = FiS;
-        this.FiwareServicepath = FiSP;
-        this.SamsungID = sID;
+   //     this.FiwareService = FiS;
+   //     this.FiwareServicepath = FiSP;
+   //     this.SamsungID = sID;
     }
 
 }
