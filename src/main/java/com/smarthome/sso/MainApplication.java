@@ -31,11 +31,6 @@ public class MainApplication implements CommandLineRunner {
 
     }
 
-    public User createUserFor(UserRepository uRepo, String username, String password){
-        User u = new User(Integer.toString(idCounter),username,password);
-        idCounter++;
-        return u;
-    }
 
 
 

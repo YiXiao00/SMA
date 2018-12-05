@@ -66,6 +66,30 @@ public class MainController {
         return ResponseEntity.badRequest().body("Username or password not correct.");
     }
 
+    @PostMapping("/user/delete")
+    @ResponseBody
+    public ResponseEntity<?> deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        try {
+            String username = String.valueOf(request.getParameter("name"));
+            String pwd = String.valueOf(request.getParameter("pwd"));
+            User foundUser = userService.findOneUserByUsername(username);
+            if (foundUser == null) {
+                return ResponseEntity.badRequest().body("This user does not exist.");
+            }
+            if (!foundUser.getPassword().equals(pwd)) {
+                return ResponseEntity.badRequest().body("The password given is not correct. Cannot delete");
+            }
+
+            String id = foundUser.getUserId();
+            userService.deleteOneUserByUserId(id);
+            return ResponseEntity.ok("User " + username + " has been deleted.");
+        }
+        catch (Exception e){
+            return ResponseEntity.ok("User has been deleted.");
+        }
+
+    }
+
     @RequestMapping(value="/homepage", method = {RequestMethod.POST, RequestMethod.GET})
     public String getHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/home.html";
