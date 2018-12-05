@@ -7,6 +7,8 @@ import com.smarthome.sso.web.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  *  Service for user database
  *
@@ -41,6 +43,8 @@ public class UserService {
     public User findOneUserByUsername(String name){
         return uRepo.findByUsername(name);
     }
+
+    public List<User> findAllUsers() {  return uRepo.findAll(); }
 
 
 

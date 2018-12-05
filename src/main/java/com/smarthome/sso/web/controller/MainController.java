@@ -87,7 +87,18 @@ public class MainController {
         catch (Exception e){
             return ResponseEntity.ok("User has been deleted.");
         }
+    }
 
+    @PostMapping("/user/all")
+    @ResponseBody
+    public ResponseEntity<?> showUsers(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<User> uList = userService.findAllUsers();
+        String s = "";
+        for(int i=0; i<uList.size();i++){
+            User u = uList.get(i);
+            s = s + u.getUsername() +", ";
+        }
+        return ResponseEntity.ok(s);
     }
 
     @RequestMapping(value="/homepage", method = {RequestMethod.POST, RequestMethod.GET})
