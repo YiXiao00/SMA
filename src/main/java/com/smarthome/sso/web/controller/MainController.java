@@ -121,6 +121,43 @@ public class MainController {
 
     }
 
+    @PostMapping("/device/all")
+    @ResponseBody
+    public ResponseEntity<?> showAllDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<Device> dList = deviceService.findAllDevices();
+        String s = "";
+        for(int i=0; i<dList.size();i++){
+            Device d = dList.get(i);
+            s = s + d.getType() +", ";
+        }
+        return ResponseEntity.ok(s);
+    }
+
+    @PostMapping("/device/user/all")
+    @ResponseBody
+    public ResponseEntity<?> showUserDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String username = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        User foundUser = userService.findOneUserByUsername(username);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+        }
+        List<Device> dList = deviceService.findAllDevices();
+        String s = "";
+        for(int i=0; i<dList.size();i++){
+            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
+                Device d = dList.get(i);
+                s = s + d.getType() + ", ";
+            }
+        }
+        return ResponseEntity.ok(s);
+    }
+
+
+
     @RequestMapping(value="/homepage", method = {RequestMethod.POST, RequestMethod.GET})
     public String getHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/home.html";

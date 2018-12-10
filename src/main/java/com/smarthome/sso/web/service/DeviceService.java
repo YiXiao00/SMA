@@ -7,6 +7,7 @@ import com.smarthome.sso.web.domain.DeviceRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,5 +19,7 @@ public class DeviceService {
     public void addOneDevice(Device d){
         dRepo.save(d);
     }
+
+    public List<Device> findAllDevices() { return dRepo.findAll();}
 
 }
