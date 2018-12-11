@@ -115,7 +115,10 @@ public class MainController {
         if (!foundUser.getPassword().equals(pwd)) {
             return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
         }
-        Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).build();
+        Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).relativeUserId(foundUser.getDevicesOwned()).build();
+        foundUser.addDevice();
+        deleteUser(request,response);
+        userService.addOneUser(foundUser);
         deviceService.addOneDevice(newDevice);
         return ResponseEntity.ok("Added new device to user "+foundUser.getUserId()+" of type "+type);
 
@@ -124,13 +127,18 @@ public class MainController {
     @PostMapping("/device/all")
     @ResponseBody
     public ResponseEntity<?> showAllDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        List<Device> dList = deviceService.findAllDevices();
-        String s = "";
-        for(int i=0; i<dList.size();i++){
-            Device d = dList.get(i);
-            s = s + d.getType() +", ";
-        }
-        return ResponseEntity.ok(s);
+        String admin = String.valueOf(request.getParameter("admin"));
+        if(admin.equals("admin")) {
+            List<Device> dList = deviceService.findAllDevices();
+            String s = "";
+            for (int i = 0; i < dList.size(); i++) {
+                Device d = dList.get(i);
+                s = s + d.getType() + " owned by " + d.getUserId() + " ,";
+            }
+            return ResponseEntity.ok(s);
+        }else{
+        return ResponseEntity.badRequest().body("Needs admin permission");
+    }
     }
 
     @PostMapping("/device/user/all")
@@ -150,10 +158,23 @@ public class MainController {
         for(int i=0; i<dList.size();i++){
             if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
                 Device d = dList.get(i);
-                s = s + d.getType() + ", ";
+                s = s + d.getType() + " relative UID " + d.getRelativeUserId() +" ,";
             }
         }
         return ResponseEntity.ok(s);
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ResponseEntity<?> deleteAllDatabases(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String admin = String.valueOf(request.getParameter("admin"));
+        if(admin.equals("admin")) {
+            userService.deleteSelf();
+            deviceService.deleteSelf();
+            return ResponseEntity.ok("Deleted");
+        }else{
+            return ResponseEntity.badRequest().body("Needs admin permission");
+        }
     }
 
 

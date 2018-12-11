@@ -46,6 +46,8 @@ public class UserService {
 
     public List<User> findAllUsers() {  return uRepo.findAll(); }
 
+    public void deleteSelf(){ uRepo.deleteAll(); }
+
 
 
 

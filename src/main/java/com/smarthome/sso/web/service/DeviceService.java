@@ -22,4 +22,6 @@ public class DeviceService {
 
     public List<Device> findAllDevices() { return dRepo.findAll();}
 
+    public void deleteSelf() {dRepo.deleteAll();}
+
 }

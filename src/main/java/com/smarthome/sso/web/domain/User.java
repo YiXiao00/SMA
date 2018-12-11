@@ -43,6 +43,19 @@ public class User {
     /** pwd */
     private String password;
 
+    private int devicesOwned = 0;
+
+    public void addDevice(){
+        this.devicesOwned++;
+    }
+    public void removeDevice(){
+        if(this.devicesOwned!=0){
+            this.devicesOwned--;
+        }else{
+            System.out.println("Attempted to remove devices when there aren't any");
+        }
+    }
+
     // use Lombok - AllArgsConstructor
 //    public User(String userID, String username, String password){
 //        this.userId = userID;
