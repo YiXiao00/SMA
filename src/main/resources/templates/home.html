@@ -1,10 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
+    </script>
+    <script type="text/javascript" >
+        $(document).ready(function(){
+            $("#btnsignin").click(function(){
+                var uri = "http://localhost:8090/user/signin";
+                $.post(uri,
+                    {
+                        name:$("#user").val(),
+                        pwd:$("#pwd").val()
+                    },function(data) {
+                    $("#msg").text(data);
+                });
+            });
+            $("#btnsignup").click(function(){
+                var uri = "http://localhost:8090/user/signup";
+                $.post(uri,
+                    {
+                        name:$("#user").val(),
+                        pwd:$("#pwd").val()
+                    },function(data) {
+                        $("#msg").text(data);
+                    });
+            });
+        });
+    </script>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Smart Home</title>
 </head>
 <body>
-    <h1>Hello!</h1>
+<h1>Welcome to Smart Home User Service</h1>
+<div>
+    Username: <input class="inputbox" type="text" name="user" id="user"/><br/>
+    Password: <input class="inputbox" type="password" name="pwd" id="pwd"/><br/>
+    <input class="btn" type="submit" id="btnsignin" value="Sign in" />
+    <input class="btn" type="submit" id="btnsignup" value="Sign up" />
+</div>
+<br/>
+<div class="msgboard" id="msg"></div>
 </body>
 </html>

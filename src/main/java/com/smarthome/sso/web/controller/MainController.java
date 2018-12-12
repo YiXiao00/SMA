@@ -45,7 +45,7 @@ public class MainController {
         String username = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
         if (userService.findOneUserByUsername(username) != null){
-            return ResponseEntity.badRequest().body("The username has been used by another user.");
+            return ResponseEntity.ok("The username has been used by another user.");
         }
         User newUser = User.builder().username(username).password(pwd).build();
         User addUser = userService.addOneUser(newUser);
@@ -59,12 +59,12 @@ public class MainController {
         String pwd = String.valueOf(request.getParameter("pwd"));
         User tryUser = userService.findOneUserByUsername(username);
         if (tryUser == null){
-            return ResponseEntity.badRequest().body("Username or password not correct.");
+            return ResponseEntity.ok("Username or password not correct.");
         }
         if (tryUser.getPassword().equals(pwd)){
             return ResponseEntity.ok("Logged in.");
         }
-        return ResponseEntity.badRequest().body("Username or password not correct.");
+        return ResponseEntity.ok("Username or password not correct.");
     }
 
     @PostMapping("/user/delete")
@@ -75,10 +75,10 @@ public class MainController {
             String pwd = String.valueOf(request.getParameter("pwd"));
             User foundUser = userService.findOneUserByUsername(username);
             if (foundUser == null) {
-                return ResponseEntity.badRequest().body("This user does not exist.");
+                return ResponseEntity.ok("This user does not exist.");
             }
             if (!foundUser.getPassword().equals(pwd)) {
-                return ResponseEntity.badRequest().body("The password given is not correct. Cannot delete");
+                return ResponseEntity.ok("The password given is not correct. Cannot delete");
             }
 
             String id = foundUser.getUserId();
