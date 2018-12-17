@@ -184,4 +184,10 @@ public class MainController {
         return "templates/home.html";
     }
 
+    @RequestMapping(value="/loginLanding", method = {RequestMethod.POST, RequestMethod.GET})
+    public String getLoginlanding(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        return "templates/loginLanding.html";
+    }
+
+
 }
