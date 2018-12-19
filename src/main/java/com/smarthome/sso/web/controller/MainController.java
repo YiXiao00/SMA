@@ -27,6 +27,8 @@ public class MainController {
     private UserService userService;
     @Autowired
     private DeviceService deviceService;
+    @Autowired
+    private DeviceService bufferDS;
 
     @PostMapping("/user/info")
     @ResponseBody
@@ -141,6 +143,37 @@ public class MainController {
     }
     }
 
+    @PostMapping("/device/delete")
+    @ResponseBody
+    public ResponseEntity<?> deleteDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String username = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        User foundUser = userService.findOneUserByUsername(username);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+        }
+        int relativeID = Integer.valueOf(request.getParameter("relUID"));
+        List<Device> dList = deviceService.findAllDevices();
+        bufferDS.deleteSelf();
+        boolean removedDevice = false;
+        for(int i=0; i<dList.size();i++){
+            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
+                if(dList.get(i).getRelativeUserId()==relativeID) {
+                    removedDevice = true;
+                }else {
+                    Device d = dList.get(i);
+                    if(removedDevice) d.setRelativeUserId(d.getRelativeUserId()-1);
+                    bufferDS.addOneDevice(d);
+
+                }}
+        }
+        deviceService =bufferDS;
+        return ResponseEntity.ok("Device deleted");
+
+    }
     @PostMapping("/device/user/all")
     @ResponseBody
     public ResponseEntity<?> showUserDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
