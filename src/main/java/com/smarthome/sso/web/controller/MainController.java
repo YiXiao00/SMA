@@ -1,21 +1,16 @@
 package com.smarthome.sso.web.controller;
 
-import com.mongodb.BasicDBObject;
+import com.smarthome.sso.web.constants.ServiceResult;
 import com.smarthome.sso.web.domain.Device;
 import com.smarthome.sso.web.domain.User;
 import com.smarthome.sso.web.service.DeviceService;
 import com.smarthome.sso.web.service.UserService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import org.bson.BasicBSONObject;
-import org.bson.codecs.configuration.CodecRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -57,16 +52,31 @@ public class MainController {
     @PostMapping("/user/signin")
     @ResponseBody
     public ResponseEntity<?> logIn(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputSession = "";
+        Cookie[] cookies = request.getCookies();
+        if (!(cookies == null)){
+            for (Cookie cookie : cookies){
+                if ("sessionId".equals(cookie.getName())){
+                    inputSession = cookie.getValue();
+                    break;
+                }
+            }
+            if (!("".equals(inputSession))){
+                ServiceResult sessionVerify = userService.verifySessionId(inputSession);
+                if (sessionVerify == ServiceResult.SERVICE_SUCCESS){
+                    return ResponseEntity.ok("already signed in");
+                }
+            }
+        }
         String username = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        User tryUser = userService.findOneUserByUsername(username);
-        if (tryUser == null){
-            return ResponseEntity.ok("Username or password not correct.");
+        ServiceResult result = userService.tryLogIn(username,pwd);
+        if (result == ServiceResult.SERVICE_SUCCESS){
+            String sessionId = userService.createToken(60);
+            response.addCookie(new Cookie("sessionId",sessionId));
+            return ResponseEntity.ok("succeeded");
         }
-        if (tryUser.getPassword().equals(pwd)){
-            return ResponseEntity.ok("Logged in.");
-        }
-        return ResponseEntity.ok("Username or password not correct.");
+        return ResponseEntity.ok("failed");
     }
 
     @PostMapping("/user/delete")
