@@ -20,18 +20,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user")
 public class User {
 
-    // use Lombok
-//    public String getUserId() {
-//        return userId;
-//    }
-//
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
+ // use Lombok
+   public String getUserId() {
+       return userId;
+   }
+
+   public String getUsername() {
+       return username;
+   }
+
+   public String getPassword() {
+       return password;
+   }
 
     /** Id, unique */
     @Id
@@ -54,6 +54,9 @@ public class User {
         }else{
             System.out.println("Attempted to remove devices when there aren't any");
         }
+    }
+    public int getDevicesOwned(){
+        return devicesOwned;
     }
 
     // use Lombok - AllArgsConstructor

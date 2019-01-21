@@ -236,7 +236,7 @@ public class MainController {
         for(int i=0; i<dList.size();i++){
             if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
                 Device d = dList.get(i);
-                s = s + d.getType() + " relative UID " + d.getRelativeUserId() +" CurrentlyOn"+d.getPowerStatus() +" ,";
+                s = s + d.getType() + " relativeUID " + d.getRelativeUserId() +" CurrentlyOn "+d.getPowerStatus() +" , ";
             }
         }
         return ResponseEntity.ok(s);
@@ -265,6 +265,11 @@ public class MainController {
     @RequestMapping(value="/loginLanding", method = {RequestMethod.POST, RequestMethod.GET})
     public String getLoginlanding(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/loginLanding.html";
+    }
+
+    @RequestMapping(value="/room", method = {RequestMethod.POST, RequestMethod.GET})
+    public String getRoom(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        return "templates/room.html";
     }
 
 
