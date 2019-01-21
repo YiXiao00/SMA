@@ -184,6 +184,41 @@ public class MainController {
         return ResponseEntity.ok("Device deleted");
 
     }
+
+    @PostMapping("/device/toggle")
+    @ResponseBody
+    public ResponseEntity<?> toggleDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String username = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        User foundUser = userService.findOneUserByUsername(username);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+        }
+        int relativeID = Integer.valueOf(request.getParameter("relUID"));
+        List<Device> dList = deviceService.findAllDevices();
+        bufferDS.deleteSelf();
+        boolean toggledDevice = false;
+        for(int i=0; i<dList.size();i++){
+            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
+                if(dList.get(i).getRelativeUserId()==relativeID) {
+                    toggledDevice = true;
+                    Device d = dList.get(i);
+                    d.toggle();
+                    bufferDS.addOneDevice(d);
+                }else {
+                    Device d = dList.get(i);
+                    if(toggledDevice) d.setRelativeUserId(d.getRelativeUserId()-1);
+                    bufferDS.addOneDevice(d);
+
+                }}
+        }
+        deviceService =bufferDS;
+        return ResponseEntity.ok("Device toggled");
+
+    }
     @PostMapping("/device/user/all")
     @ResponseBody
     public ResponseEntity<?> showUserDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -201,7 +236,7 @@ public class MainController {
         for(int i=0; i<dList.size();i++){
             if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
                 Device d = dList.get(i);
-                s = s + d.getType() + " relative UID " + d.getRelativeUserId() +" ,";
+                s = s + d.getType() + " relative UID " + d.getRelativeUserId() +" CurrentlyOn"+d.getPowerStatus() +" ,";
             }
         }
         return ResponseEntity.ok(s);

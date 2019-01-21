@@ -48,6 +48,9 @@ public class Device {
    //     this.SamsungID = sID;
     }
 
+    public boolean getPowerStatus(){
+        return poweredOn;
+    }
     public void toggle(){
         poweredOn = !poweredOn;
     }
