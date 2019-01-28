@@ -1,21 +1,16 @@
 package com.smarthome.sso.web.controller;
 
-import com.mongodb.BasicDBObject;
+import com.smarthome.sso.web.constants.ServiceResult;
 import com.smarthome.sso.web.domain.Device;
 import com.smarthome.sso.web.domain.User;
 import com.smarthome.sso.web.service.DeviceService;
 import com.smarthome.sso.web.service.UserService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import org.bson.BasicBSONObject;
-import org.bson.codecs.configuration.CodecRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -27,6 +22,8 @@ public class MainController {
     private UserService userService;
     @Autowired
     private DeviceService deviceService;
+    @Autowired
+    private DeviceService bufferDS;
 
     @PostMapping("/user/info")
     @ResponseBody
@@ -55,16 +52,31 @@ public class MainController {
     @PostMapping("/user/signin")
     @ResponseBody
     public ResponseEntity<?> logIn(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputSession = "";
+        Cookie[] cookies = request.getCookies();
+        if (!(cookies == null)){
+            for (Cookie cookie : cookies){
+                if ("sessionId".equals(cookie.getName())){
+                    inputSession = cookie.getValue();
+                    break;
+                }
+            }
+            if (!("".equals(inputSession))){
+                ServiceResult sessionVerify = userService.verifySessionId(inputSession);
+                if (sessionVerify == ServiceResult.SERVICE_SUCCESS){
+                    return ResponseEntity.ok("already signed in");
+                }
+            }
+        }
         String username = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        User tryUser = userService.findOneUserByUsername(username);
-        if (tryUser == null){
-            return ResponseEntity.ok("Username or password not correct.");
+        ServiceResult result = userService.tryLogIn(username,pwd);
+        if (result == ServiceResult.SERVICE_SUCCESS){
+            String sessionId = userService.createToken(60);
+            response.addCookie(new Cookie("sessionId",sessionId));
+            return ResponseEntity.ok("succeeded");
         }
-        if (tryUser.getPassword().equals(pwd)){
-            return ResponseEntity.ok("Logged in.");
-        }
-        return ResponseEntity.ok("Username or password not correct.");
+        return ResponseEntity.ok("failed");
     }
 
     @PostMapping("/user/delete")
@@ -141,6 +153,72 @@ public class MainController {
     }
     }
 
+    @PostMapping("/device/delete")
+    @ResponseBody
+    public ResponseEntity<?> deleteDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String username = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        User foundUser = userService.findOneUserByUsername(username);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+        }
+        int relativeID = Integer.valueOf(request.getParameter("relUID"));
+        List<Device> dList = deviceService.findAllDevices();
+        bufferDS.deleteSelf();
+        boolean removedDevice = false;
+        for(int i=0; i<dList.size();i++){
+            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
+                if(dList.get(i).getRelativeUserId()==relativeID) {
+                    removedDevice = true;
+                }else {
+                    Device d = dList.get(i);
+                    if(removedDevice) d.setRelativeUserId(d.getRelativeUserId()-1);
+                    bufferDS.addOneDevice(d);
+
+                }}
+        }
+        deviceService =bufferDS;
+        return ResponseEntity.ok("Device deleted");
+
+    }
+
+    @PostMapping("/device/toggle")
+    @ResponseBody
+    public ResponseEntity<?> toggleDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String username = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        User foundUser = userService.findOneUserByUsername(username);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+        }
+        int relativeID = Integer.valueOf(request.getParameter("relUID"));
+        List<Device> dList = deviceService.findAllDevices();
+        bufferDS.deleteSelf();
+        boolean toggledDevice = false;
+        for(int i=0; i<dList.size();i++){
+            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
+                if(dList.get(i).getRelativeUserId()==relativeID) {
+                    toggledDevice = true;
+                    Device d = dList.get(i);
+                    d.toggle();
+                    bufferDS.addOneDevice(d);
+                }else {
+                    Device d = dList.get(i);
+                    if(toggledDevice) d.setRelativeUserId(d.getRelativeUserId()-1);
+                    bufferDS.addOneDevice(d);
+
+                }}
+        }
+        deviceService =bufferDS;
+        return ResponseEntity.ok("Device toggled");
+
+    }
     @PostMapping("/device/user/all")
     @ResponseBody
     public ResponseEntity<?> showUserDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -158,7 +236,7 @@ public class MainController {
         for(int i=0; i<dList.size();i++){
             if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
                 Device d = dList.get(i);
-                s = s + d.getType() + " relative UID " + d.getRelativeUserId() +" ,";
+                s = s + d.getType() + " relativeUID " + d.getRelativeUserId() +" CurrentlyOn "+d.getPowerStatus() +" , ";
             }
         }
         return ResponseEntity.ok(s);
@@ -183,5 +261,16 @@ public class MainController {
     public String getHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/home.html";
     }
+
+    @RequestMapping(value="/loginLanding", method = {RequestMethod.POST, RequestMethod.GET})
+    public String getLoginlanding(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        return "templates/loginLanding.html";
+    }
+
+    @RequestMapping(value="/room", method = {RequestMethod.POST, RequestMethod.GET})
+    public String getRoom(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        return "templates/room.html";
+    }
+
 
 }

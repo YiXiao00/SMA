@@ -48,6 +48,26 @@ public class Device {
    //     this.SamsungID = sID;
     }
 
+    public boolean getPowerStatus(){
+        return poweredOn;
+    }
+
+    public int getRelativeUserId(){
+        return relativeUserId;
+    }
+    public String getType(){
+        return type;
+    }
+    public String getUserId(){
+        return userId;
+    }
+    public String getDeviceId(){
+        return deviceId;
+    }
+    public void setRelativeUserId(int i){
+        this.relativeUserId =i;
+    }
+
     public void toggle(){
         poweredOn = !poweredOn;
     }

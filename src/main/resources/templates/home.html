@@ -8,6 +8,7 @@
         $(document).ready(function(){
             $("#btnsignin").click(function(){
                 var uri = "http://localhost:8090/user/signin";
+                window.location.href = "http://localhost:8090/loginLanding";
                 $.post(uri,
                     {
                         name:$("#user").val(),
@@ -15,6 +16,7 @@
                     },function(data) {
                     $("#msg").text(data);
                 });
+
             });
             $("#btnsignup").click(function(){
                 var uri = "http://localhost:8090/user/signup";
