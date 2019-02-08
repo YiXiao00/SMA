@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.sql.Date;
+import java.util.Calendar;
 
 
 /**
@@ -25,11 +25,17 @@ public class Task {
     @Id
     private String taskId;
 
+    private String type;
+
     private String userId;
+
+    private int relativeDeviceId;
 
     private int duration;
 
-    private date date;
+    private Calendar calendar;
+
+    private boolean[] repeated;
 
 
     //   private String FiwareService;
@@ -39,10 +45,13 @@ public class Task {
     //   private String SamsungID;
 
     /** Generate task without taskId which will be generated automatically */
-    public Task(String userId, date date1, int duration,String FiS, String FiSP, String sID){
+    public Task(String type,String userId,int ruid, Calendar calendar, int duration){
+        this.type = type;
         this.userId = userId;
-        this.date = date1;
+        this.calendar = calendar;
         this.duration = duration;
+        this.relativeDeviceId = ruid;
+        this.repeated = new boolean[]{false,false,false,false,false,false,false};
         //     this.FiwareService = FiS;
         //     this.FiwareServicepath = FiSP;
         //     this.SamsungID = sID;

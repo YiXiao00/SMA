@@ -2,8 +2,10 @@ package com.smarthome.sso.web.controller;
 
 import com.smarthome.sso.web.constants.ServiceResult;
 import com.smarthome.sso.web.domain.Device;
+import com.smarthome.sso.web.domain.Task;
 import com.smarthome.sso.web.domain.User;
 import com.smarthome.sso.web.service.DeviceService;
+import com.smarthome.sso.web.service.TaskService;
 import com.smarthome.sso.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -24,6 +27,8 @@ public class MainController {
     private DeviceService deviceService;
     @Autowired
     private DeviceService bufferDS;
+    @Autowired
+    private TaskService taskService;
 
     @PostMapping("/user/info")
     @ResponseBody
@@ -254,6 +259,59 @@ public class MainController {
             return ResponseEntity.badRequest().body("Needs admin permission");
         }
     }
+
+    @RequestMapping("/task/view")
+    @ResponseBody
+    public ResponseEntity<?> findTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<Task> tList = taskService.findAllTasks();
+        String s = "";
+        for(int i=0; i<tList.size();i++){
+                Task t = tList.get(i);
+                s = s + t.getType() + " for user " + t.getUserId() +" device "+t.getRelativeDeviceId()+" at time  "+t.getCalendar().getTime() +" for "+t.getDuration()+", ";
+
+        }
+        return ResponseEntity.ok(s);
+
+    }
+
+    @RequestMapping("/task/delete/all")
+    @ResponseBody
+    public ResponseEntity<?> deleteAllTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        taskService.deleteSelf();
+        return ResponseEntity.ok("Deleted task list");
+
+    }
+
+    @RequestMapping("/task/add")
+    @ResponseBody
+    public ResponseEntity<?> addTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<Task> tList = taskService.findAllTasks();
+        String s = "";
+        String username = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        User foundUser = userService.findOneUserByUsername(username);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add Task");
+        }
+        int ruid = Integer.valueOf(request.getParameter("ruid"));
+        if(!(ruid >=0) || !(ruid < foundUser.getDevicesOwned()) )
+            return ResponseEntity.badRequest().body("Device does not exist");
+        String type = String.valueOf(request.getParameter("type"));
+        int inThisTime = Integer.valueOf(request.getParameter("in"));
+        int duration = Integer.valueOf(request.getParameter("duration"));
+        Calendar c1 = Calendar.getInstance();
+        c1.add(Calendar.MINUTE,inThisTime);
+
+        Task t = new Task(type,username,ruid,c1,duration);
+        taskService.addOneTask(t);
+        return ResponseEntity.ok("Task added");
+
+    }
+
+
 
 
 
