@@ -9,7 +9,23 @@
             var _listen = function(event){
 
             };
+            $("#AddNew").click(function(){
+               var uri = "http://localhost:8090/device/add"
 
+               $.post(uri,
+                   {
+                    name:$("#user").val(),
+                    pwd:$("#pwd").val(),
+                    type:$("#newDevice").val()
+                   }, function(data){
+                       var button = document.getElementById("load");
+                       button.click();
+                       document.getElementById('newDevice').value = '';
+
+
+                   }
+               )
+            });
             $("#load").click(function() {
                 var uri = "http://localhost:8090/device/user/all"
                 $.post(uri,
@@ -35,7 +51,6 @@
 
 
                                             var uri = "http://localhost:8090/device/toggle"
-                                            ctx.fillText("got here 1 ",100,400,200);
                                             $.post(uri, {
                                                 name: $("#user").val(),
                                                 pwd: $("#pwd").val(),
@@ -115,5 +130,9 @@
 </div>
 <br/>
 <canvas id = "roomCanvas" width="600" height="600" style="border:1px solid #000000;" ></canvas>
+<div>
+    New Device: <input class="inputbox" type="text" name="newDevice" id="newDevice" value="Enter Device Here" onfocus="this.value=''"/><br/>
+    <input class="btn" type="submit" id="AddNew" value="Add" /> <br/>
+</div>
 </body>
 </html>
