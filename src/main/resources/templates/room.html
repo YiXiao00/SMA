@@ -5,6 +5,11 @@
     </script>
     <script type="text/javascript" >
         $(document).ready(function(){
+            var c = document.getElementById("roomCanvas");
+            var _listen = function(event){
+
+            };
+
             $("#load").click(function() {
                 var uri = "http://localhost:8090/device/user/all"
                 $.post(uri,
@@ -13,18 +18,84 @@
                         pwd:$("#pwd").val()
                     }, function (data) {
                         $("#msg").text(data);
-                        var c = document.getElementById("roomCanvas");
+                        c = document.getElementById("roomCanvas");
                         var ctx = c.getContext("2d");
+                        ctx.clearRect(0, 0, c.width, c.height);
                         var words = data.split(" ");
+                        if (typeof _listen !== 'undefined') {
+                            c.removeEventListener('click', _listen);
+                        }
+                        _listen = function(event){
+                                var x = event.pageX-c.offsetLeft;
+                                var y = event.pageY-c.offsetTop;
+
+                                for(var i=0; i<(words.length/6)-1;i++) {
+                                    if(y>(25+(i*75)) && y<(75+(i*75))){
+                                        if(x>430 && x<480){
+
+
+                                            var uri = "http://localhost:8090/device/toggle"
+                                            ctx.fillText("got here 1 ",100,400,200);
+                                            $.post(uri, {
+                                                name: $("#user").val(),
+                                                pwd: $("#pwd").val(),
+                                                relUID: i
+                                            }, function (data) {
+                                                x=0;
+                                                var button = document.getElementById("load");
+                                                button.click();
+                                                return;
+
+
+                                            });
+
+
+                                        }
+                                        if(x>500 && x<550){
+
+                                            if(confirm("Are you sure you want to delete device "+words[i*6])) {
+
+                                                var uri = "http://localhost:8090/device/delete"
+                                                $.post(uri, {
+                                                    name: $("#user").val(),
+                                                    pwd: $("#pwd").val(),
+                                                    relUID: i
+                                                }, function (data) {
+                                                    x = 0;
+                                                    var button = document.getElementById("load");
+                                                    button.click();
+                                                    return;
+
+
+                                                });
+                                            }
+
+                                        }
+
+                                    }
+
+
+                                }
+
+                            }
+                        c.addEventListener('click',_listen);
                         for(var i=0; i<(words.length/6)-1;i++){
                                 ctx.fillStyle = "#FFFF99";
                             if(words[(6*i)+4]==="true")
                                 ctx.fillStyle = "#FFFF00";
-                            ctx.fillRect(50,25+(i*150),200,100);
+                            ctx.fillRect(10,25+(i*75),400,50);
+                            ctx.fillStyle = "#AAAAAA";
+                            ctx.fillRect(430,25+(i*75),50,50);
+                            ctx.fillStyle="#770000"
+                            ctx.fillRect(500,25+(i*75),50,50);
                             ctx.fillStyle = "#000000";
                             ctx.font = "20px Arial";
-                            ctx.fillText(words[i*6],75,60+(i*150),120);
-                            ctx.fillText("Turned On: "+words[4+(i*6)],75,100+(i*150),120);
+                            ctx.fillText(words[i*6],30,50+(i*75),120);
+                            ctx.fillText("Turned On: "+words[4+(i*6)],200,50+(i*75),120);
+                            ctx.font = "14px Arial";
+                            ctx.fillText("Toggle",435,55+(i*75),50);
+                            ctx.fillText("Delete",505,55+(i*75),50);
+
                         }
                     });
             });

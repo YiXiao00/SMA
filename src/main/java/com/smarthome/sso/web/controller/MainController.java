@@ -44,12 +44,12 @@ public class MainController {
     @PostMapping("/user/signup")
     @ResponseBody
     public ResponseEntity<?> registerOneNewUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String username = String.valueOf(request.getParameter("name"));
+        String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        if (userService.findOneUserByUsername(username) != null){
+        if (userService.findOneUserByUsername(name) != null){
             return ResponseEntity.ok("The username has been used by another user.");
         }
-        User newUser = User.builder().username(username).password(pwd).build();
+        User newUser = User.builder().username(name).password(pwd).build();
         User addUser = userService.addOneUser(newUser);
         return ResponseEntity.ok("Signed up successfully.");
     }
@@ -61,6 +61,7 @@ public class MainController {
         Cookie[] cookies = request.getCookies();
         if (!(cookies == null)){
             for (Cookie cookie : cookies){
+                System.out.println("cookie getname "+cookie.getName());
                 if ("sessionId".equals(cookie.getName())){
                     inputSession = cookie.getValue();
                     break;
@@ -77,8 +78,10 @@ public class MainController {
         String pwd = String.valueOf(request.getParameter("pwd"));
         ServiceResult result = userService.tryLogIn(username,pwd);
         if (result == ServiceResult.SERVICE_SUCCESS){
+            System.out.println("Match found");
             String sessionId = userService.createToken(60);
             response.addCookie(new Cookie("sessionId",sessionId));
+
             return ResponseEntity.ok("succeeded");
         }
         return ResponseEntity.ok("failed");
@@ -88,9 +91,9 @@ public class MainController {
     @ResponseBody
     public ResponseEntity<?> deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
         try {
-            String username = String.valueOf(request.getParameter("name"));
+            String name = String.valueOf(request.getParameter("name"));
             String pwd = String.valueOf(request.getParameter("pwd"));
-            User foundUser = userService.findOneUserByUsername(username);
+            User foundUser = userService.findOneUserByUsername(name);
             if (foundUser == null) {
                 return ResponseEntity.ok("This user does not exist.");
             }
@@ -100,7 +103,7 @@ public class MainController {
 
             String id = foundUser.getUserId();
             userService.deleteOneUserByUserId(id);
-            return ResponseEntity.ok("User " + username + " has been deleted.");
+            return ResponseEntity.ok("User " + name + " has been deleted.");
         }
         catch (Exception e){
             return ResponseEntity.ok("User has been deleted.");
@@ -122,10 +125,10 @@ public class MainController {
     @PostMapping("/device/add")
     @ResponseBody
     public ResponseEntity<?> addDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String username = String.valueOf(request.getParameter("name"));
+        String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
         String type = String.valueOf(request.getParameter("type"));
-        User foundUser = userService.findOneUserByUsername(username);
+        User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
             return ResponseEntity.badRequest().body("User does not exist.");
         }
@@ -141,6 +144,12 @@ public class MainController {
 
     }
 
+    @PostMapping("/deleteAllDevices")
+    @ResponseBody
+    public ResponseEntity<?> restartDeviceDB(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        deviceService.deleteSelf();
+        return ResponseEntity.ok("good");
+    }
     @PostMapping("/device/all")
     @ResponseBody
     public ResponseEntity<?> showAllDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -161,9 +170,9 @@ public class MainController {
     @PostMapping("/device/delete")
     @ResponseBody
     public ResponseEntity<?> deleteDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String username = String.valueOf(request.getParameter("name"));
+        String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(username);
+        User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
             return ResponseEntity.badRequest().body("User does not exist.");
         }
@@ -178,13 +187,20 @@ public class MainController {
             if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
                 if(dList.get(i).getRelativeUserId()==relativeID) {
                     removedDevice = true;
+
                 }else {
                     Device d = dList.get(i);
                     if(removedDevice) d.setRelativeUserId(d.getRelativeUserId()-1);
                     bufferDS.addOneDevice(d);
 
-                }}
+                }}else{
+                Device d = dList.get(i);
+                bufferDS.addOneDevice(d);
+            }
         }
+        foundUser.removeDevice();
+        deleteUser(request,response);
+        userService.addOneUser(foundUser);
         deviceService =bufferDS;
         return ResponseEntity.ok("Device deleted");
 
@@ -193,9 +209,9 @@ public class MainController {
     @PostMapping("/device/toggle")
     @ResponseBody
     public ResponseEntity<?> toggleDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String username = String.valueOf(request.getParameter("name"));
+        String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(username);
+        User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
             return ResponseEntity.badRequest().body("User does not exist.");
         }
@@ -215,10 +231,13 @@ public class MainController {
                     bufferDS.addOneDevice(d);
                 }else {
                     Device d = dList.get(i);
-                    if(toggledDevice) d.setRelativeUserId(d.getRelativeUserId()-1);
                     bufferDS.addOneDevice(d);
 
-                }}
+                }}else{
+                Device d = dList.get(i);
+                bufferDS.addOneDevice(d);
+            }
+            List<Device> bufferList = bufferDS.findAllDevices();
         }
         deviceService =bufferDS;
         return ResponseEntity.ok("Device toggled");
@@ -227,9 +246,25 @@ public class MainController {
     @PostMapping("/device/user/all")
     @ResponseBody
     public ResponseEntity<?> showUserDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String username = String.valueOf(request.getParameter("name"));
+        String inputSession = "";
+        Cookie[] cookies = request.getCookies();
+        if (!(cookies == null)){
+            for (Cookie cookie : cookies){
+                if ("sessionId".equals(cookie.getName())){
+                    inputSession = cookie.getValue();
+                    break;
+                }
+            }
+            if (!("".equals(inputSession))){
+                ServiceResult sessionVerify = userService.verifySessionId(inputSession);
+                if (sessionVerify == ServiceResult.SERVICE_SUCCESS){
+                    System.out.println("Cookie found");
+                }
+            }
+        }
+        String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(username);
+        User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
             return ResponseEntity.badRequest().body("User does not exist.");
         }
@@ -287,9 +322,9 @@ public class MainController {
     public ResponseEntity<?> addTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
         List<Task> tList = taskService.findAllTasks();
         String s = "";
-        String username = String.valueOf(request.getParameter("name"));
+        String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(username);
+        User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
             return ResponseEntity.badRequest().body("User does not exist.");
         }
@@ -305,7 +340,7 @@ public class MainController {
         Calendar c1 = Calendar.getInstance();
         c1.add(Calendar.MINUTE,inThisTime);
 
-        Task t = new Task(type,username,ruid,c1,duration);
+        Task t = new Task(type,name,ruid,c1,duration);
         taskService.addOneTask(t);
         return ResponseEntity.ok("Task added");
 
