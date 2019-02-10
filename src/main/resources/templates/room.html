@@ -6,6 +6,8 @@
     <script type="text/javascript" >
         $(document).ready(function(){
             var c = document.getElementById("roomCanvas");
+            var cT = document.getElementById("taskCanvas");
+            var words = {};
             var _listen = function(event){
 
             };
@@ -26,6 +28,32 @@
                    }
                )
             });
+
+            $("#newTask").click(function(){
+               var uri = "http://localhost:8090/task/add"
+                $.post(uri,
+                    {
+                        name:$("#user").val(),
+                        pwd:$("#pwd").val(),
+                        type:$("#newTaskType").val(),
+                        relUID:$("#newTaskRuid").val(),
+                        in:$("#newTaskWhen").val(),
+                        duration:$("#newTaskDuration").val()
+                    }, function(data){
+                        var button = document.getElementById("load");
+                        button.click();
+                        document.getElementById('newTaskWhen').value = '';
+                        document.getElementById('mewTaskDuration').value = '';
+                        document.getElementById('newTaskType').value = '';
+                        document.getElementById('newTaskDuration').value = '';
+
+
+
+                    }
+                )
+
+
+            });
             $("#load").click(function() {
                 var uri = "http://localhost:8090/device/user/all"
                 $.post(uri,
@@ -37,62 +65,88 @@
                         c = document.getElementById("roomCanvas");
                         var ctx = c.getContext("2d");
                         ctx.clearRect(0, 0, c.width, c.height);
-                        var words = data.split(" ");
+                        words = data.split(" ");
                         if (typeof _listen !== 'undefined') {
                             c.removeEventListener('click', _listen);
                         }
-                        _listen = function(event){
-                                var x = event.pageX-c.offsetLeft;
-                                var y = event.pageY-c.offsetTop;
+                        _listen = function(event) {
+                            var x = event.pageX - c.offsetLeft;
+                            var y = event.pageY - c.offsetTop;
 
-                                for(var i=0; i<(words.length/6)-1;i++) {
-                                    if(y>(25+(i*75)) && y<(75+(i*75))){
-                                        if(x>430 && x<480){
+                            for (var i = 0; i < (words.length / 6) - 1; i++) {
+                                if (y > (25 + (i * 75)) && y < (75 + (i * 75))) {
+                                    if (x > 430 && x < 480) {
 
 
-                                            var uri = "http://localhost:8090/device/toggle"
+                                        var uri = "http://localhost:8090/device/toggle"
+                                        $.post(uri, {
+                                            name: $("#user").val(),
+                                            pwd: $("#pwd").val(),
+                                            relUID: i
+                                        }, function (data) {
+                                            x = 0;
+                                            var button = document.getElementById("load");
+                                            button.click();
+                                            return;
+
+
+                                        });
+
+
+                                    }
+                                    if (x > 500 && x < 550) {
+
+                                        if (confirm("Are you sure you want to delete device " + words[i * 6])) {
+
+                                            var uri = "http://localhost:8090/device/delete"
                                             $.post(uri, {
                                                 name: $("#user").val(),
                                                 pwd: $("#pwd").val(),
                                                 relUID: i
                                             }, function (data) {
-                                                x=0;
+                                                x = 0;
                                                 var button = document.getElementById("load");
                                                 button.click();
                                                 return;
 
 
                                             });
-
-
-                                        }
-                                        if(x>500 && x<550){
-
-                                            if(confirm("Are you sure you want to delete device "+words[i*6])) {
-
-                                                var uri = "http://localhost:8090/device/delete"
-                                                $.post(uri, {
-                                                    name: $("#user").val(),
-                                                    pwd: $("#pwd").val(),
-                                                    relUID: i
-                                                }, function (data) {
-                                                    x = 0;
-                                                    var button = document.getElementById("load");
-                                                    button.click();
-                                                    return;
-
-
-                                                });
-                                            }
-
                                         }
 
                                     }
 
-
                                 }
 
+
                             }
+                        }
+                                var uri = "http://localhost:8090/task/user/view"
+                            $.post(uri,
+                                {
+                                    name:$("#user").val(),
+                                    pwd:$("#pwd").val()
+                                }, function (data) {
+                                    var tasks = data.split(" ");
+                                    cT = document.getElementById("taskCanvas");
+                                    var ctxT = cT.getContext("2d");
+                                    ctxT.clearRect(0, 0, cT.width, cT.height);
+                                    ctxT.fillStyle = "#000000";
+                                    ctxT.font = "14px Arial";
+                                    ctxT.fillText("Tasks for "+$("#user").val(),10,40,100);
+                                    ctxT.fillText("Task|Device|Date|Time|Duration",10,70,300);
+                                    for(var i=0; i<(tasks.length/15)-1;i++) {
+                                       ctxT.fillText(tasks[0+i*15]+"|"+words[(tasks[4+i*15])*6]+"|"+tasks[7+i*15]+" "+tasks[8+i*15]+"|"+tasks[9+i*15]+"|"+tasks[13+i*15],10,100+(i*20),300);
+                                    }
+                                    for(var i=0;i<tasks.length;i++){
+                                     //   ctxT.fillText(tasks[i],10,150+(20*i),300);
+                                    }
+
+
+
+
+                                })
+
+
                         c.addEventListener('click',_listen);
                         for(var i=0; i<(words.length/6)-1;i++){
                                 ctx.fillStyle = "#FFFF99";
@@ -129,10 +183,23 @@
     Devices currently associated with your account:
 </div>
 <br/>
-<canvas id = "roomCanvas" width="600" height="600" style="border:1px solid #000000;" ></canvas>
 <div>
-    New Device: <input class="inputbox" type="text" name="newDevice" id="newDevice" value="Enter Device Here" onfocus="this.value=''"/><br/>
-    <input class="btn" type="submit" id="AddNew" value="Add" /> <br/>
+    <canvas id = "roomCanvas" width="600" height="600" style="border:1px solid #000000;" ></canvas>
+    <canvas id="taskCanvas" width=300" height ="600" style="border:1px solid #000000;"></canvas>
 </div>
+<div>
+    New Device: <input class="inputbox" type="text" name="newDevice" id="newDevice" value="Enter Device Here" onfocus="this.value=''"/>
+    <input class="btn" type="submit" id="AddNew" value="Add" /> <br/>
+    New Task -> Device ID:<input class="inputbox" type="text" name="newDevice" id="newTaskRuid" value="Enter Device ID" onfocus="this.value=''"/>
+    When (minutes from now): <input class="inputbox" type="text" name="newDevice" id="newTaskWhen" value="Enter time until this task should be performed (minutes)" onfocus="this.value=''"/>
+    Duration:<input class="inputbox" type="text" name="newDevice" id="newTaskDuration" value="Enter How long this should be performed for" onfocus="this.value=''"/>
+    Type:<input class="inputbox" type="text" name="newDevice" id="newTaskType" value="Enter Type of Task" onfocus="this.value=''"/>
+    <input class="btn" type="submit" id="newTask" value="Submit Task" />
+
+</div>
+
+</div>
+
 </body>
+
 </html>

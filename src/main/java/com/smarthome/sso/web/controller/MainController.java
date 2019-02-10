@@ -302,8 +302,31 @@ public class MainController {
         String s = "";
         for(int i=0; i<tList.size();i++){
                 Task t = tList.get(i);
-                s = s + t.getType() + " for user " + t.getUserId() +" device "+t.getRelativeDeviceId()+" at time  "+t.getCalendar().getTime() +" for "+t.getDuration()+", ";
+                s = s + t.getType() + " forUser " + t.getUserId() +" device "+t.getRelativeDeviceId()+" atTime "+t.getCalendar().getTime() +" for "+t.getDuration()+", ";
 
+        }
+        return ResponseEntity.ok(s);
+
+    }
+    @RequestMapping("/task/user/view")
+    @ResponseBody
+    public ResponseEntity<?> findUserTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<Task> tList = taskService.findAllTasks();
+        String name = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        User foundUser = userService.findOneUserByUsername(name);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct.");
+        }
+        String s = "";
+        for(int i=0; i<tList.size();i++){
+            Task t = tList.get(i);
+            if(t.getUserId().equals(name)) {
+                s = s + t.getType() + " forUser " + t.getUserId() + " device " + t.getRelativeDeviceId() + " atTime " + t.getCalendar().getTime() + " for " + t.getDuration() + " , ";
+            }
         }
         return ResponseEntity.ok(s);
 
@@ -331,7 +354,7 @@ public class MainController {
         if (!foundUser.getPassword().equals(pwd)) {
             return ResponseEntity.badRequest().body("The password given is not correct. Cannot add Task");
         }
-        int ruid = Integer.valueOf(request.getParameter("ruid"));
+        int ruid = Integer.valueOf(request.getParameter("relUID"));
         if(!(ruid >=0) || !(ruid < foundUser.getDevicesOwned()) )
             return ResponseEntity.badRequest().body("Device does not exist");
         String type = String.valueOf(request.getParameter("type"));
