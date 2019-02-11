@@ -2,10 +2,8 @@ package com.smarthome.sso.web.service;
 
 
 
-import com.smarthome.sso.web.domain.Device;
-import com.smarthome.sso.web.domain.DeviceRespository;
-import com.smarthome.sso.web.domain.Task;
-import com.smarthome.sso.web.domain.TaskRepository;
+import com.smarthome.sso.web.constants.ServiceResult;
+import com.smarthome.sso.web.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +16,15 @@ public class TaskService {
     private TaskRepository tRepo;
 
     public void addOneTask(Task t){ tRepo.save(t) ;
+    }
+
+    public void deleteTask(Task t){
+        tRepo.delete(t);
+    }
+    public ServiceResult deleteOneTaskByTaskId(String id){
+        //FIX - DOES NOT HAVE THE VERIFICAITON USER SERVICE HAS
+        tRepo.deleteByTaskId(id);
+        return ServiceResult.SERVICE_SUCCESS;
     }
 
     public List<Task> findAllTasks() { return tRepo.findAll();}

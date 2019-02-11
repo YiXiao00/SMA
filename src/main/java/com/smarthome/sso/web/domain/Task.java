@@ -64,6 +64,8 @@ public class Task {
     public String getTaskId(){
         return taskId;
     }
+    public int getDeviceId() { return relativeDeviceId;}
+    public String getType() { return type;}
 
 
 }

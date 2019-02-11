@@ -332,6 +332,36 @@ public class MainController {
 
     }
 
+    @RequestMapping("/task/delete")
+    @ResponseBody
+    public ResponseEntity<?> deleteTask(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<Task> tList = taskService.findAllTasks();
+        String name = String.valueOf(request.getParameter("name"));
+        String pwd = String.valueOf(request.getParameter("pwd"));
+        String type = String.valueOf(request.getParameter("type"));
+        int ruid = Integer.valueOf(request.getParameter("relUID"));
+        User foundUser = userService.findOneUserByUsername(name);
+        if (foundUser == null) {
+            return ResponseEntity.badRequest().body("User does not exist.");
+        }
+        if (!foundUser.getPassword().equals(pwd)) {
+            return ResponseEntity.badRequest().body("The password given is not correct.");
+        }
+        int tasksDeleted=0;
+        for(int i=0;i<tList.size();i++){
+            Task t = tList.get(i);
+            if(t.getUserId().equals(name) && t.getType().equals(type) && t.getDeviceId()==(ruid)){
+                taskService.deleteTask(t);
+                tasksDeleted++;
+
+            }
+        }
+        if(tasksDeleted==0) return ResponseEntity.ok("No matching tasks found");
+        return ResponseEntity.ok("Deleted " +tasksDeleted+" tasks.");
+
+    }
+
+
     @RequestMapping("/task/delete/all")
     @ResponseBody
     public ResponseEntity<?> deleteAllTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{

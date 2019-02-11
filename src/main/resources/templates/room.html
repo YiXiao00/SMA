@@ -8,7 +8,11 @@
             var c = document.getElementById("roomCanvas");
             var cT = document.getElementById("taskCanvas");
             var words = {};
+            var tasks = {};
             var _listen = function(event){
+
+            };
+            var _listenTasks = function(event){
 
             };
             $("#AddNew").click(function(){
@@ -96,7 +100,7 @@
                                     }
                                     if (x > 500 && x < 550) {
 
-                                        if (confirm("Are you sure you want to delete device " + words[i * 6])) {
+                                        if (confirm("Are you sure you want to delete device " + words[i * 6] + "?" )) {
 
                                             var uri = "http://localhost:8090/device/delete"
                                             $.post(uri, {
@@ -126,7 +130,7 @@
                                     name:$("#user").val(),
                                     pwd:$("#pwd").val()
                                 }, function (data) {
-                                    var tasks = data.split(" ");
+                                    tasks = data.split(" ");
                                     cT = document.getElementById("taskCanvas");
                                     var ctxT = cT.getContext("2d");
                                     ctxT.clearRect(0, 0, cT.width, cT.height);
@@ -148,6 +152,36 @@
 
 
                         c.addEventListener('click',_listen);
+
+                        if(typeof _listenTasks !=='undefined'){
+                            cT.removeEventListener('click',_listenTasks);
+                        }
+                        _listenTasks = function(event){
+                            var x = event.pageX-cT.offsetLeft;
+                            var y = event.pageY-cT.offsetTop;
+                            for(var i =0;i<(tasks.length)/15;i++){
+                                if(y>80+(i*20) && y<100+(i*20)){
+                                    if(confirm(tasks[2+i*15]+", are you sure you want to delete task "+tasks[i*15]+" on "+words[(tasks[4+i*15])*6]+ " ?")) {
+                                        var uri = "http://localhost:8090/task/delete";
+                                        $.post(uri,
+                                            {
+                                                name:$("#user").val(),
+                                                pwd:$("#pwd").val(),
+                                                type:tasks[i*15],
+                                                relUID:tasks[4+i*15]
+
+                                            },function(data){
+                                                x = 0;
+                                                var button = document.getElementById("load");
+                                                button.click();
+                                                return;
+                                            })
+                                    }
+
+                                }
+                            }
+                        }
+                        cT.addEventListener('click',_listenTasks);
                         for(var i=0; i<(words.length/6)-1;i++){
                                 ctx.fillStyle = "#FFFF99";
                             if(words[(6*i)+4]==="true")
@@ -158,8 +192,9 @@
                             ctx.fillStyle="#770000"
                             ctx.fillRect(500,25+(i*75),50,50);
                             ctx.fillStyle = "#000000";
-                            ctx.font = "20px Arial";
+                            ctx.font = "16px Arial";
                             ctx.fillText(words[i*6],30,50+(i*75),120);
+                            ctx.fillText("ID: "+words[2+i*6],150,50+(i*75),120);
                             ctx.fillText("Turned On: "+words[4+(i*6)],200,50+(i*75),120);
                             ctx.font = "14px Arial";
                             ctx.fillText("Toggle",435,55+(i*75),50);
