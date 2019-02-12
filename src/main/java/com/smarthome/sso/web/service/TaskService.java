@@ -15,11 +15,19 @@ public class TaskService {
     @Autowired
     private TaskRepository tRepo;
 
-    public void addOneTask(Task t){ tRepo.save(t) ;
+    public void addOneTask(Task t){
+        tRepo.save(t);
     }
 
     public void deleteTask(Task t){
         tRepo.delete(t);
+    }
+
+    public void decrementTaskRuid(Task t){
+        tRepo.delete(t);
+        t.decrementDeviceId();
+        tRepo.save(t);
+        System.out.println(tRepo.findAll());
     }
     public ServiceResult deleteOneTaskByTaskId(String id){
         //FIX - DOES NOT HAVE THE VERIFICAITON USER SERVICE HAS
@@ -27,7 +35,9 @@ public class TaskService {
         return ServiceResult.SERVICE_SUCCESS;
     }
 
-    public List<Task> findAllTasks() { return tRepo.findAll();}
+    public List<Task> findAllTasks() {
+        return tRepo.findAll();
+    }
 
     public void deleteSelf() {tRepo.deleteAll();}
 

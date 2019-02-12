@@ -102,6 +102,22 @@ public class MainController {
             }
 
             String id = foundUser.getUserId();
+            List<Device> dList = deviceService.findAllDevices();
+            for(int i=0;i<dList.size();i++){
+                Device d = dList.get(i);
+                if(d.getUserId().equals(id)) {
+                    deviceService.deleteDevice(d);
+                }
+            }
+
+            List<Task> tList = taskService.findAllTasks();
+            for(int i=0;i<tList.size();i++){
+                Task t = tList.get(i);
+                if(t.getUserId().equals(name)) {
+                    taskService.deleteTask(t);
+                }
+            }
+
             userService.deleteOneUserByUserId(id);
             return ResponseEntity.ok("User " + name + " has been deleted.");
         }
@@ -137,7 +153,7 @@ public class MainController {
         }
         Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).relativeUserId(foundUser.getDevicesOwned()).build();
         foundUser.addDevice();
-        deleteUser(request,response);
+        userService.deleteUser(foundUser);
         userService.addOneUser(foundUser);
         deviceService.addOneDevice(newDevice);
         return ResponseEntity.ok("Added new device to user "+foundUser.getUserId()+" of type "+type);
@@ -198,8 +214,22 @@ public class MainController {
                 bufferDS.addOneDevice(d);
             }
         }
+
+        List<Task> tList = taskService.findAllTasks();
+        for(int i=0;i<tList.size();i++){
+            Task t = tList.get(i);
+            if(t.getUserId().equals(name) && t.getDeviceId()==relativeID) {
+                taskService.deleteTask(t);
+            }
+            if(t.getUserId().equals(name) && t.getDeviceId()>relativeID){
+                taskService.deleteTask(t);
+                t.decrementDeviceId();
+                taskService.addOneTask(t);
+            }
+        }
+
         foundUser.removeDevice();
-        deleteUser(request,response);
+        userService.deleteUser(foundUser);
         userService.addOneUser(foundUser);
         deviceService =bufferDS;
         return ResponseEntity.ok("Device deleted");
@@ -373,7 +403,6 @@ public class MainController {
     @RequestMapping("/task/add")
     @ResponseBody
     public ResponseEntity<?> addTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        List<Task> tList = taskService.findAllTasks();
         String s = "";
         String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
@@ -392,8 +421,35 @@ public class MainController {
         int duration = Integer.valueOf(request.getParameter("duration"));
         Calendar c1 = Calendar.getInstance();
         c1.add(Calendar.MINUTE,inThisTime);
-
         Task t = new Task(type,name,ruid,c1,duration);
+
+        List<Task> tList = taskService.findAllTasks();
+
+        taskService.deleteSelf();
+        boolean placedNew = false;
+        Task oldT;
+
+        System.out.println("tasks in list "+tList.size());
+
+        for(int i=0;i<tList.size()+1;i++){
+            if(tList.size()!=0) {
+                if (placedNew || (i == tList.size())) {
+                    oldT = tList.get(i - 1);
+                } else {
+                    oldT = tList.get(i);
+                }
+                if (c1.after(oldT.getCalendar()) || placedNew) {
+                    taskService.addOneTask(oldT);
+                } else {
+                    taskService.addOneTask(t);
+                    placedNew = true;
+                }
+            }else{
+                taskService.addOneTask(t);
+            }
+
+        }
+
         taskService.addOneTask(t);
         return ResponseEntity.ok("Task added");
 

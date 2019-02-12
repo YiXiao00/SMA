@@ -57,7 +57,7 @@ public class Task {
         //     this.SamsungID = sID;
     }
 
-
+    public Calendar getCalendar() { return calendar; }
     public String getUserId(){
         return userId;
     }
@@ -66,6 +66,7 @@ public class Task {
     }
     public int getDeviceId() { return relativeDeviceId;}
     public String getType() { return type;}
+    public void decrementDeviceId() { this.relativeDeviceId--;}
 
 
 }

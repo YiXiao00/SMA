@@ -30,6 +30,8 @@ public class UserService {
         return uRepo.save(u);
     }
 
+    public void deleteUser(User u){ uRepo.delete(u); }
+
     public ServiceResult deleteOneUserByUserId(String id){
         User result = uRepo.deleteByUserId(id);
         if (result != null){

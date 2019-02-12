@@ -19,6 +19,9 @@ public class DeviceService {
     public void addOneDevice(Device d){
         dRepo.save(d);
     }
+    public void deleteDevice(Device d){
+        dRepo.delete(d);
+    }
 
     public List<Device> findAllDevices() { return dRepo.findAll();}
 

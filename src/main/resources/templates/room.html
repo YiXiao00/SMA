@@ -159,7 +159,7 @@
                         _listenTasks = function(event){
                             var x = event.pageX-cT.offsetLeft;
                             var y = event.pageY-cT.offsetTop;
-                            for(var i =0;i<(tasks.length)/15;i++){
+                            for(var i =0;i<((tasks.length)/15)-1;i++){
                                 if(y>80+(i*20) && y<100+(i*20)){
                                     if(confirm(tasks[2+i*15]+", are you sure you want to delete task "+tasks[i*15]+" on "+words[(tasks[4+i*15])*6]+ " ?")) {
                                         var uri = "http://localhost:8090/task/delete";
