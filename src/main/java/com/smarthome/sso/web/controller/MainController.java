@@ -9,17 +9,25 @@ import com.smarthome.sso.web.service.TaskService;
 import com.smarthome.sso.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.task.TaskExecutor;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
 @Controller
+@EnableScheduling
 public class MainController {
     @Autowired
     private UserService userService;
@@ -29,6 +37,10 @@ public class MainController {
     private DeviceService bufferDS;
     @Autowired
     private TaskService taskService;
+
+
+
+
 
     @PostMapping("/user/info")
     @ResponseBody
@@ -420,7 +432,7 @@ public class MainController {
         int inThisTime = Integer.valueOf(request.getParameter("in"));
         int duration = Integer.valueOf(request.getParameter("duration"));
         Calendar c1 = Calendar.getInstance();
-        c1.add(Calendar.MINUTE,inThisTime);
+        c1.add(Calendar.SECOND,inThisTime);
         Task t = new Task(type,name,ruid,c1,duration);
 
         List<Task> tList = taskService.findAllTasks();
@@ -473,6 +485,45 @@ public class MainController {
     public String getRoom(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/room.html";
     }
+
+    @Scheduled(fixedRate= 1000)
+    public void printOutStatement() {
+        List<Task>  tList = taskService.findAllTasks();
+        Calendar c = Calendar.getInstance();
+        if(tList.size()!=0) {
+            Task t = tList.get(0);
+            if(c.after(t.getCalendar())){
+                List<Device> dList = deviceService.findAllDevices();
+                bufferDS.deleteSelf();
+                boolean toggledDevice = false;
+                User u = userService.findOneUserByUsername(t.getUserId());
+                for(int i=0; i<dList.size();i++){
+                    if(dList.get(i).getUserId().equals(u.getUserId())) {
+                        if(dList.get(i).getRelativeUserId()==t.getDeviceId()) {
+                            toggledDevice = true;
+                            Device d = dList.get(i);
+                            d.toggle();
+                            System.out.println("Toggled");
+                            bufferDS.addOneDevice(d);
+                        }else {
+                            Device d = dList.get(i);
+                            bufferDS.addOneDevice(d);
+
+                        }}else{
+                        Device d = dList.get(i);
+                        bufferDS.addOneDevice(d);
+                    }
+                }
+                deviceService =bufferDS;
+
+
+
+                taskService.deleteTask(t);
+            }
+
+        }
+    }
+
 
 
 }
