@@ -7,6 +7,11 @@
         $(document).ready(function(){
             var c = document.getElementById("roomCanvas");
             var cT = document.getElementById("taskCanvas");
+            function hitButton(){
+                var button = document.getElementById("load");
+                button.click();
+            }
+            setInterval(hitButton,1000);
             var words = {};
             var tasks = {};
             var _listen = function(event){
@@ -199,11 +204,6 @@
                             ctx.font = "14px Arial";
                             ctx.fillText("Toggle",435,55+(i*75),50);
                             ctx.fillText("Delete",505,55+(i*75),50);
-                            function hitButton(){
-                                var button = document.getElementById("load");
-                                button.click();
-                            }
-                            setTimeout(hitButton,1000);
 
 
                         }
