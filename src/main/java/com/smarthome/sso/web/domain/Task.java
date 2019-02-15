@@ -67,6 +67,8 @@ public class Task {
     public int getDeviceId() { return relativeDeviceId;}
     public String getType() { return type;}
     public void decrementDeviceId() { this.relativeDeviceId--;}
+    public int getDuration(){ return this.duration;}
+    public void setCalendar(Calendar newCalendar){ this.calendar = newCalendar;}
 
 
 }

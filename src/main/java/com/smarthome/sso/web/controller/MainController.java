@@ -489,10 +489,10 @@ public class MainController {
     @Scheduled(fixedRate= 1000)
     public void printOutStatement() {
         List<Task>  tList = taskService.findAllTasks();
-        Calendar c = Calendar.getInstance();
+        Calendar c1 = Calendar.getInstance();
         if(tList.size()!=0) {
             Task t = tList.get(0);
-            if(c.after(t.getCalendar())){
+            if(c1.after(t.getCalendar())){
                 List<Device> dList = deviceService.findAllDevices();
                 bufferDS.deleteSelf();
                 boolean toggledDevice = false;
@@ -505,6 +505,38 @@ public class MainController {
                             d.toggle();
                             System.out.println("Toggled");
                             bufferDS.addOneDevice(d);
+                            if(t.getDuration()!=0){
+                                taskService.deleteTask(t);
+
+                                Calendar newC = Calendar.getInstance();
+                                newC.add(Calendar.SECOND,t.getDuration());
+                                t.setCalendar(newC);
+                                taskService.deleteSelf();
+                                boolean placedNew = false;
+                                Task oldT;
+
+
+
+                                for(int j=0;j<tList.size()+1;j++){
+                                    if(tList.size()!=0) {
+                                        if (placedNew || (j == tList.size())) {
+                                            oldT = tList.get(j - 1);
+                                        } else {
+                                            oldT = tList.get(j);
+                                        }
+                                        if (c1.after(oldT.getCalendar()) || placedNew) {
+                                            taskService.addOneTask(oldT);
+                                        } else {
+                                            taskService.addOneTask(t);
+                                            placedNew = true;
+                                        }
+                                    }else{
+                                        taskService.addOneTask(t);
+                                    }
+
+                                }
+
+                            }
                         }else {
                             Device d = dList.get(i);
                             bufferDS.addOneDevice(d);
@@ -518,7 +550,6 @@ public class MainController {
 
 
 
-                taskService.deleteTask(t);
             }
 
         }
