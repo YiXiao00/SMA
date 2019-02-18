@@ -48,6 +48,7 @@ public class Device {
    //     this.SamsungID = sID;
     }
 
+    //getters for all relevant attributes
     public boolean getPowerStatus(){
         return poweredOn;
     }
