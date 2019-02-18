@@ -422,7 +422,7 @@ public class MainController {
         return "templates/loginLanding.html";
     }
 
-    @RequestMapping(value="/room", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value="/user/dashboard", method = {RequestMethod.POST, RequestMethod.GET})
     public String getRoom(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/room.html";
     }
