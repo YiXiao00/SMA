@@ -43,6 +43,11 @@ public class User {
     /** pwd */
     private String password;
 
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
+
     private int devicesOwned = 0;
 
     public void addDevice(){
