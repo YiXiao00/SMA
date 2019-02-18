@@ -44,30 +44,34 @@ public class Task {
 
     //   private String SamsungID;
 
-    /** Generate task without taskId which will be generated automatically */
+    /** Constructor, generates task without taskId which will be generated automatically */
     public Task(String type,String userId,int ruid, Calendar calendar, int duration){
         this.type = type;
         this.userId = userId;
         this.calendar = calendar;
         this.duration = duration;
         this.relativeDeviceId = ruid;
-        this.repeated = new boolean[]{false,false,false,false,false,false,false};
+        this.repeated = new boolean[]{false,false,false,false,false,false,false}; //setting all default values
         //     this.FiwareService = FiS;
         //     this.FiwareServicepath = FiSP;
         //     this.SamsungID = sID;
     }
 
-    public Calendar getCalendar() { return calendar; }
-    public String getUserId(){
+    //getters for all relevant attributes
+    public Calendar getCalendar() { return calendar; } 
+    public String getUserId(){ 
         return userId;
     }
-    public String getTaskId(){
+    public String getTaskId(){ 
         return taskId;
     }
-    public int getDeviceId() { return relativeDeviceId;}
+    public int getDeviceId() { return relativeDeviceId;} 
     public String getType() { return type;}
-    public void decrementDeviceId() { this.relativeDeviceId--;}
     public int getDuration(){ return this.duration;}
+
+    //Decrements device id, used for when devices are deleted to shift the rest of the devices in the device service
+    public void decrementDeviceId() { this.relativeDeviceId--;}
+    
     public void setCalendar(Calendar newCalendar){ this.calendar = newCalendar;}
 
 
