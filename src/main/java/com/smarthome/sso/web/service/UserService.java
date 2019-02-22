@@ -69,15 +69,15 @@ public class UserService {
         return ServiceResult.SERVICE_FAIL;
     }
 
-    public String createToken(Integer timeSpan){
+    public String createToken(Integer timeSpan, String username){
         String sessionId = UUID.randomUUID().toString();
-        redisTemplate.opsForValue().set(sessionId, sessionId, timeSpan, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(sessionId, username, timeSpan, TimeUnit.MINUTES);
         return sessionId;
     }
 
     public ServiceResult verifySessionId(String sessionId){
         String record = (String)redisTemplate.opsForValue().get(sessionId);
-        if (sessionId.equals(record)){
+        if (!("".equals(record))){
             return ServiceResult.SERVICE_SUCCESS;
         }
         return ServiceResult.SERVICE_FAIL;

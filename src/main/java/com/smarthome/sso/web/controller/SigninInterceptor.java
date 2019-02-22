@@ -27,7 +27,7 @@ public class SigninInterceptor extends HandlerInterceptorAdapter {
             }
             if (!"".equals(inputSession)){
                 String record = (String)redisTemplate.opsForValue().get(inputSession);
-                if (inputSession.equals(record)){
+                if (!("".equals(record))){
                     return true;    //already signed in
                 }
 

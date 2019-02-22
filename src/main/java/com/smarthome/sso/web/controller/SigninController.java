@@ -101,7 +101,7 @@ public class SigninController {
 
         if (result == ServiceResult.SERVICE_SUCCESS){
             System.out.println("Match found");
-            String sessionId = userService.createToken(60);
+            String sessionId = userService.createToken(60,username);
             response.addCookie(new Cookie("sessionId",sessionId));
 
             return ResponseEntity.ok("succeeded");
