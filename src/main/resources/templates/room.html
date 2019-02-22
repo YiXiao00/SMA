@@ -5,6 +5,12 @@
     </script>
     <script type="text/javascript" >
         $(document).ready(function(){
+            var cookiesString = document.cookie;
+            $("#cookieBoard").text(cookiesString);
+            var sessionCookie = cookiesString.split(";");
+            var sessionArg = sessionCookie[0].split("=")[1];
+            $("#cookieBoard").text(sessionArg);
+
             var c = document.getElementById("roomCanvas");
             var cT = document.getElementById("taskCanvas");
             function hitButton(){
@@ -20,6 +26,8 @@
             var _listenTasks = function(event){
 
             };
+
+
             $("#AddNew").click(function(){
                var uri = "http://localhost:8090/device/add"
 
@@ -39,6 +47,7 @@
             });
 
             $("#newTask").click(function(){
+
                var uri = "http://localhost:8090/task/add"
                 $.post(uri,
                     {
@@ -47,7 +56,8 @@
                         type:$("#newTaskType").val(),
                         relUID:$("#newTaskRuid").val(),
                         in:$("#newTaskWhen").val(),
-                        duration:$("#newTaskDuration").val()
+                        duration:$("#newTaskDuration").val(),
+                        token:sessionArg
                     }, function(data){
                         var button = document.getElementById("load");
                         button.click();
@@ -217,6 +227,7 @@
 <body>
 <body>
 <h1>Welcome User!</h1>
+<h2 class="cookieBoard" name="cookieBoard" id="cookieBoard">cookieBoard content</h2>
 <div>
     Username: <input class="inputbox" type="text" name="user" id="user"/><br/>
     Password: <input class="inputbox" type="password" name="pwd" id="pwd"/><br/>

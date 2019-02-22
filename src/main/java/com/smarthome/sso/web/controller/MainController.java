@@ -374,6 +374,9 @@ public class MainController {
         String s = "";
         String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
+        String inputToken = String.valueOf(request.getParameter("token"));
+        System.out.println(inputToken);
+
         User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
             return ResponseEntity.badRequest().body("User does not exist.");
