@@ -39,7 +39,7 @@ public class MainController {
     private TaskService taskService;
 
 
-
+    //Procedure to delete a user, all of their devices and associated tasks from the database
     @PostMapping("/user/delete")
     @ResponseBody
     public ResponseEntity<?> deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -79,6 +79,7 @@ public class MainController {
         }
     }
 
+    //Returns a string with all the usernames comma separated
     @PostMapping("/user/all")
     @ResponseBody
     public ResponseEntity<?> showUsers(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -91,6 +92,7 @@ public class MainController {
         return ResponseEntity.ok(s);
     }
 
+    //Adds a new device associated with the user
     @PostMapping("/device/add")
     @ResponseBody
     public ResponseEntity<?> addDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -113,12 +115,15 @@ public class MainController {
 
     }
 
+    //Deletes all devices, used for debugging
     @PostMapping("/deleteAllDevices")
     @ResponseBody
     public ResponseEntity<?> restartDeviceDB(HttpServletRequest request, HttpServletResponse response) throws Exception{
         deviceService.deleteSelf();
         return ResponseEntity.ok("good");
     }
+
+    //Returns list of all devices and their owners, requires admin permission
     @PostMapping("/device/all")
     @ResponseBody
     public ResponseEntity<?> showAllDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -136,6 +141,7 @@ public class MainController {
     }
     }
 
+    //Deletes a device and all tasks associated with it
     @PostMapping("/device/delete")
     @ResponseBody
     public ResponseEntity<?> deleteDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -189,6 +195,7 @@ public class MainController {
 
     }
 
+    //Toggles on or off one device, must be owned by the user
     @PostMapping("/device/toggle")
     @ResponseBody
     public ResponseEntity<?> toggleDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -226,6 +233,8 @@ public class MainController {
         return ResponseEntity.ok("Device toggled");
 
     }
+
+    //Shows all devices owned by the user
     @PostMapping("/device/user/all")
     @ResponseBody
     public ResponseEntity<?> showUserDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -265,6 +274,7 @@ public class MainController {
         return ResponseEntity.ok(s);
     }
 
+    //Deletes user, device and task service databases
     @RequestMapping("/delete")
     @ResponseBody
     public ResponseEntity<?> deleteAllDatabases(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -272,6 +282,7 @@ public class MainController {
         if(admin.equals("admin")) {
             userService.deleteSelf();
             deviceService.deleteSelf();
+            taskService.deleteSelf();
             return ResponseEntity.ok("Deleted");
         }else{
             return ResponseEntity.badRequest().body("Needs admin permission");
@@ -291,6 +302,8 @@ public class MainController {
         return ResponseEntity.ok(s);
 
     }
+
+    //Returns task data for all of the user's device's tasks
     @RequestMapping("/task/user/view")
     @ResponseBody
     public ResponseEntity<?> findUserTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -315,6 +328,7 @@ public class MainController {
 
     }
 
+    //Deletes a certain type of task for the current user
     @RequestMapping("/task/delete")
     @ResponseBody
     public ResponseEntity<?> deleteTask(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -344,7 +358,7 @@ public class MainController {
 
     }
 
-
+    //Deletes task database
     @RequestMapping("/task/delete/all")
     @ResponseBody
     public ResponseEntity<?> deleteAllTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -353,6 +367,7 @@ public class MainController {
 
     }
 
+    //Adds multiple tasks to the database
     @RequestMapping("/task/add")
     @ResponseBody
     public ResponseEntity<?> addTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -411,22 +426,25 @@ public class MainController {
 
 
 
-
+    //maps /homepage to the home html file
     @RequestMapping(value="/homepage", method = {RequestMethod.POST, RequestMethod.GET})
     public String getHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/home.html";
     }
 
+    //maps /loginLanding to the corresponding file
     @RequestMapping(value="/loginLanding", method = {RequestMethod.POST, RequestMethod.GET})
     public String getLoginlanding(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/loginLanding.html";
     }
 
+    //maps /user/dashboard to the corresponding file
     @RequestMapping(value="/user/dashboard", method = {RequestMethod.POST, RequestMethod.GET})
     public String getRoom(HttpServletRequest request, HttpServletResponse response) throws Exception{
         return "templates/room.html";
     }
 
+    //Constant checks every second to see whether a device needs to be toggled or tasks need to be updated
     @Scheduled(fixedRate= 1000)
     public void printOutStatement() {
         List<Task>  tList = taskService.findAllTasks();
