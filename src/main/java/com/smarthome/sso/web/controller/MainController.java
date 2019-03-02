@@ -289,6 +289,7 @@ public class MainController {
         }
     }
 
+    //Returns a list of all tasks with their associated user, device and time
     @RequestMapping("/task/view")
     @ResponseBody
     public ResponseEntity<?> findTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -367,7 +368,7 @@ public class MainController {
 
     }
 
-    //Adds multiple tasks to the database
+    //Adds tasks to the database
     @RequestMapping("/task/add")
     @ResponseBody
     public ResponseEntity<?> addTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
