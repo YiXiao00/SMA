@@ -1,0 +1,41 @@
+smartHomes\src\main\java\com\smarthome\sso\web\constants\ServiceResult.java:
+
+smartHomes\src\main\java\com\smarthome\sso\web\controller\InterceptorConfig.java:
+
+smartHomes\src\main\java\com\smarthome\sso\web\controller\MainController.java:
+
+Main controller provides most of the functionality of the program. It has a lot of core functions and maps the relevant URLS to the functions.
+
+Attributes:
+
+userService
+deviceService
+bufferDS
+taskService
+
+Methods:
+
+deleteUser: Deletes a user, all of their devices, and all relevant tasks from the database. Mapped to /user/delete
+showUsers: Returns a comma separated string with all of the user's usernames in the database. Mapped to /user/all
+addDevice: Adds a new device associated to a specified user to the database. Mapped to /device/add
+restartDeviceDB: Deletes all devices, used for debugging.
+showAllDevices: Returns list of all devices and their owners, requires admin privelege. Mapped to /device/all
+deleteDevice: Deletes a specific device and all tasks associated with it. Mapped to /device/delete
+toggleDevice: Toggles on or off a device owned by the current user. Mapped to /device/toggle
+showUserDevices: Shows all devices owned by the current user. Mapped to /device/user/all
+deleteAllDatabases: Deletes all users, devices and tasks, used for debugging
+findTasks: Returns a list of all tasks with their associated user, device, time and duration. Mapped to /task/view
+findUserTasks: Same as findTasks but for the current user's tasks only. Mapped to /task/user/view
+deleteTask: Deletes a specified type of task for the current user. Mapped to /task/delete
+deleteAllTasks: Deletes task database
+addTasks: Takes device type, time and duration, and creates tasks for the current user. Mapped to /task/add
+getHomePage: Maps /homepage to the home.html file
+getLoginLanding: Maps /loginLanding to the loginLanding.html file
+getRoom: maps /user/dashboard to room.html file
+printOutStatement: Run every second to check whether a scheduled device needs to be toggled on or off
+
+
+
+smartHomes\src\main\java\com\smarthome\sso\web\controller\SigninController.java:
+
+smartHomes\src\main\java\com\smarthome\sso\web\controller\SigninInterceptor.java:
