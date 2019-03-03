@@ -1,5 +1,6 @@
 package com.smarthome.sso.web.controller;
 
+import com.smarthome.sso.web.domain.FiwareInfo;
 import com.smarthome.sso.web.domain.User;
 import com.smarthome.sso.web.service.FiwareService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,12 @@ public class FiwareController {
     @RequestMapping(value = "/fiware/info", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public ResponseEntity<?> GetApiInfo(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String token = String.valueOf(request.getParameter("sessionId"));
+        //String token = String.valueOf(request.getParameter("sessionId"));
         //User tmpUser = getUserFromSessionId(token);
         //TODO
-        return ResponseEntity.ok("");
+
+        FiwareInfo fiwareInfo = fiwareService.fiwareApiRequest("http://137.222.204.81:1026/v2/entities","testLuft2019","/testLuft2019");
+        return ResponseEntity.ok(fiwareInfo);
     }
 
 }
