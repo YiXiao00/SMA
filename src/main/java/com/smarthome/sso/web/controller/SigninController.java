@@ -20,6 +20,31 @@ public class SigninController {
     private UserService userService;
 
     /**
+     * Api for getting the username when one has signed in
+     *
+     * The function works with sessionId_cookie, so it will return empty string if
+     *     not signed in before, has cleared the cookie or wrong sessionId.
+     *
+     * */
+
+    @PostMapping("/user/getname")
+    @ResponseBody
+    public ResponseEntity<?> getUsernameFromSessionId(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String session = "";
+        Cookie[] cookies = request.getCookies();
+        if (!(cookies == null)) {
+            for (Cookie cookie : cookies) {
+                if ("sessionId".equals(cookie.getName())) {
+                    session = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        if ("".equals(session)){return ResponseEntity.ok(session);}
+        return ResponseEntity.ok(userService.getUsernameFromSessionId(session));
+    }
+
+    /**
      *
      * Debug function used for testing - returns username when given user id.
      *

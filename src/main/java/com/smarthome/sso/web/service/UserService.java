@@ -83,7 +83,10 @@ public class UserService {
         return ServiceResult.SERVICE_FAIL;
     }
 
-
+    public String getUsernameFromSessionId(String sessionId){
+        String record = (String)redisTemplate.opsForValue().get(sessionId);
+        return record;
+    }
 
 
 }
