@@ -5,11 +5,23 @@
     </script>
     <script type="text/javascript" >
         $(document).ready(function(){
+            //This segment below shows how to get the cookie containing sessionId when the web page is
+            //fully loaded.
+            //I assumed there is session-cookie so I use SPLIT.
             var cookiesString = document.cookie;
-            $("#cookieBoard").text(cookiesString);
             var sessionCookie = cookiesString.split(";");
             var sessionArg = sessionCookie[0].split("=")[1];
-            $("#cookieBoard").text(sessionArg);
+            //The session-cookie generate stage is in path '/homepage', so you should sign-in
+            //using '/homepage'entrance in advance. Then, open '/user/dashboard'(which is
+            //exactly this page) and 'Welcome XXX(username you signed in)' should been displayed.
+            //If you disabled the interceptor which prevents visiting dashboard without
+            //session-cookie and connect to '/user/dashboard' directly, it will probably show nothing
+            //because no sessionId fetched.
+            var getNameUri = "http://localhost:8090/user/getname"
+            $.post(getNameUri, function(data){
+                    $("#cookieBoard").text("Welcome: " + data);
+                }
+            );
 
             var c = document.getElementById("roomCanvas");
             var cT = document.getElementById("taskCanvas");

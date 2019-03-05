@@ -372,19 +372,16 @@ public class MainController {
     @RequestMapping("/task/add")
     @ResponseBody
     public ResponseEntity<?> addTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String s = "";
-        String name = String.valueOf(request.getParameter("name"));
-        String pwd = String.valueOf(request.getParameter("pwd"));
-        String inputToken = String.valueOf(request.getParameter("token"));
-        System.out.println(inputToken);
 
-        User foundUser = userService.findOneUserByUsername(name);
-        if (foundUser == null) {
-            return ResponseEntity.badRequest().body("User does not exist.");
-        }
-        if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add Task");
-        }
+        //    I have changed the two params into using sessionId:
+        //String name = String.valueOf(request.getParameter("name"));
+        //String pwd = String.valueOf(request.getParameter("pwd"));
+
+        //    Use sessionId to get the username, then the full User Object:
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
+
         int ruid = Integer.valueOf(request.getParameter("relUID"));
         if(!(ruid >=0) || !(ruid < foundUser.getDevicesOwned()) )
             return ResponseEntity.badRequest().body("Device does not exist");
@@ -393,7 +390,7 @@ public class MainController {
         int duration = Integer.valueOf(request.getParameter("duration"));
         Calendar c1 = Calendar.getInstance();
         c1.add(Calendar.SECOND,inThisTime);
-        Task t = new Task(type,name,ruid,c1,duration);
+        Task t = new Task(type,username,ruid,c1,duration);
 
         List<Task> tList = taskService.findAllTasks();
 
