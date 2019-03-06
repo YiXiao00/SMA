@@ -48,10 +48,10 @@ public class MainController {
             String pwd = String.valueOf(request.getParameter("pwd"));
             User foundUser = userService.findOneUserByUsername(name);
             if (foundUser == null) {
-                return ResponseEntity.ok("This user does not exist.");
+                return ResponseEntity.ok("No user found with username: " + name);
             }
             if (!foundUser.getPassword().equals(pwd)) {
-                return ResponseEntity.ok("The password given is not correct. Cannot delete");
+                return ResponseEntity.ok("Password does not match for: " + name);
             }
 
             String id = foundUser.getUserId();
@@ -63,6 +63,8 @@ public class MainController {
                 }
             }
 
+            System.out.println("All devices associated with "+name+" have been deleted.");
+
             List<Task> tList = taskService.findAllTasks();
             for(int i=0;i<tList.size();i++){
                 Task t = tList.get(i);
@@ -71,6 +73,10 @@ public class MainController {
                 }
             }
 
+            System.out.println("All tasks associated with "+name+" have been deleted");
+
+            System.out.println(name+" has been deleted.");
+
             userService.deleteOneUserByUserId(id);
             return ResponseEntity.ok("User " + name + " has been deleted.");
         }
@@ -78,6 +84,9 @@ public class MainController {
             return ResponseEntity.ok("User has been deleted.");
         }
     }
+
+
+
 
     //Returns a string with all the usernames comma separated
     @PostMapping("/user/all")
@@ -92,6 +101,11 @@ public class MainController {
         return ResponseEntity.ok(s);
     }
 
+
+
+
+
+
     //Adds a new device associated with the user
     @PostMapping("/device/add")
     @ResponseBody
@@ -100,28 +114,44 @@ public class MainController {
         String pwd = String.valueOf(request.getParameter("pwd"));
         String type = String.valueOf(request.getParameter("type"));
         User foundUser = userService.findOneUserByUsername(name);
+
         if (foundUser == null) {
-            return ResponseEntity.badRequest().body("User does not exist.");
+            return ResponseEntity.ok("No user found with username: " + name);
         }
         if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+            return ResponseEntity.ok("Password does not match for: " + name);
         }
+
         Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).relativeUserId(foundUser.getDevicesOwned()).build();
-        foundUser.addDevice();
         userService.deleteUser(foundUser);
+        foundUser.addDevice();
         userService.addOneUser(foundUser);
         deviceService.addOneDevice(newDevice);
+        System.out.println("Added new device to user "+foundUser.getUserId()+" of type "+type);
+
         return ResponseEntity.ok("Added new device to user "+foundUser.getUserId()+" of type "+type);
 
     }
+
+
+
+
+
+
 
     //Deletes all devices, used for debugging
     @PostMapping("/deleteAllDevices")
     @ResponseBody
     public ResponseEntity<?> restartDeviceDB(HttpServletRequest request, HttpServletResponse response) throws Exception{
         deviceService.deleteSelf();
+        System.out.println("All devices have been deleted");
         return ResponseEntity.ok("good");
     }
+
+
+
+
+
 
     //Returns list of all devices and their owners, requires admin permission
     @PostMapping("/device/all")
@@ -141,6 +171,10 @@ public class MainController {
     }
     }
 
+
+
+
+
     //Deletes a device and all tasks associated with it
     @PostMapping("/device/delete")
     @ResponseBody
@@ -149,11 +183,12 @@ public class MainController {
         String pwd = String.valueOf(request.getParameter("pwd"));
         User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
-            return ResponseEntity.badRequest().body("User does not exist.");
+            return ResponseEntity.ok("No user found with username: " + name);
         }
         if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+            return ResponseEntity.ok("Password does not match for: " + name);
         }
+
         int relativeID = Integer.valueOf(request.getParameter("relUID"));
         List<Device> dList = deviceService.findAllDevices();
         bufferDS.deleteSelf();
@@ -191,9 +226,16 @@ public class MainController {
         userService.deleteUser(foundUser);
         userService.addOneUser(foundUser);
         deviceService =bufferDS;
+        System.out.println("Device deleted");
         return ResponseEntity.ok("Device deleted");
 
     }
+
+
+
+
+
+
 
     //Toggles on or off one device, must be owned by the user
     @PostMapping("/device/toggle")
@@ -203,19 +245,18 @@ public class MainController {
         String pwd = String.valueOf(request.getParameter("pwd"));
         User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
-            return ResponseEntity.badRequest().body("User does not exist.");
+            return ResponseEntity.ok("No user found with username: " + name);
         }
         if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+            return ResponseEntity.ok("Password does not match for: " + name);
         }
+
         int relativeID = Integer.valueOf(request.getParameter("relUID"));
         List<Device> dList = deviceService.findAllDevices();
         bufferDS.deleteSelf();
-        boolean toggledDevice = false;
         for(int i=0; i<dList.size();i++){
             if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
                 if(dList.get(i).getRelativeUserId()==relativeID) {
-                    toggledDevice = true;
                     Device d = dList.get(i);
                     d.toggle();
                     bufferDS.addOneDevice(d);
@@ -227,12 +268,16 @@ public class MainController {
                 Device d = dList.get(i);
                 bufferDS.addOneDevice(d);
             }
-            List<Device> bufferList = bufferDS.findAllDevices();
         }
         deviceService =bufferDS;
+        System.out.println("Device toggled");
         return ResponseEntity.ok("Device toggled");
 
     }
+
+
+
+
 
     //Shows all devices owned by the user
     @PostMapping("/device/user/all")
@@ -258,11 +303,12 @@ public class MainController {
         String pwd = String.valueOf(request.getParameter("pwd"));
         User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
-            return ResponseEntity.badRequest().body("User does not exist.");
+            return ResponseEntity.ok("No user found with username: " + name);
         }
         if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.badRequest().body("The password given is not correct. Cannot add device");
+            return ResponseEntity.ok("Password does not match for: " + name);
         }
+
         List<Device> dList = deviceService.findAllDevices();
         String s = "";
         for(int i=0; i<dList.size();i++){
@@ -283,6 +329,7 @@ public class MainController {
             userService.deleteSelf();
             deviceService.deleteSelf();
             taskService.deleteSelf();
+            System.out.println("All databases reset");
             return ResponseEntity.ok("Deleted");
         }else{
             return ResponseEntity.badRequest().body("Needs admin permission");
@@ -313,11 +360,12 @@ public class MainController {
         String pwd = String.valueOf(request.getParameter("pwd"));
         User foundUser = userService.findOneUserByUsername(name);
         if (foundUser == null) {
-            return ResponseEntity.badRequest().body("User does not exist.");
+            return ResponseEntity.ok("No user found with username: " + name);
         }
         if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.badRequest().body("The password given is not correct.");
+            return ResponseEntity.ok("Password does not match for: " + name);
         }
+
         String s = "";
         for(int i=0; i<tList.size();i++){
             Task t = tList.get(i);
