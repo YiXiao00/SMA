@@ -38,4 +38,34 @@ printOutStatement: Run every second to check whether a scheduled device needs to
 
 smartHomes\src\main\java\com\smarthome\sso\web\controller\SigninController.java:
 
+Sign in controller provides functionality required for user based services such as getting user information, logging in and registering
+
+Attributes: 
+
+userService
+
+Methods:
+
+getUsernameFromSessionId: Checks cookies to see if there's a current session. If so, it returns the currently logged in user's username.
+getUserInfo: Debug function used for testing.
+registerOneNewUser: Creates new user with username and password provided, after completing validation checks
+logIn: Checks cookies to see if there is a current session. If not, username and password are checked in database. If username and password match then a session cookie is added.
+
 smartHomes\src\main\java\com\smarthome\sso\web\controller\SigninInterceptor.java:
+
+smartHomes\src\main\java\com\smarthome\sso\web\domain\Device.java:
+
+Device class, used to represent a device. Has relevant device attributes, getters and setters and a toggle on/off function. 
+Attributes: deviceId, userId, type, poweredOn, relativeUserId
+Paired with DeviceRepository.java which links the device class to the database
+
+smartHomes\src\main\java\com\smarthome\sso\web\domain\Task.java:
+
+Task class to represent tasks. Has relevant task attributes and getters and setters.
+Attributes: taskId, type, userId, relativeDeviceId, duration, calendar, repeated.
+
+smartHomes\src\main\java\com\smarthome\sso\web\domain\User.java:
+
+User class to represent users.
+Attributes: userId, username, password
+Methods to return userId, username, password, add and remove devices owned and return the number of devices owned.
