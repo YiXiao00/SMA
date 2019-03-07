@@ -14,17 +14,21 @@ import java.util.Optional;
 public class DeviceService {
 
     @Autowired
-    private DeviceRespository dRepo;
+    private DeviceRespository deviceRespository;
 
     public void addOneDevice(Device d){
-        dRepo.save(d);
+        deviceRespository.save(d);
     }
     public void deleteDevice(Device d){
-        dRepo.delete(d);
+        deviceRespository.delete(d);
     }
 
-    public List<Device> findAllDevices() { return dRepo.findAll();}
+    public List<Device> findAllDevices() { return deviceRespository.findAll();}
 
-    public void deleteSelf() {dRepo.deleteAll();}
+    public void deleteSelf() {deviceRespository.deleteAll();}
+
+    public Integer getDeviceCountByUserId(String userId){
+        return deviceRespository.getDeviceCountFromUserId(userId);
+    }
 
 }

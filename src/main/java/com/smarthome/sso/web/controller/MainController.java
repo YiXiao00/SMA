@@ -110,20 +110,12 @@ public class MainController {
     @PostMapping("/device/add")
     @ResponseBody
     public ResponseEntity<?> addDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String name = String.valueOf(request.getParameter("name"));
-        String pwd = String.valueOf(request.getParameter("pwd"));
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
         String type = String.valueOf(request.getParameter("type"));
-        User foundUser = userService.findOneUserByUsername(name);
-
-        if (foundUser == null) {
-            return ResponseEntity.ok("No user found with username: " + name);
-        }
-        if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.ok("Password does not match for: " + name);
-        }
 
         Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).relativeUserId(foundUser.getDevicesOwned()).build();
-        userService.deleteUser(foundUser);
         foundUser.addDevice();
         userService.addOneUser(foundUser);
         deviceService.addOneDevice(newDevice);

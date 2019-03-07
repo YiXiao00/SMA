@@ -60,9 +60,7 @@ public class User {
             System.out.println("Attempted to remove devices when there aren't any");
         }
     }
-    public int getDevicesOwned(){
-        return devicesOwned;
-    }
+
 
     // use Lombok - AllArgsConstructor
 //    public User(String userID, String username, String password){
