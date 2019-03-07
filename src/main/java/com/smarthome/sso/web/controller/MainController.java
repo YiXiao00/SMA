@@ -34,8 +34,6 @@ public class MainController {
     @Autowired
     private DeviceService deviceService;
     @Autowired
-    private DeviceService bufferDS;
-    @Autowired
     private TaskService taskService;
 
 
@@ -115,9 +113,7 @@ public class MainController {
         User foundUser = userService.findOneUserByUsername(username);
         String type = String.valueOf(request.getParameter("type"));
 
-        Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).relativeUserId(foundUser.getDevicesOwned()).build();
-        foundUser.addDevice();
-        userService.addOneUser(foundUser);
+        Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).build();
         deviceService.addOneDevice(newDevice);
         System.out.println("Added new device to user "+foundUser.getUserId()+" of type "+type);
 
@@ -171,62 +167,24 @@ public class MainController {
     @PostMapping("/device/delete")
     @ResponseBody
     public ResponseEntity<?> deleteDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String name = String.valueOf(request.getParameter("name"));
-        String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(name);
-        if (foundUser == null) {
-            return ResponseEntity.ok("No user found with username: " + name);
-        }
-        if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.ok("Password does not match for: " + name);
-        }
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
 
-        int relativeID = Integer.valueOf(request.getParameter("relUID"));
-        List<Device> dList = deviceService.findAllDevices();
-        bufferDS.deleteSelf();
-        boolean removedDevice = false;
-        for(int i=0; i<dList.size();i++){
-            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
-                if(dList.get(i).getRelativeUserId()==relativeID) {
-                    removedDevice = true;
+        String deviceId = String.valueOf(request.getParameter("deviceId"));
+        Device target = deviceService.findDeviceByDeviceId(deviceId);
 
-                }else {
-                    Device d = dList.get(i);
-                    if(removedDevice) d.setRelativeUserId(d.getRelativeUserId()-1);
-                    bufferDS.addOneDevice(d);
-
-                }}else{
-                Device d = dList.get(i);
-                bufferDS.addOneDevice(d);
-            }
+        if (!foundUser.getUserId().equals(target.getUserId())){
+            return ResponseEntity.ok("device not belongs to the user");
         }
 
-        List<Task> tList = taskService.findAllTasks();
-        for(int i=0;i<tList.size();i++){
-            Task t = tList.get(i);
-            if(t.getUserId().equals(name) && t.getDeviceId()==relativeID) {
-                taskService.deleteTask(t);
-            }
-            if(t.getUserId().equals(name) && t.getDeviceId()>relativeID){
-                taskService.deleteTask(t);
-                t.decrementDeviceId();
-                taskService.addOneTask(t);
-            }
-        }
+        List<Task> taskList = taskService.findTasksByDeviceId(deviceId);
+        taskService.deleteTasks(taskList);
 
-        foundUser.removeDevice();
-        userService.deleteUser(foundUser);
-        userService.addOneUser(foundUser);
-        deviceService =bufferDS;
         System.out.println("Device deleted");
         return ResponseEntity.ok("Device deleted");
 
     }
-
-
-
-
-
 
 
     //Toggles on or off one device, must be owned by the user

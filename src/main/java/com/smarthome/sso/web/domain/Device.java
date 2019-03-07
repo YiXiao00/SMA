@@ -30,8 +30,6 @@ public class Device {
 
     private boolean poweredOn = false;
 
-    private int relativeUserId;
-
  //   private String FiwareService;
 
  //   private String FiwareServicepath;
@@ -39,10 +37,9 @@ public class Device {
  //   private String SamsungID;
 
     /** Generate device without deviceId which will be generated automatically */
-    public Device(String userId, String type, int relativeUserId, String FiS, String FiSP, String sID){
+    public Device(String userId, String type, String FiS, String FiSP, String sID){
         this.userId = userId;
         this.type = type;
-        this.relativeUserId = relativeUserId;
    //     this.FiwareService = FiS;
    //     this.FiwareServicepath = FiSP;
    //     this.SamsungID = sID;

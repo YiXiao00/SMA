@@ -23,12 +23,14 @@ public class TaskService {
         tRepo.delete(t);
     }
 
-    public void decrementTaskRuid(Task t){
-        tRepo.delete(t);
-        t.decrementDeviceId();
-        tRepo.save(t);
-        System.out.println(tRepo.findAll());
+    public void deleteTasks(List<Task> tasks){
+        tRepo.deleteAll(tasks);
     }
+
+    public List<Task> findTasksByDeviceId(String deviceId){
+        return tRepo.findByDeviceId(deviceId);
+    }
+
     public ServiceResult deleteOneTaskByTaskId(String id){
         //FIX - DOES NOT HAVE THE VERIFICAITON USER SERVICE HAS
         tRepo.deleteByTaskId(id);

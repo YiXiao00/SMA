@@ -7,6 +7,8 @@ public interface DeviceRespository extends MongoRepository<Device, String> {
 
     Device findByUserId(String id);
 
+    Device findByDeviceId(String deviceId);
+
     void delete(Device d);
 
     @Query(value = "{'userId':?0}", count = true)
