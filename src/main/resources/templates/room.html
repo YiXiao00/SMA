@@ -23,6 +23,9 @@
                 }
             );
 
+            //The deviceList stores all the devices' deviceId of the User.
+            var deviceList = new Array();
+
             var c = document.getElementById("roomCanvas");
             var cT = document.getElementById("taskCanvas");
             function hitButton(){
@@ -65,6 +68,7 @@
                         type:$("#newTaskType").val(),
                         in:$("#newTaskWhen").val(),
                         duration:$("#newTaskDuration").val(),
+                        device:$("#newTaskRuid").val(),
                         token:sessionArg
                     }, function(data){
                         var button = document.getElementById("load");
@@ -97,16 +101,16 @@
                         _listen = function(event) {
                             var x = event.pageX - c.offsetLeft;
                             var y = event.pageY - c.offsetTop;
+                            var y_index = Math.floor((y - 25) / 75);
 
                             for (var i = 0; i < (words.length / 6) - 1; i++) {
                                 if (y > (25 + (i * 75)) && y < (75 + (i * 75))) {
                                     if (x > 430 && x < 480) {
 
-
                                         var uri = "http://localhost:8090/device/toggle"
                                         $.post(uri, {
                                             token:sessionArg,
-                                            device:0
+                                            device:deviceList[y_index]
                                         }, function (data) {
                                             x = 0;
                                             var button = document.getElementById("load");
@@ -118,14 +122,13 @@
 
 
                                     }
-                                    if (x > 500 && x < 550) {
+                                    else if (x > 500 && x < 550) {
 
                                         if (confirm("Are you sure you want to delete device " + words[i * 6] + "?" )) {
-
                                             var uri = "http://localhost:8090/device/delete"
                                             $.post(uri, {
                                                 token:sessionArg,
-                                                device:0
+                                                device:deviceList[y_index]
                                             }, function (data) {
                                                 x = 0;
                                                 var button = document.getElementById("load");
@@ -136,6 +139,15 @@
                                             });
                                         }
 
+                                    }
+                                    else{
+
+                                        //Click the device area to copy deviceId into the id-textbox
+                                        //    because I have changed task stucture with a deviceId linking to
+                                        //    selected device rather than the previous RUID,
+                                        //    therefore we need a easy way to copy the long-string-type deviceId.
+
+                                        $("#newTaskRuid").val(deviceList[y_index]);
                                     }
 
                                 }
@@ -157,7 +169,7 @@
                                     ctxT.fillText("Tasks for "+$("#user").val(),10,40,100);
                                     ctxT.fillText("Task|Device|Date|Time|Duration",10,70,300);
                                     for(var i=0; i<(tasks.length/15)-1;i++) {
-                                       ctxT.fillText(tasks[0+i*15]+"|"+words[(tasks[4+i*15])*6]+"|"+tasks[7+i*15]+" "+tasks[8+i*15]+"|"+tasks[9+i*15]+"|"+tasks[13+i*15],10,100+(i*20),300);
+                                       ctxT.fillText(tasks[0+i*15]+"|"+tasks[4+i*15]+"|"+tasks[7+i*15]+" "+tasks[8+i*15]+"|"+tasks[9+i*15]+"|"+tasks[13+i*15],10,100+(i*20),300);
                                     }
                                     for(var i=0;i<tasks.length;i++){
                                      //   ctxT.fillText(tasks[i],10,150+(20*i),300);
@@ -217,6 +229,8 @@
                             ctx.fillText("Toggle",435,55+(i*75),50);
                             ctx.fillText("Delete",505,55+(i*75),50);
 
+                            //Add the deviceId to deviceList
+                            deviceList[i] = words[2+i*6];
 
                         }
                     });

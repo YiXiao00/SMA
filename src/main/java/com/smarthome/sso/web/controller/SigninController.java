@@ -99,26 +99,11 @@ public class SigninController {
     @PostMapping("/user/signin")
     @ResponseBody
     public ResponseEntity<?> logIn(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String inputSession = "";
-        Cookie[] cookies = request.getCookies();
 
-
-        if (!(cookies == null)){
-            for (Cookie cookie : cookies){
-                System.out.println("cookie getname "+cookie.getName());
-                if ("sessionId".equals(cookie.getName())){
-                    inputSession = cookie.getValue();
-                    break;
-                }
-            }
-            if (!("".equals(inputSession))){
-                ServiceResult sessionVerify = userService.verifySessionId(inputSession);
-                if (sessionVerify == ServiceResult.SERVICE_SUCCESS){
-                    return ResponseEntity.ok("already signed in");
-                }
-            }
-        }
-
+        //Changes: No cookie verifications anymore
+        //Previously if there is sessionId already, the function will ignore username and password
+        //and causes failure to sign in as a different user. Now it overwrite the cookies.
+        
         String username = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
         ServiceResult result = userService.tryLogIn(username,pwd);

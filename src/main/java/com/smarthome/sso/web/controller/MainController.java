@@ -236,6 +236,7 @@ public class MainController {
             }
         }
         return ResponseEntity.ok(s);
+
     }
 
     //Deletes user, device and task service databases
@@ -285,6 +286,7 @@ public class MainController {
                 s = s + task.getType() + " forUser " + username + " device " + task.getDeviceId() + " atTime " + task.getCalendar().getTime() + " for " + task.getDuration() + " , ";
             }
         }
+        System.out.println(s);
         return ResponseEntity.ok(s);
 
     }
@@ -386,7 +388,6 @@ public class MainController {
         List<Task> tList = taskService.findAllTasksSortedByTime();
         Calendar c1 = Calendar.getInstance();
         Task task = tList.get(0);
-        System.out.println(task.toString());
 
 
 //
