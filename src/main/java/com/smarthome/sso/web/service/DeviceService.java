@@ -27,6 +27,10 @@ public class DeviceService {
         return deviceRespository.findByDeviceId(deviceId);
     }
 
+    public List<Device> findDevicesByUserId(String userId){
+        return deviceRespository.findAllByUserId(userId);
+    }
+
     public List<Device> findAllDevices() { return deviceRespository.findAll();}
 
     public void deleteSelf() {deviceRespository.deleteAll();}

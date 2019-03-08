@@ -45,8 +45,7 @@
 
                $.post(uri,
                    {
-                    name:$("#user").val(),
-                    pwd:$("#pwd").val(),
+                    token:sessionArg,
                     type:$("#newDevice").val()
                    }, function(data){
                        var button = document.getElementById("load");
@@ -63,10 +62,7 @@
                var uri = "http://localhost:8090/task/add"
                 $.post(uri,
                     {
-                        name:$("#user").val(),
-                        pwd:$("#pwd").val(),
                         type:$("#newTaskType").val(),
-                        relUID:$("#newTaskRuid").val(),
                         in:$("#newTaskWhen").val(),
                         duration:$("#newTaskDuration").val(),
                         token:sessionArg
@@ -79,7 +75,6 @@
                         document.getElementById('newTaskDuration').value = '';
 
 
-
                     }
                 )
 
@@ -89,8 +84,7 @@
                 var uri = "http://localhost:8090/device/user/all"
                 $.post(uri,
                     {
-                        name:$("#user").val(),
-                        pwd:$("#pwd").val()
+                        token:sessionArg
                     }, function (data) {
                         $("#msg").text(data);
                         c = document.getElementById("roomCanvas");
@@ -111,9 +105,8 @@
 
                                         var uri = "http://localhost:8090/device/toggle"
                                         $.post(uri, {
-                                            name: $("#user").val(),
-                                            pwd: $("#pwd").val(),
-                                            relUID: i
+                                            token:sessionArg,
+                                            device:0
                                         }, function (data) {
                                             x = 0;
                                             var button = document.getElementById("load");
@@ -131,9 +124,8 @@
 
                                             var uri = "http://localhost:8090/device/delete"
                                             $.post(uri, {
-                                                name: $("#user").val(),
-                                                pwd: $("#pwd").val(),
-                                                relUID: i
+                                                token:sessionArg,
+                                                device:0
                                             }, function (data) {
                                                 x = 0;
                                                 var button = document.getElementById("load");
@@ -154,8 +146,7 @@
                                 var uri = "http://localhost:8090/task/user/view"
                             $.post(uri,
                                 {
-                                    name:$("#user").val(),
-                                    pwd:$("#pwd").val()
+                                    token:sessionArg
                                 }, function (data) {
                                     tasks = data.split(" ");
                                     cT = document.getElementById("taskCanvas");
@@ -192,8 +183,7 @@
                                         var uri = "http://localhost:8090/task/delete";
                                         $.post(uri,
                                             {
-                                                name:$("#user").val(),
-                                                pwd:$("#pwd").val(),
+                                                token:sessionArg,
                                                 type:tasks[i*15],
                                                 relUID:tasks[4+i*15]
 

@@ -12,4 +12,6 @@ public interface TaskRepository extends MongoRepository<Task, String> {
 
     List<Task> findByDeviceId(String deviceId);
 
+    List<Task> findAllByOrderByCalendarAsc();
+
 }

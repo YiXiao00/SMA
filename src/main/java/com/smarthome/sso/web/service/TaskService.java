@@ -41,6 +41,10 @@ public class TaskService {
         return tRepo.findAll();
     }
 
+    public List<Task> findAllTasksSortedByTime(){
+        return tRepo.findAllByOrderByCalendarAsc();
+    }
+
     public void deleteSelf() {tRepo.deleteAll();}
 
 }

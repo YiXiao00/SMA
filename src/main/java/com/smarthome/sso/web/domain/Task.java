@@ -36,7 +36,7 @@ public class Task {
     private boolean[] repeated;
 
     /** Constructor, generates task without taskId which will be generated automatically */
-    public Task(String type,String deviceId,int ruid, Calendar calendar, int duration){
+    public Task(String type,String deviceId, Calendar calendar, int duration){
         this.type = type;
         this.deviceId = deviceId;
         this.calendar = calendar;

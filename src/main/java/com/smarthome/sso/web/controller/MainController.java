@@ -63,13 +63,13 @@ public class MainController {
 
             System.out.println("All devices associated with "+name+" have been deleted.");
 
-            List<Task> tList = taskService.findAllTasks();
-            for(int i=0;i<tList.size();i++){
-                Task t = tList.get(i);
-                if(t.getUserId().equals(name)) {
-                    taskService.deleteTask(t);
-                }
-            }
+//            List<Task> tList = taskService.findAllTasks();
+//            for(int i=0;i<tList.size();i++){
+//                Task t = tList.get(i);
+//                if(t.getUserId().equals(name)) {
+//                    taskService.deleteTask(t);
+//                }
+//            }
 
             System.out.println("All tasks associated with "+name+" have been deleted");
 
@@ -171,12 +171,14 @@ public class MainController {
         String username = userService.getUsernameFromSessionId(inputToken);
         User foundUser = userService.findOneUserByUsername(username);
 
-        String deviceId = String.valueOf(request.getParameter("deviceId"));
+        String deviceId = String.valueOf(request.getParameter("device"));
         Device target = deviceService.findDeviceByDeviceId(deviceId);
 
         if (!foundUser.getUserId().equals(target.getUserId())){
             return ResponseEntity.ok("device not belongs to the user");
         }
+
+        deviceService.deleteDevice(target);
 
         List<Task> taskList = taskService.findTasksByDeviceId(deviceId);
         taskService.deleteTasks(taskList);
@@ -191,35 +193,20 @@ public class MainController {
     @PostMapping("/device/toggle")
     @ResponseBody
     public ResponseEntity<?> toggleDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String name = String.valueOf(request.getParameter("name"));
-        String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(name);
-        if (foundUser == null) {
-            return ResponseEntity.ok("No user found with username: " + name);
-        }
-        if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.ok("Password does not match for: " + name);
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
+
+        String deviceId = String.valueOf(request.getParameter("device"));
+        Device target = deviceService.findDeviceByDeviceId(deviceId);
+
+        if (!foundUser.getUserId().equals(target.getUserId())){
+            return ResponseEntity.ok("device not belongs to the user");
         }
 
-        int relativeID = Integer.valueOf(request.getParameter("relUID"));
-        List<Device> dList = deviceService.findAllDevices();
-        bufferDS.deleteSelf();
-        for(int i=0; i<dList.size();i++){
-            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
-                if(dList.get(i).getRelativeUserId()==relativeID) {
-                    Device d = dList.get(i);
-                    d.toggle();
-                    bufferDS.addOneDevice(d);
-                }else {
-                    Device d = dList.get(i);
-                    bufferDS.addOneDevice(d);
+        target.setPoweredOn(!target.getPowerStatus());
+        deviceService.addOneDevice(target);
 
-                }}else{
-                Device d = dList.get(i);
-                bufferDS.addOneDevice(d);
-            }
-        }
-        deviceService =bufferDS;
         System.out.println("Device toggled");
         return ResponseEntity.ok("Device toggled");
 
@@ -233,38 +220,19 @@ public class MainController {
     @PostMapping("/device/user/all")
     @ResponseBody
     public ResponseEntity<?> showUserDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String inputSession = "";
-        Cookie[] cookies = request.getCookies();
-        if (!(cookies == null)){
-            for (Cookie cookie : cookies){
-                if ("sessionId".equals(cookie.getName())){
-                    inputSession = cookie.getValue();
-                    break;
-                }
-            }
-            if (!("".equals(inputSession))){
-                ServiceResult sessionVerify = userService.verifySessionId(inputSession);
-                if (sessionVerify == ServiceResult.SERVICE_SUCCESS){
-                    System.out.println("Cookie found");
-                }
-            }
-        }
-        String name = String.valueOf(request.getParameter("name"));
-        String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(name);
-        if (foundUser == null) {
-            return ResponseEntity.ok("No user found with username: " + name);
-        }
-        if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.ok("Password does not match for: " + name);
-        }
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
 
-        List<Device> dList = deviceService.findAllDevices();
+        List<Device> deviceList = deviceService.findDevicesByUserId(foundUser.getUserId());
+        if (deviceList == null){
+            return ResponseEntity.ok("");
+        }
         String s = "";
-        for(int i=0; i<dList.size();i++){
-            if(dList.get(i).getUserId().equals(foundUser.getUserId())) {
-                Device d = dList.get(i);
-                s = s + d.getType() + " relativeUID " + d.getRelativeUserId() +" CurrentlyOn "+d.getPowerStatus() +" , ";
+        for(int i=0; i<deviceList.size();i++){
+            if(deviceList.get(i).getUserId().equals(foundUser.getUserId())) {
+                Device d = deviceList.get(i);
+                s = s + d.getType() + " deviceId " + d.getDeviceId() +" CurrentlyOn "+d.getPowerStatus() +" , ";
             }
         }
         return ResponseEntity.ok(s);
@@ -294,7 +262,7 @@ public class MainController {
         String s = "";
         for(int i=0; i<tList.size();i++){
                 Task t = tList.get(i);
-                s = s + t.getType() + " forUser " + t.getUserId() +" device "+t.getRelativeDeviceId()+" atTime "+t.getCalendar().getTime() +" for "+t.getDuration()+", ";
+                s = s + t.getType() + " taskId " + t.getTaskId()+" atTime "+t.getCalendar().getTime() +" for "+t.getDuration()+", ";
 
         }
         return ResponseEntity.ok(s);
@@ -305,22 +273,16 @@ public class MainController {
     @RequestMapping("/task/user/view")
     @ResponseBody
     public ResponseEntity<?> findUserTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        List<Task> tList = taskService.findAllTasks();
-        String name = String.valueOf(request.getParameter("name"));
-        String pwd = String.valueOf(request.getParameter("pwd"));
-        User foundUser = userService.findOneUserByUsername(name);
-        if (foundUser == null) {
-            return ResponseEntity.ok("No user found with username: " + name);
-        }
-        if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.ok("Password does not match for: " + name);
-        }
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
 
+        List<Device> deviceList = deviceService.findDevicesByUserId(foundUser.getUserId());
         String s = "";
-        for(int i=0; i<tList.size();i++){
-            Task t = tList.get(i);
-            if(t.getUserId().equals(name)) {
-                s = s + t.getType() + " forUser " + t.getUserId() + " device " + t.getRelativeDeviceId() + " atTime " + t.getCalendar().getTime() + " for " + t.getDuration() + " , ";
+        for (Device device : deviceList){
+            List<Task> taskList = taskService.findTasksByDeviceId(device.getDeviceId());
+            for (Task task : taskList){
+                s = s + task.getType() + " forUser " + username + " device " + task.getDeviceId() + " atTime " + task.getCalendar().getTime() + " for " + task.getDuration() + " , ";
             }
         }
         return ResponseEntity.ok(s);
@@ -331,30 +293,30 @@ public class MainController {
     @RequestMapping("/task/delete")
     @ResponseBody
     public ResponseEntity<?> deleteTask(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        List<Task> tList = taskService.findAllTasks();
-        String name = String.valueOf(request.getParameter("name"));
-        String pwd = String.valueOf(request.getParameter("pwd"));
-        String type = String.valueOf(request.getParameter("type"));
-        int ruid = Integer.valueOf(request.getParameter("relUID"));
-        User foundUser = userService.findOneUserByUsername(name);
-        if (foundUser == null) {
-            return ResponseEntity.badRequest().body("User does not exist.");
-        }
-        if (!foundUser.getPassword().equals(pwd)) {
-            return ResponseEntity.badRequest().body("The password given is not correct.");
-        }
-        int tasksDeleted=0;
-        for(int i=0;i<tList.size();i++){
-            Task t = tList.get(i);
-            if(t.getUserId().equals(name) && t.getType().equals(type) && t.getDeviceId()==(ruid)){
-                taskService.deleteTask(t);
-                tasksDeleted++;
-
-            }
-        }
-        if(tasksDeleted==0) return ResponseEntity.ok("No matching tasks found");
-        return ResponseEntity.ok("Deleted " +tasksDeleted+" tasks.");
-
+//        List<Task> tList = taskService.findAllTasks();
+//        String name = String.valueOf(request.getParameter("name"));
+//        String pwd = String.valueOf(request.getParameter("pwd"));
+//        String type = String.valueOf(request.getParameter("type"));
+//        int ruid = Integer.valueOf(request.getParameter("relUID"));
+//        User foundUser = userService.findOneUserByUsername(name);
+//        if (foundUser == null) {
+//            return ResponseEntity.badRequest().body("User does not exist.");
+//        }
+//        if (!foundUser.getPassword().equals(pwd)) {
+//            return ResponseEntity.badRequest().body("The password given is not correct.");
+//        }
+//        int tasksDeleted=0;
+//        for(int i=0;i<tList.size();i++){
+//            Task t = tList.get(i);
+//            if(t.getUserId().equals(name) && t.getType().equals(type) && t.getDeviceId()==(ruid)){
+//                taskService.deleteTask(t);
+//                tasksDeleted++;
+//
+//            }
+//        }
+//        if(tasksDeleted==0) return ResponseEntity.ok("No matching tasks found");
+//        return ResponseEntity.ok("Deleted " +tasksDeleted+" tasks.");
+        return ResponseEntity.ok("not implemented");
     }
 
     //Deletes task database
@@ -379,43 +341,18 @@ public class MainController {
         String inputToken = String.valueOf(request.getParameter("token"));
         String username = userService.getUsernameFromSessionId(inputToken);
         User foundUser = userService.findOneUserByUsername(username);
+        String deviceId = String.valueOf(request.getParameter("device"));
+        Device target = deviceService.findDeviceByDeviceId(deviceId);
+        if (!foundUser.getUserId().equals(target.getUserId())){
+            return ResponseEntity.ok("device not belongs to the user");
+        }
 
-        int ruid = Integer.valueOf(request.getParameter("relUID"));
-        if(!(ruid >=0) || !(ruid < foundUser.getDevicesOwned()) )
-            return ResponseEntity.badRequest().body("Device does not exist");
         String type = String.valueOf(request.getParameter("type"));
         int inThisTime = Integer.valueOf(request.getParameter("in"));
         int duration = Integer.valueOf(request.getParameter("duration"));
         Calendar c1 = Calendar.getInstance();
         c1.add(Calendar.SECOND,inThisTime);
-        Task t = new Task(type,username,ruid,c1,duration);
-
-        List<Task> tList = taskService.findAllTasks();
-
-        taskService.deleteSelf();
-        boolean placedNew = false;
-        Task oldT;
-
-        System.out.println("tasks in list "+tList.size());
-
-        for(int i=0;i<tList.size()+1;i++){
-            if(tList.size()!=0) {
-                if (placedNew || (i == tList.size())) {
-                    oldT = tList.get(i - 1);
-                } else {
-                    oldT = tList.get(i);
-                }
-                if (c1.after(oldT.getCalendar()) || placedNew) {
-                    taskService.addOneTask(oldT);
-                } else {
-                    taskService.addOneTask(t);
-                    placedNew = true;
-                }
-            }else{
-                taskService.addOneTask(t);
-            }
-
-        }
+        Task t = new Task(type,deviceId,c1,duration);
 
         taskService.addOneTask(t);
         return ResponseEntity.ok("Task added");
@@ -446,71 +383,77 @@ public class MainController {
     //Constant checks every second to see whether a device needs to be toggled or tasks need to be updated
     @Scheduled(fixedRate= 1000)
     public void printOutStatement() {
-        List<Task>  tList = taskService.findAllTasks();
+        List<Task> tList = taskService.findAllTasksSortedByTime();
         Calendar c1 = Calendar.getInstance();
-        if(tList.size()!=0) {
-            Task t = tList.get(0);
-            if(c1.after(t.getCalendar())){
-                List<Device> dList = deviceService.findAllDevices();
-                bufferDS.deleteSelf();
-                boolean toggledDevice = false;
-                User u = userService.findOneUserByUsername(t.getUserId());
-                for(int i=0; i<dList.size();i++){
-                    if(dList.get(i).getUserId().equals(u.getUserId())) {
-                        if(dList.get(i).getRelativeUserId()==t.getDeviceId()) {
-                            toggledDevice = true;
-                            Device d = dList.get(i);
-                            d.toggle();
-                            System.out.println("Toggled");
-                            bufferDS.addOneDevice(d);
-                            if(t.getDuration()!=0){
-                                taskService.deleteTask(t);
-
-                                Calendar newC = Calendar.getInstance();
-                                newC.add(Calendar.SECOND,t.getDuration());
-                                t.setCalendar(newC);
-                                taskService.deleteSelf();
-                                boolean placedNew = false;
-                                Task oldT;
+        Task task = tList.get(0);
+        System.out.println(task.toString());
 
 
+//
+//        if(tList.size()!=0) {
+//            Task t = tList.get(0);
+//            if(c1.after(t.getCalendar())){
+//                List<Device> dList = deviceService.findAllDevices();
+//                User u = userService.findOneUserByUsername(t.getUserId());
+//                for(int i=0; i<dList.size();i++){
+//                    if(dList.get(i).getUserId().equals(u.getUserId())) {
+//                        if(dList.get(i).getRelativeUserId()==t.getDeviceId()) {
+//                            toggledDevice = true;
+//                            Device d = dList.get(i);
+//                            d.toggle();
+//                            System.out.println("Toggled");
+//                            bufferDS.addOneDevice(d);
+//                            if(t.getDuration()!=0){
+//                                taskService.deleteTask(t);
+//
+//                                Calendar newC = Calendar.getInstance();
+//                                newC.add(Calendar.SECOND,t.getDuration());
+//                                t.setCalendar(newC);
+//                                taskService.deleteSelf();
+//                                boolean placedNew = false;
+//                                Task oldT;
+//
+//
+//
+//                                for(int j=0;j<tList.size()+1;j++){
+//                                    if(tList.size()!=0) {
+//                                        if (placedNew || (j == tList.size())) {
+//                                            oldT = tList.get(j - 1);
+//                                        } else {
+//                                            oldT = tList.get(j);
+//                                        }
+//                                        if (c1.after(oldT.getCalendar()) || placedNew) {
+//                                            taskService.addOneTask(oldT);
+//                                        } else {
+//                                            taskService.addOneTask(t);
+//                                            placedNew = true;
+//                                        }
+//                                    }else{
+//                                        taskService.addOneTask(t);
+//                                    }
+//
+//                                }
+//
+//                            }
+//                        }else {
+//                            Device d = dList.get(i);
+//                            bufferDS.addOneDevice(d);
+//
+//                        }}else{
+//                        Device d = dList.get(i);
+//                        bufferDS.addOneDevice(d);
+//                    }
+//                }
+//                deviceService =bufferDS;
+//
+//
+//
+//            }
+//
+//        }
+//
 
-                                for(int j=0;j<tList.size()+1;j++){
-                                    if(tList.size()!=0) {
-                                        if (placedNew || (j == tList.size())) {
-                                            oldT = tList.get(j - 1);
-                                        } else {
-                                            oldT = tList.get(j);
-                                        }
-                                        if (c1.after(oldT.getCalendar()) || placedNew) {
-                                            taskService.addOneTask(oldT);
-                                        } else {
-                                            taskService.addOneTask(t);
-                                            placedNew = true;
-                                        }
-                                    }else{
-                                        taskService.addOneTask(t);
-                                    }
 
-                                }
-
-                            }
-                        }else {
-                            Device d = dList.get(i);
-                            bufferDS.addOneDevice(d);
-
-                        }}else{
-                        Device d = dList.get(i);
-                        bufferDS.addOneDevice(d);
-                    }
-                }
-                deviceService =bufferDS;
-
-
-
-            }
-
-        }
     }
 
 
