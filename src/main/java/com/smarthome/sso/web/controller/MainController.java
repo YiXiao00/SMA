@@ -396,6 +396,9 @@ public class MainController {
                     taskService.addOneTask(shutdownTask);
                 }
             }
+            else{
+                return;
+            }
         }
 
 

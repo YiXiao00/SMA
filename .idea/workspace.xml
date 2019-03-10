@@ -86,8 +86,8 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="387" column="52" selection-start-line="387" selection-start-column="52" selection-end-line="387" selection-end-column="52" />
+            <state relative-caret-position="443">
+              <caret line="391" column="45" lean-forward="true" selection-start-line="391" selection-start-column="45" selection-end-line="391" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -540,12 +540,12 @@
       <workItem from="1551956309217" duration="7336000" />
       <workItem from="1552001667984" duration="3582000" />
       <workItem from="1552051957764" duration="3860000" />
-      <workItem from="1552230381774" duration="4318000" />
+      <workItem from="1552230381774" duration="4721000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141223000" />
+    <option name="totallyTimeSpent" value="141626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -561,7 +561,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" visible="true" weight="0.34242094" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.34242094" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.48933902" weight="0.32061067" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
@@ -925,8 +925,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="387" column="52" selection-start-line="387" selection-start-column="52" selection-end-line="387" selection-end-column="52" />
+        <state relative-caret-position="443">
+          <caret line="391" column="45" lean-forward="true" selection-start-line="391" selection-start-column="45" selection-end-line="391" selection-end-column="45" />
         </state>
       </provider>
     </entry>
