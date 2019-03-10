@@ -103,7 +103,7 @@ public class SigninController {
         //Changes: No cookie verifications anymore
         //Previously if there is sessionId already, the function will ignore username and password
         //and causes failure to sign in as a different user. Now it overwrite the cookies.
-        
+
         String username = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
         ServiceResult result = userService.tryLogIn(username,pwd);

@@ -27,6 +27,10 @@ public class TaskService {
         tRepo.deleteAll(tasks);
     }
 
+    public Task findTaskByTaskId(String taskId){
+        return tRepo.findByTaskId(taskId);
+    }
+
     public List<Task> findTasksByDeviceId(String deviceId){
         return tRepo.findByDeviceId(deviceId);
     }

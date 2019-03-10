@@ -175,7 +175,7 @@ public class MainController {
         Device target = deviceService.findDeviceByDeviceId(deviceId);
 
         if (!foundUser.getUserId().equals(target.getUserId())){
-            return ResponseEntity.ok("device not belongs to the user");
+            return ResponseEntity.ok("device does not belong to the user");
         }
 
         deviceService.deleteDevice(target);
@@ -201,7 +201,7 @@ public class MainController {
         Device target = deviceService.findDeviceByDeviceId(deviceId);
 
         if (!foundUser.getUserId().equals(target.getUserId())){
-            return ResponseEntity.ok("device not belongs to the user");
+            return ResponseEntity.ok("device does not belong to the user");
         }
 
         target.setPoweredOn(!target.getPowerStatus());
@@ -286,39 +286,32 @@ public class MainController {
                 s = s + task.getType() + " forUser " + username + " device " + task.getDeviceId() + " atTime " + task.getCalendar().getTime() + " for " + task.getDuration() + " , ";
             }
         }
-        System.out.println(s);
+        //System.out.println(s);
         return ResponseEntity.ok(s);
 
     }
 
     //Deletes a certain type of task for the current user
-    @RequestMapping("/task/delete")
+    @PostMapping("/task/delete")
     @ResponseBody
     public ResponseEntity<?> deleteTask(HttpServletRequest request, HttpServletResponse response) throws Exception{
-//        List<Task> tList = taskService.findAllTasks();
-//        String name = String.valueOf(request.getParameter("name"));
-//        String pwd = String.valueOf(request.getParameter("pwd"));
-//        String type = String.valueOf(request.getParameter("type"));
-//        int ruid = Integer.valueOf(request.getParameter("relUID"));
-//        User foundUser = userService.findOneUserByUsername(name);
-//        if (foundUser == null) {
-//            return ResponseEntity.badRequest().body("User does not exist.");
-//        }
-//        if (!foundUser.getPassword().equals(pwd)) {
-//            return ResponseEntity.badRequest().body("The password given is not correct.");
-//        }
-//        int tasksDeleted=0;
-//        for(int i=0;i<tList.size();i++){
-//            Task t = tList.get(i);
-//            if(t.getUserId().equals(name) && t.getType().equals(type) && t.getDeviceId()==(ruid)){
-//                taskService.deleteTask(t);
-//                tasksDeleted++;
-//
-//            }
-//        }
-//        if(tasksDeleted==0) return ResponseEntity.ok("No matching tasks found");
-//        return ResponseEntity.ok("Deleted " +tasksDeleted+" tasks.");
-        return ResponseEntity.ok("not implemented");
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
+
+        String taskId = String.valueOf(request.getParameter("taskid"));
+        Task task = taskService.findTaskByTaskId(taskId);
+        if (task == null){
+            return ResponseEntity.ok("invalid taskId");
+        }
+        Device device = deviceService.findDeviceByDeviceId(task.getDeviceId());
+        if (!foundUser.getUserId().equals(device.getUserId())){
+            return ResponseEntity.ok("device of the task does not belong to the user");
+        }
+
+        taskService.deleteTask(task);
+        return ResponseEntity.ok("finished");
+
     }
 
     //Deletes task database
@@ -385,74 +378,25 @@ public class MainController {
     //Constant checks every second to see whether a device needs to be toggled or tasks need to be updated
     @Scheduled(fixedRate= 1000)
     public void printOutStatement() {
-        List<Task> tList = taskService.findAllTasksSortedByTime();
-        Calendar c1 = Calendar.getInstance();
-        Task task = tList.get(0);
+        List<Task> taskList = taskService.findAllTasksSortedByTime();
+        Calendar now = Calendar.getInstance();
+        for (Task task : taskList){
+            if (now.after(task.getCalendar())){
+                String deviceId = task.getDeviceId();
+                ServiceResult result = deviceService.toggleDevice(deviceId);
+                if (result == ServiceResult.SERVICE_SUCCESS){
+                    System.out.println(deviceId + " toggled");
+                }
 
-
-//
-//        if(tList.size()!=0) {
-//            Task t = tList.get(0);
-//            if(c1.after(t.getCalendar())){
-//                List<Device> dList = deviceService.findAllDevices();
-//                User u = userService.findOneUserByUsername(t.getUserId());
-//                for(int i=0; i<dList.size();i++){
-//                    if(dList.get(i).getUserId().equals(u.getUserId())) {
-//                        if(dList.get(i).getRelativeUserId()==t.getDeviceId()) {
-//                            toggledDevice = true;
-//                            Device d = dList.get(i);
-//                            d.toggle();
-//                            System.out.println("Toggled");
-//                            bufferDS.addOneDevice(d);
-//                            if(t.getDuration()!=0){
-//                                taskService.deleteTask(t);
-//
-//                                Calendar newC = Calendar.getInstance();
-//                                newC.add(Calendar.SECOND,t.getDuration());
-//                                t.setCalendar(newC);
-//                                taskService.deleteSelf();
-//                                boolean placedNew = false;
-//                                Task oldT;
-//
-//
-//
-//                                for(int j=0;j<tList.size()+1;j++){
-//                                    if(tList.size()!=0) {
-//                                        if (placedNew || (j == tList.size())) {
-//                                            oldT = tList.get(j - 1);
-//                                        } else {
-//                                            oldT = tList.get(j);
-//                                        }
-//                                        if (c1.after(oldT.getCalendar()) || placedNew) {
-//                                            taskService.addOneTask(oldT);
-//                                        } else {
-//                                            taskService.addOneTask(t);
-//                                            placedNew = true;
-//                                        }
-//                                    }else{
-//                                        taskService.addOneTask(t);
-//                                    }
-//
-//                                }
-//
-//                            }
-//                        }else {
-//                            Device d = dList.get(i);
-//                            bufferDS.addOneDevice(d);
-//
-//                        }}else{
-//                        Device d = dList.get(i);
-//                        bufferDS.addOneDevice(d);
-//                    }
-//                }
-//                deviceService =bufferDS;
-//
-//
-//
-//            }
-//
-//        }
-//
+                taskService.deleteTask(task);
+                if (task.getDuration() != 0){
+                    Calendar shutdownTime = task.getCalendar();
+                    shutdownTime.add(Calendar.SECOND,task.getDuration());
+                    Task shutdownTask = new Task(task.getType(),task.getDeviceId(),shutdownTime,0);
+                    taskService.addOneTask(shutdownTask);
+                }
+            }
+        }
 
 
     }

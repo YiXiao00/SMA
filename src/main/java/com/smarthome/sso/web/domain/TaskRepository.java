@@ -14,4 +14,5 @@ public interface TaskRepository extends MongoRepository<Task, String> {
 
     List<Task> findAllByOrderByCalendarAsc();
 
+    Task findByTaskId(String taskId);
 }

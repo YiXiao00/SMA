@@ -2,6 +2,7 @@ package com.smarthome.sso.web.service;
 
 
 
+import com.smarthome.sso.web.constants.ServiceResult;
 import com.smarthome.sso.web.domain.Device;
 import com.smarthome.sso.web.domain.DeviceRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,4 +40,13 @@ public class DeviceService {
         return deviceRespository.getDeviceCountFromUserId(userId);
     }
 
+    public ServiceResult toggleDevice(String deviceId){
+        Device device = deviceRespository.findByDeviceId(deviceId);
+        if (device == null){
+            return ServiceResult.SERVICE_NOTFOUND;
+        }
+        device.toggle();
+        deviceRespository.save(device);
+        return ServiceResult.SERVICE_SUCCESS;
+    }
 }
