@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30c882d4-3ba6-407d-92ac-ca1557835fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/room.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/room.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,7 +43,7 @@
         <counts>
           <entry key="class" value="1" />
           <entry key="gitignore" value="1" />
-          <entry key="html" value="16" />
+          <entry key="html" value="17" />
           <entry key="java" value="79" />
           <entry key="json" value="1" />
           <entry key="png" value="1" />
@@ -55,7 +54,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="HTML" value="16" />
+          <entry key="HTML" value="17" />
           <entry key="Image" value="1" />
           <entry key="JAVA" value="79" />
           <entry key="JSON" value="1" />
@@ -66,14 +65,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="6649" />
+          <entry key="html" value="6723" />
           <entry key="java" value="14572" />
           <entry key="xml" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="6649" />
+          <entry key="HTML" value="6723" />
           <entry key="JAVA" value="14572" />
           <entry key="XML" value="29" />
         </counts>
@@ -85,8 +84,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="18" column="31" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="31" />
+            <state relative-caret-position="58">
+              <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="28" column="87" selection-start-line="28" selection-start-column="87" selection-end-line="28" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -112,7 +120,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
@@ -218,8 +226,8 @@
       <find>device.toggle();</find>
       <find>.toggle</find>
       <find>Welcome</find>
-      <find>delete</find>
       <find>device/add</find>
+      <find>delete</find>
       <find>cooki</find>
     </findStrings>
   </component>
@@ -231,7 +239,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/resources/template/userInfo.html" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/loginLanding.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/UserRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/MainApplication.java" />
@@ -250,6 +257,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/SigninController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/room.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
       </list>
     </option>
   </component>
@@ -390,7 +398,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552308973016" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552309162550" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="SDKs" />
@@ -497,12 +505,12 @@
       <workItem from="1552001667984" duration="3582000" />
       <workItem from="1552051957764" duration="3860000" />
       <workItem from="1552230381774" duration="4721000" />
-      <workItem from="1552303079365" duration="5823000" />
+      <workItem from="1552303079365" duration="6037000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147452000" />
+    <option name="totallyTimeSpent" value="147666000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="953" y="0" width="974" height="1047" extended-state="0" />
@@ -634,13 +642,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="16" lean-forward="true" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -769,13 +770,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="18" column="31" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/SigninInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="429">
@@ -797,6 +791,20 @@
           <folding>
             <element signature="n#style#0;n#canvas#1;n#div#1;n#body#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="28" column="87" selection-start-line="28" selection-start-column="87" selection-end-line="28" selection-end-column="87" />
         </state>
       </provider>
     </entry>

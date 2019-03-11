@@ -14,6 +14,7 @@
                         pwd:$("#pwd").val()
                     },function(data) {
                     $("#msg").text(data);
+                    window.location.replace("http://localhost:8090/user/dashboard")
                 });
 
             });
@@ -25,6 +26,8 @@
                         pwd:$("#pwd").val()
                     },function(data) {
                         $("#msg").text(data);
+                        window.location.replace("http://localhost:8090/user/dashboard")
+
                     });
             });
         });
