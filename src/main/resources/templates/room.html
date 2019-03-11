@@ -8,6 +8,7 @@
             //This segment below shows how to get the cookie containing sessionId when the web page is
             //fully loaded.
             //I assumed there is session-cookie so I use SPLIT.
+            var name = "blank"
             var cookiesString = document.cookie;
             var sessionCookie = cookiesString.split(";");
             var sessionArg = sessionCookie[0].split("=")[1];
@@ -19,7 +20,8 @@
             //because no sessionId fetched.
             var getNameUri = "http://localhost:8090/user/getname"
             $.post(getNameUri, function(data){
-                    $("#cookieBoard").text("Welcome: " + data);
+                    name = data
+                    $("#cookieBoard").text("Welcome: " + name);
                 }
             );
 
@@ -166,7 +168,7 @@
                                     ctxT.clearRect(0, 0, cT.width, cT.height);
                                     ctxT.fillStyle = "#000000";
                                     ctxT.font = "14px Arial";
-                                    ctxT.fillText("Tasks for "+$("#user").val(),10,40,100);
+                                    ctxT.fillText("Tasks for "+name,10,40,100);
                                     ctxT.fillText("Task|Device|Date|Time|Duration",10,70,300);
                                     for(var i=0; i<(tasks.length/15)-1;i++) {
                                        ctxT.fillText(tasks[0+i*15]+"|"+tasks[4+i*15]+"|"+tasks[7+i*15]+" "+tasks[8+i*15]+"|"+tasks[9+i*15]+"|"+tasks[13+i*15],10,100+(i*20),300);
@@ -212,9 +214,16 @@
                         }
                         cT.addEventListener('click',_listenTasks);
                         for(var i=0; i<(words.length/6)-1;i++){
-                                ctx.fillStyle = "#FFFF99";
+                                ctx.fillStyle = "#EEE8AA";
                             if(words[(6*i)+4]==="true")
-                                ctx.fillStyle = "#FFFF00";
+                                ctx.fillStyle = "#FFD700";
+                            if(deviceList[i]==$("#newTaskRuid").val()) {
+                                ctx.fillStyle = "#FFA500"
+                                if(words[(6*i)+4]==="true")
+                                    ctx.fillStyle = "#DAA520"
+
+
+                            }
                             ctx.fillRect(10,25+(i*75),400,50);
                             ctx.fillStyle = "#AAAAAA";
                             ctx.fillRect(430,25+(i*75),50,50);
@@ -223,8 +232,8 @@
                             ctx.fillStyle = "#000000";
                             ctx.font = "16px Arial";
                             ctx.fillText(words[i*6],30,50+(i*75),120);
-                            ctx.fillText("ID: "+words[2+i*6],150,50+(i*75),120);
-                            ctx.fillText("Turned On: "+words[4+(i*6)],200,50+(i*75),120);
+                            ctx.fillText("ID: "+words[2+i*6],150,70+(i*75),200);
+                            ctx.fillText("Turned On: "+words[4+(i*6)],150,40+(i*75),100);
                             ctx.font = "14px Arial";
                             ctx.fillText("Toggle",435,55+(i*75),50);
                             ctx.fillText("Delete",505,55+(i*75),50);
@@ -242,12 +251,9 @@
 </head>
 <body>
 <body>
-<h1>Welcome User!</h1>
 <h2 class="cookieBoard" name="cookieBoard" id="cookieBoard">cookieBoard content</h2>
 <div>
-    Username: <input class="inputbox" type="text" name="user" id="user"/><br/>
-    Password: <input class="inputbox" type="password" name="pwd" id="pwd"/><br/>
-    <input class="btn" type="submit" id="load" value="Load" /> <br/>
+    <input class="btn" type="submit" id="load" value="Refresh" /> <br/>
     Devices currently associated with your account:
 </div>
 <br/>
@@ -258,7 +264,7 @@
 <div>
     New Device: <input class="inputbox" type="text" name="newDevice" id="newDevice" value="Enter Device Here" onfocus="this.value=''"/>
     <input class="btn" type="submit" id="AddNew" value="Add" /> <br/>
-    New Task -> Device ID:<input class="inputbox" type="text" name="newDevice" id="newTaskRuid" value="Enter Device ID" onfocus="this.value=''"/>
+    New Task -> Device ID:<input class="inputbox" type="text" name="newDevice" id="newTaskRuid" value="Click on the device" onfocus="this.value=''"/>
     When (seconds from now): <input class="inputbox" type="text" name="newDevice" id="newTaskWhen" value="Enter time until this task should be performed (seconds)" onfocus="this.value=''"/>
     Duration:<input class="inputbox" type="text" name="newDevice" id="newTaskDuration" value="Enter How long this should be performed for" onfocus="this.value=''"/>
     Type:<input class="inputbox" type="text" name="newDevice" id="newTaskType" value="Enter Type of Task" onfocus="this.value=''"/>
