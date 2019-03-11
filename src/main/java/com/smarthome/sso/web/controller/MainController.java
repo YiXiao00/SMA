@@ -19,6 +19,8 @@ import org.springframework.core.task.TaskExecutor;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -353,6 +355,54 @@ public class MainController {
         return ResponseEntity.ok("Task added");
 
     }
+
+    @RequestMapping("/file/add")
+    @ResponseBody
+    public ResponseEntity<?> AddFromFile(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        try(BufferedReader br = new BufferedReader(new FileReader("newData.txt"))) {
+            for(String line; (line = br.readLine()) != null; ) {
+                String split[] = line.split("\\s+");
+                if(split[0].equals("USER")){
+                    String name = split[1];
+                    String pwd = split[2];
+                    if (userService.findOneUserByUsername(name) == null) {
+                        User newUser = new User(name, pwd);
+                        userService.addOneUser(newUser);
+                        System.out.println("Added user name " + split[1] + " pwd " + split[2]);
+                    }
+
+                }
+                if(split[0].equals("DEVICE")) {
+                    String username = split[1];
+                    String type = split[2];
+                    User foundUser = userService.findOneUserByUsername(username);
+
+                    Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).build();
+                    deviceService.addOneDevice(newDevice);
+                    System.out.println("Added new device to user "+foundUser.getUserId()+" of type "+type);
+                }
+
+                if(split[0].equals("TASK")){
+                    String deviceId = split[1];
+                    String type = split[2];
+                    int inThisTime = Integer.valueOf(split[3]);
+                    int duration = Integer.valueOf(split[4]);
+                    Calendar c1 = Calendar.getInstance();
+                    c1.add(Calendar.SECOND,inThisTime);
+                    Task t = new Task(type,deviceId,c1,duration);
+
+                    List<Task> tList = taskService.findAllTasks();
+                    taskService.addOneTask(t);
+
+                    System.out.println("Added task");
+
+                }
+            }
+        }
+        return ResponseEntity.ok("Added from file");
+
+    }
+
 
 
 
