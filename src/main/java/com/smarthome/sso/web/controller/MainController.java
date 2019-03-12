@@ -202,14 +202,17 @@ public class MainController {
         String deviceId = String.valueOf(request.getParameter("device"));
         Device target = deviceService.findDeviceByDeviceId(deviceId);
 
+
         if (!foundUser.getUserId().equals(target.getUserId())){
             return ResponseEntity.ok("device does not belong to the user");
         }
 
-        target.setPoweredOn(!target.getPowerStatus());
-        deviceService.addOneDevice(target);
 
-        System.out.println("Device toggled");
+        ServiceResult result = deviceService.toggleDevice(deviceId);
+        if (result == ServiceResult.SERVICE_SUCCESS){
+            System.out.println(deviceId + " toggled");
+        }
+
         return ResponseEntity.ok("Device toggled");
 
     }
