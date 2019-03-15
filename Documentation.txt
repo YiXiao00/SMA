@@ -1,6 +1,13 @@
 smartHomes\src\main\java\com\smarthome\sso\web\constants\ServiceResult.java:
 
+This file provides enums to return when certain functions are called to say whether it was successful.
+
+smartHomes\src\main\java\com\smarthome\sso\web\controller\FiwareController.java:
+
+
 smartHomes\src\main\java\com\smarthome\sso\web\controller\InterceptorConfig.java:
+
+
 
 smartHomes\src\main\java\com\smarthome\sso\web\controller\MainController.java:
 
@@ -52,6 +59,8 @@ registerOneNewUser: Creates new user with username and password provided, after 
 logIn: Checks cookies to see if there is a current session. If not, username and password are checked in database. If username and password match then a session cookie is added.
 
 smartHomes\src\main\java\com\smarthome\sso\web\controller\SigninInterceptor.java:
+
+SigninInterceptor checks whether there are cookies associated to the current user and returns true or false.
 
 smartHomes\src\main\java\com\smarthome\sso\web\domain\Device.java:
 
