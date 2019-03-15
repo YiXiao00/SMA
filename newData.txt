@@ -1,0 +1,4 @@
+USER Chris 123
+USER Edgar 1234
+DEVICE Chris Toaster
+DEVICE Chris Microwave
