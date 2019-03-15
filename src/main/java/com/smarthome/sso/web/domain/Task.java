@@ -19,7 +19,7 @@ import java.util.Calendar;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "task")
-public class Task {
+public class Task implements ISmartHomeTask {
 
     /** Id, unique */
     @Id

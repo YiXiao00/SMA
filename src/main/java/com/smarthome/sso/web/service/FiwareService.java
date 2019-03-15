@@ -23,13 +23,19 @@ public class FiwareService {
      * This function send a GET message to the fiware api and wraps the result to FiwareInfo Class
      *
      * */
-    public FiwareInfo fiwareApiRequest(String requestUrl, String arg_service, String arg_servicePath){
+    public FiwareInfo fiwareApiRequest(String requestUrl, String arg_service, String arg_servicePath) throws Exception{
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("fiware-service", arg_service);
         requestHeaders.add("fiware-servicepath", arg_servicePath);
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
-        ResponseEntity<String> result = restTemplate.exchange(requestUrl, HttpMethod.GET ,requestEntity, String.class);
+        ResponseEntity<String> result;
+        try{
+            result = restTemplate.exchange(requestUrl, HttpMethod.GET ,requestEntity, String.class);
+        }
+        catch(Exception ex){
+            return null;
+        }
         String content = result.toString();
 
         //Parse entity
