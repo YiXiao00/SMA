@@ -1,15 +1,14 @@
 package com.smarthome.sso.web.service;
 
+import com.smarthome.sso.web.constants.ServiceResult;
 import com.smarthome.sso.web.domain.FiwareInfo;
 import com.smarthome.sso.web.domain.FiwareInfoProperty;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +73,23 @@ public class FiwareService {
             fiwareInfo.setPropertyList(list);
         }
         return fiwareInfo;
+    }
+
+    /**
+     * Condition format definition:
+     *     term = ([PropertyName],[Operator],[Value1],[Value2]...)
+     *     term -> (term [And/Or] term)
+     *     syntax = term
+     *
+     * for example:
+     *  syntax = (Humidity,HigherThan,0.35) And (Power,LowerThan,200)
+     *
+     * returns the result of syntax
+     * */
+    public ServiceResult TryCondition(FiwareInfo nowStatus, String syntax){
+        // Interpreter
+        // TODO
+        return ServiceResult.SERVICE_FAIL;
     }
 
 }

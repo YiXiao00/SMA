@@ -15,6 +15,9 @@ public class TaskService {
     @Autowired
     private TaskRepository tRepo;
 
+    @Autowired
+    private Task2Repository task2Repository;
+
     public void addOneTask(Task t){
         tRepo.save(t);
     }
@@ -50,5 +53,9 @@ public class TaskService {
     }
 
     public void deleteSelf() {tRepo.deleteAll();}
+
+    public void addTask2(Task2 task2){
+        task2Repository.save(task2);
+    }
 
 }
