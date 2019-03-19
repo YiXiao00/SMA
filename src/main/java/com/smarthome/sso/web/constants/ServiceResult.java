@@ -12,6 +12,8 @@ public enum ServiceResult {
 
     SERVICE_FAIL,
 
-    SERVICE_NOTFOUND
+    SERVICE_NOTFOUND,
+
+    SERVICE_ERROR
 
 }

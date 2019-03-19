@@ -31,12 +31,12 @@ public class Task2 implements ISmartHomeTask {
 
     /**
      * trigger format definition:
-     *     term = ([PropertyName],[Operator],[Value1],[Value2]...)
-     *     term -> (term [And/Or] term)
+     *     term = [[PropertyName],[Operator],[Value1],[Value2]...]
+     *     term -> ( term [And/Or] term )
      *     syntax = term
      *
      * for example:
-     *  syntax = (Humidity,HigherThan,0.35) And (Power,LowerThan,200)
+     *  syntax = [Humidity,HigherThan,0.35] And [Power,LowerThan,200]
      *
      * */
     private String trigger;

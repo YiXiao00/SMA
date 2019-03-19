@@ -19,5 +19,13 @@ public class FiwareInfo {
 
     private List<FiwareInfoProperty> propertyList;
 
+    public String getPropertyValue(String input){
+        for (FiwareInfoProperty property : propertyList){
+            if (input.equals(property.getPropertyName())){
+                return property.getPropertyValue();
+            }
+        }
+        return "";
+    }
 
 }
