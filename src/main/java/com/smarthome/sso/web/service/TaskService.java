@@ -58,4 +58,8 @@ public class TaskService {
         task2Repository.save(task2);
     }
 
+    public List<Task2> findAllTask2s(){
+        return task2Repository.findAll();
+    }
+
 }

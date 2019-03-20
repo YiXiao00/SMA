@@ -62,7 +62,7 @@ public class FiwareService {
         } else {
             return null;
         }
-        Pattern pattern_property = Pattern.compile("\"(.*?)\":\\{\"type\":\"(.*?)\",\"value\":\"(.*?)\",\"metadata\":\\{(.*?)\\}\\},");
+        Pattern pattern_property = Pattern.compile("\"(.*?)\":\\{\"type\":\"(.*?)\",\"value\":\"(.*?)\",\"metadata\":\\{(.*?)\\}\\}");
         Matcher matcher_property = pattern_property.matcher(content.replaceFirst("\"id\":\"(.*?)\",","").replaceFirst("\"type\":\"(.*?)\",",""));
 
         while (matcher_property.find()) {
@@ -166,7 +166,7 @@ public class FiwareService {
 
     private Boolean tryOneRule(FiwareInfo nowStatus, String rule){
         String content = rule.substring(1,rule.length()-1);
-        String[] args = rule.split(",");
+        String[] args = content.split(",");
         String property = args[0];
         String operator = args[1];
         String fiwareValue = nowStatus.getPropertyValue(property);

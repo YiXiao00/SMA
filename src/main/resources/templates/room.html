@@ -101,6 +101,25 @@
 
 
             });
+
+            $("#addtask2").click(function(){
+                var uri = "http://localhost:8090/fiware/task/add"
+                $.post(uri,
+                    {
+                        type:"DefaultType",
+                        condition:$("#task2rule").val(),
+                        device:$("#newTaskRuid").val(),
+                        token:sessionArg
+                    }, function(data){
+                        var button = document.getElementById("load");
+                        button.click();
+                        alert("syntax added.");
+                    }
+                )
+
+
+            });
+
             $("#load").click(function() {
                 var uri = "http://localhost:8090/device/user/all"
                 $.post(uri,
@@ -275,10 +294,11 @@
     <canvas id = "roomCanvas" width="600" height="600" style="border:1px solid #000000;" ></canvas>
     <canvas id="taskCanvas" width=300" height ="600" style="border:1px solid #000000;"></canvas>
 </div>
+
 <div>
     New Device: <input class="inputbox" type="text" name="newDevice" id="newDevice" value="Enter Device Here" onfocus="this.value=''"/>
     <input class="btn" type="submit" id="AddNew" value="Add" /> <br/>
-    New Task -> Device ID:<input class="inputbox" type="text" name="newDevice" id="newTaskRuid" value="Click on the device" onfocus="this.value=''"/>
+    New Task -> Device ID:<input class="inputbox" type="text" name="newDevice" id="newTaskRuid" value="Click on the device" />
     When (seconds from now): <input class="inputbox" type="text" name="newDevice" id="newTaskWhen" value="Enter time until this task should be performed (seconds)" onfocus="this.value=''"/>
     Repeated:<input class="inputbox" type="text" name="newDevice" id="newTaskDuration" value="Enter how often this should be repeated" onfocus="this.value=''"/>
     Type: <select id="newTaskType">
@@ -287,6 +307,12 @@
     <input class="btn" type="submit" id="newTask" value="Submit Task" />
 
 </div>
+
+<div>
+    Syntax: <input class="inputbox" type="text" name="task2rule" id="task2rule"/>
+    <input class="btn" type="submit" id="addtask2" value="Add Monitor Task" /> <br/>
+</div>
+
 <div>
 <input class="btn" type="submit" id="logOut" value="Log Out" />
 </div>

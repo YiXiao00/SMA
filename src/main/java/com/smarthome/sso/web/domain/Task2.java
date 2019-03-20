@@ -17,7 +17,6 @@ import java.util.List;
  * */
 
 @Data
-@Builder
 @NoArgsConstructor
 @Document(collection = "task2")
 public class Task2 implements ISmartHomeTask {
