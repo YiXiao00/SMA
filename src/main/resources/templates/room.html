@@ -106,7 +106,7 @@
                 var uri = "http://localhost:8090/fiware/task/add"
                 $.post(uri,
                     {
-                        type:"DefaultType",
+                        type:$("#task2type").val(),
                         condition:$("#task2rule").val(),
                         device:$("#newTaskRuid").val(),
                         token:sessionArg
@@ -309,7 +309,8 @@
 </div>
 
 <div>
-    Syntax: <input class="inputbox" type="text" name="task2rule" id="task2rule"/>
+    Syntax: <input type="text" name="task2rule" id="task2rule"/>
+    Type:(Toggle/TurnOn/TurnOff)<input type="text" name="task2type" id="task2type" />
     <input class="btn" type="submit" id="addtask2" value="Add Monitor Task" /> <br/>
 </div>
 

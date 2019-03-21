@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @Service
 public class FiwareService {
 
-    private Task2Operator task2Operator;
+    private Task2Operator task2Operator = Task2Operator.getInstance();
 
     /**
      * This function send a GET message to the fiware api and wraps the result to FiwareInfo Class

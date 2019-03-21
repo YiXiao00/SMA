@@ -67,8 +67,16 @@ public class FiwareController {
         for (Task2 task2 : taskList){
             ServiceResult result = fiwareService.trySyntax(deviceHashMap.get(task2.getDeviceId()),task2.getTrigger());
             if (result == ServiceResult.SERVICE_SUCCESS){
-                deviceService.toggleDevice(task2.getDeviceId());
-                System.out.println("Task2: Toggled");
+                String taskType = task2.getType();
+                if ("DefaultType".equals(taskType) || "Toggle".equals(taskType)){
+                    deviceService.toggleDevice(task2.getDeviceId());
+                }
+                else if ("TurnOn".equals(taskType)){
+                    deviceService.turnOnDevice(task2.getDeviceId());
+                }
+                else if ("TurnOff".equals(taskType)){
+                    deviceService.turnOffDevice(task2.getDeviceId());
+                }
             }
         }
         System.out.println("---Task2: Refreshed---");

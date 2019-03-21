@@ -49,4 +49,29 @@ public class DeviceService {
         deviceRespository.save(device);
         return ServiceResult.SERVICE_SUCCESS;
     }
+
+    public ServiceResult turnOnDevice(String deviceId){
+        Device device = findDeviceByDeviceId(deviceId);
+        if (device == null){
+            return ServiceResult.SERVICE_NOTFOUND;
+        }
+        if (!device.getPowerStatus()){
+            device.toggle();
+            deviceRespository.save(device);
+        }
+        return ServiceResult.SERVICE_SUCCESS;
+    }
+
+    public ServiceResult turnOffDevice(String deviceId){
+        Device device = findDeviceByDeviceId(deviceId);
+        if (device == null){
+            return ServiceResult.SERVICE_NOTFOUND;
+        }
+        if (device.getPowerStatus()){
+            device.toggle();
+            deviceRespository.save(device);
+        }
+        return ServiceResult.SERVICE_SUCCESS;
+    }
+
 }
