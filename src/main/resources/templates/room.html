@@ -34,7 +34,30 @@
                 var button = document.getElementById("load");
                 button.click();
             }
+            function refreshFiware(){
+                var uri2 = "http://localhost:8090/fiware/info";
+                $.post(uri2,
+                    {
+                        token:sessionArg
+                    }, function(data){
+                        var f_id = data.id;
+                        var f_type = data.type;
+                        var f_property = data.propertyList;
+                        var resultProperty = "";
+                        for (var p in f_property){
+                            var obj = f_property[p];
+                            resultProperty = resultProperty + "Name: " + obj.propertyName + " ";
+                            resultProperty = resultProperty + "Type: " + obj.propertyType + " ";
+                            resultProperty = resultProperty + "Value: " + obj.propertyValue + " ";
+                            resultProperty = resultProperty + "<br/>";
+                        }
+                        var resultHTML = "<b>Id: </b>" + f_id + "<br/><b>Type: </b>" + f_type + "<br/><b>Properties: </b><br/>" + resultProperty;
+                        $("#fiwareInfo").html(resultHTML);
+                    });
+            }
+            refreshFiware();
             setInterval(hitButton,1000);
+            setInterval(refreshFiware,15000);
             var words = {};
             var tasks = {};
             var _listen = function(event){
@@ -277,6 +300,7 @@
 
                         }
                     });
+
             });
         });
     </script>
@@ -313,6 +337,7 @@
     Type:(Toggle/TurnOn/TurnOff)<input type="text" name="task2type" id="task2type" />
     <input class="btn" type="submit" id="addtask2" value="Add Monitor Task" /> <br/>
 </div>
+<div name="fiwareInfo" id="fiwareInfo"></div>
 
 <div>
 <input class="btn" type="submit" id="logOut" value="Log Out" />
