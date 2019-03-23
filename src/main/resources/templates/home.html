@@ -1,7 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <style>
+        body{
+            background-color: lightblue;
+        }
+
+        .centre {
+            height: 540px;
+            width: 1440px;
+            margin-left: 270px;
+            margin-right: 270px;
+            margin-top: 160px;
+            position: absolute;
+        }
+
+        .title {
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            font-size: 450%;
+            margin-left: 40px;
+
+        }
+
+        .inputs {
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            font-size: 200%;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            margin-top: 10px;
+            magin-bottom: 10px;
+            line-height: 70px;
+            font-size:55px;
+        }
+
+        input[type="password"] {
+            margin-top: 10px;
+            magin-bottom: 10px;
+            width: 70%;
+            line-height: 70px;
+            font-size:55px;
+        }
+
+        .buttons {
+            font-size: 70px;
+            margin-left: 75px;
+            margin-top: 50px;
+            padding: 10px;
+            display: inline-block;
+            background-color: white;
+            color: black;
+            border: none;
+
+
+        }
+
+        .clicks {
+            margin-left:350px;
+
+
+
+        }
+
+        .buttons:hover {
+            background-color: #555555;
+            color: white;
+
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+
+    </style>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
     </script>
     <script type="text/javascript">
@@ -36,16 +106,19 @@
     <title>Smart Home</title>
 </head>
 <body>
-<div class="row">
-    <div class="col-md-12"><h1>Welcome to Smart Home User Service</h1></div>
-</div>
-<div>
-    Username: <input class="inputbox" type="text" name="user" id="user"/><br/>
-    Password: <input class="inputbox" type="password" name="pwd" id="pwd"/><br/>
-    <input class="btn" type="submit" id="btnsignin" value="Sign in" />
-    <input class="btn" type="submit" id="btnsignup" value="Sign up" />
+
+
+<div class="centre">
+    <div class="col-md-12" ><h1 class="title">Welcome to Smart Home User Service</h1></div>
+    <div class="inputs">
+    Username: <input  type="text" name="user" id="user"/><br/>
+    Password: <input  type="password" name="pwd" id="pwd"/><br/>
+    </div>
+    <div class="clicks">
+    <input class="buttons" type="submit" id="btnsignin" value="Sign in" />
+    <input class="buttons" type="submit" id="btnsignup" value="Sign up" />
+    </div>
 </div>
 <br/>
-<div class="msgboard" id="msg"></div>
 </body>
 </html>

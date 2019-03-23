@@ -10,7 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Optional;
@@ -18,7 +20,7 @@ import java.util.Optional;
 @EnableSwagger2
 @EnableScheduling
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-public class MainApplication implements CommandLineRunner {
+public class MainApplication extends WebMvcAutoConfiguration implements CommandLineRunner {
 
     @Autowired
     private UserRepository uRepo;
