@@ -120,4 +120,8 @@ public class SigninController {
         return ResponseEntity.ok("failed");
     }
 
+    public void innerDeleteUser(String username){
+        userService.deleteOneUserByUsername(username);
+    }
+
 }

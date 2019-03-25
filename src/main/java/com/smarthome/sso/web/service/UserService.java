@@ -40,6 +40,10 @@ public class UserService {
         return ServiceResult.SERVICE_NOTFOUND;
     }
 
+    public void deleteOneUserByUsername(String username){
+        uRepo.deleteByUsername(username);
+    }
+
 //    public void deleteAllUsers(UserRepository uRepo){
 //        uRepo.deleteAll();
 //    }
