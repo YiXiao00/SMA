@@ -94,17 +94,41 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8856">
-              <caret line="428" column="5" selection-start-line="428" selection-start-column="5" selection-end-line="428" selection-end-column="5" />
+            <state relative-caret-position="675">
+              <caret line="107" lean-forward="true" selection-start-line="107" selection-end-line="107" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserAccessTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserAccessTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/UserAccessTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="31" column="45" lean-forward="true" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+            <state relative-caret-position="145">
+              <caret line="129" column="5" lean-forward="true" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/DeviceTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="159">
+              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FiwareController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-179">
+              <caret line="32" column="14" lean-forward="true" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -115,21 +139,25 @@
       <file leaf-file-name="SigninController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/SigninController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="83" column="81" selection-start-line="83" selection-start-column="38" selection-end-line="83" selection-end-column="81" />
+            <state relative-caret-position="3402">
+              <caret line="137" column="39" selection-start-line="137" selection-start-column="19" selection-end-line="137" selection-end-column="39" />
               <folding>
-                <element signature="e#4355#4356#0" expanded="true" />
-                <element signature="e#4416#4417#0" expanded="true" />
+                <element signature="e#4487#4488#0" expanded="true" />
+                <element signature="e#4548#4549#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
+      <file leaf-file-name="UserService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/service/UserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-675">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="432">
+              <caret line="102" column="34" lean-forward="true" selection-start-line="102" selection-start-column="34" selection-end-line="102" selection-end-column="34" />
+              <folding>
+                <element signature="e#2104#2105#0" expanded="true" />
+                <element signature="e#2123#2124#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -198,7 +226,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/DeviceRespository.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/TaskRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Task.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/ISmartHomeTask.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Task2Trigger.java" />
@@ -210,7 +237,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Task2.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/service/FiwareService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/service/DeviceService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/room.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/bootstrap.css" />
@@ -218,10 +244,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/MainApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/WebMvcConfig.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
-        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/SigninController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/service/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/UserRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/service/UserService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/SigninController.java" />
         <option value="$PROJECT_DIR$/src/test/UserAccessTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java" />
+        <option value="$PROJECT_DIR$/src/test/DeviceTest.java" />
       </list>
     </option>
   </component>
@@ -238,6 +267,22 @@
       </MavenImportingSettings>
     </option>
   </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="sso" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="sso" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
@@ -253,12 +298,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
+      <pane id="PackagesPane">
+        <subPane>
           <expand>
             <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="SMA" type="cbb8eebc:String" user="SMA" />
+              <item name="SMA" type="58d84e3e:PackageViewProjectNode" />
+              <item name="sso" type="616d4139:PackageViewModuleNode" />
             </path>
           </expand>
           <select />
@@ -371,12 +416,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <expand>
             <path>
-              <item name="SMA" type="58d84e3e:PackageViewProjectNode" />
-              <item name="sso" type="616d4139:PackageViewModuleNode" />
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="SMA" type="cbb8eebc:String" user="SMA" />
             </path>
           </expand>
           <select />
@@ -428,14 +473,31 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.UserAccessTest">
+  <component name="RunManager" selected="JUnit.All in sso">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method>
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserAccessTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in sso" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="sso" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="UserAccessTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="sso" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -540,10 +602,11 @@
       <item itemvalue="JUnit.UserAccessTest" />
       <item itemvalue="JUnit.UserAccessTest.testSignUpUser" />
       <item itemvalue="JUnit.UserAccessTest.testSignInEmptyUser" />
+      <item itemvalue="JUnit.All in sso" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserAccessTest" />
+        <item itemvalue="JUnit.All in sso" />
         <item itemvalue="JUnit.UserAccessTest.testSignInEmptyUser" />
         <item itemvalue="JUnit.UserAccessTest.testSignUpUser" />
       </list>
@@ -607,43 +670,44 @@
       <workItem from="1553267807804" duration="4393000" />
       <workItem from="1553350781663" duration="9450000" />
       <workItem from="1553527992831" duration="9701000" />
+      <workItem from="1553609202308" duration="4719000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="UserAccessTest - 2019.03.25 at 17h 47m 44s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserAccessTest - 2019.03.25 at 17h 51m 48s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserAccessTest - 2019.03.25 at 17h 55m 49s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserAccessTest - 2019.03.25 at 17h 59m 27s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserAccessTest - 2019.03.25 at 18h 01m 46s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserAccessTest - 2019.03.25 at 18h 05m 44s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserAccessTest - 2019.03.25 at 18h 09m 54s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserAccessTest - 2019.03.25 at 18h 10m 57s.xml">
-      <configuration name="UserAccessTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="UserAccessTest - 2019.03.25 at 18h 12m 33s.xml">
       <configuration name="UserAccessTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="UserAccessTest - 2019.03.25 at 18h 15m 27s.xml">
       <configuration name="UserAccessTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="UserAccessTest - 2019.03.26 at 14h 08m 58s.xml">
+      <configuration name="UserAccessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserAccessTest - 2019.03.26 at 14h 09m 49s.xml">
+      <configuration name="UserAccessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserAccessTest - 2019.03.26 at 14h 18m 05s.xml">
+      <configuration name="UserAccessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserAccessTest - 2019.03.26 at 14h 18m 36s.xml">
+      <configuration name="UserAccessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserAccessTest - 2019.03.26 at 14h 19m 13s.xml">
+      <configuration name="UserAccessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserAccessTest - 2019.03.26 at 14h 44m 35s.xml">
+      <configuration name="UserAccessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_sso - 2019.03.26 at 15h 20m 54s.xml">
+      <configuration name="All in sso" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_sso - 2019.03.26 at 15h 25m 29s.xml">
+      <configuration name="All in sso" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="194480000" />
+    <option name="totallyTimeSpent" value="199199000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -655,11 +719,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.510661" side_tool="true" weight="0.3253796" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.32955405" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="2" />
@@ -675,13 +739,12 @@
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="12" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.809628" weight="0.43184295" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.809628" visible="true" weight="0.43124166" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.3293348" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16684435" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32977304" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16931216" />
       <window_info anchor="right" id="Bean Validation" order="9" />
       <window_info id="Web" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -689,6 +752,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -699,11 +763,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="12" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa808.29051/RegisterController.java" />
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa808.32087/RegisterFilter.java" />
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa808.47436/RegisterController.java" />
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa808.48723/CommentApiTests.java" />
@@ -731,27 +794,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="85" selection-start-line="85" selection-end-line="85" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/FiwareInfoProperty.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="13" column="31" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="203" column="99" selection-start-line="203" selection-start-column="97" selection-end-line="203" selection-end-column="99" />
         </state>
       </provider>
     </entry>
@@ -791,13 +837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-test/5.0.4.RELEASE/spring-test-5.0.4.RELEASE-sources.jar!/org/springframework/test/web/servlet/setup/MockMvcBuilders.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="73" column="43" selection-start-line="73" selection-start-column="43" selection-end-line="73" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-core/5.0.4.RELEASE/spring-core-5.0.4.RELEASE.jar!/org/springframework/util/MultiValueMap.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -809,10 +848,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="106" column="20" lean-forward="true" selection-start-line="106" selection-start-column="20" selection-end-line="106" selection-end-column="20" />
-          <folding>
-            <element signature="e#2977#2978#0" expanded="true" />
-            <element signature="e#3036#3037#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -827,12 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="678">
           <caret line="235" column="30" selection-start-line="235" selection-start-column="30" selection-end-line="235" selection-end-column="30" />
-          <folding>
-            <element signature="e#5435#5436#0" expanded="true" />
-            <element signature="e#5475#5476#0" expanded="true" />
-            <element signature="e#8299#8300#0" expanded="true" />
-            <element signature="e#8339#8340#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -854,10 +883,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="52" column="69" lean-forward="true" selection-start-line="52" selection-start-column="69" selection-end-line="52" selection-end-column="69" />
-          <folding>
-            <element signature="e#2147#2148#0" expanded="true" />
-            <element signature="e#2194#2195#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -865,17 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/service/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="32" column="54" lean-forward="true" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
-          <folding>
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="e#1113#1114#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -966,13 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-675">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.m2/repository/junit/junit/4.12/junit-4.12.jar!/org/junit/runners/MethodSorters.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -987,28 +994,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/SigninController.java">
+    <entry file="jar://$USER_HOME$/.m2/repository/org/springframework/spring-test/5.0.4.RELEASE/spring-test-5.0.4.RELEASE-sources.jar!/org/springframework/test/web/servlet/setup/MockMvcBuilders.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="83" column="81" selection-start-line="83" selection-start-column="38" selection-end-line="83" selection-end-column="81" />
+        <state relative-caret-position="445">
+          <caret line="73" column="43" selection-start-line="73" selection-start-column="43" selection-end-line="73" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="102" column="34" lean-forward="true" selection-start-line="102" selection-start-column="34" selection-end-line="102" selection-end-column="34" />
           <folding>
-            <element signature="e#4355#4356#0" expanded="true" />
-            <element signature="e#4416#4417#0" expanded="true" />
+            <element signature="e#2104#2105#0" expanded="true" />
+            <element signature="e#2123#2124#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8856">
-          <caret line="428" column="5" selection-start-line="428" selection-start-column="5" selection-end-line="428" selection-end-column="5" />
+        <state relative-caret-position="675">
+          <caret line="107" lean-forward="true" selection-start-line="107" selection-end-line="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/SigninController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3402">
+          <caret line="137" column="39" selection-start-line="137" selection-start-column="19" selection-end-line="137" selection-end-column="39" />
+          <folding>
+            <element signature="e#4487#4488#0" expanded="true" />
+            <element signature="e#4548#4549#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-179">
+          <caret line="32" column="14" lean-forward="true" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/UserAccessTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="31" column="45" lean-forward="true" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+        <state relative-caret-position="145">
+          <caret line="129" column="5" lean-forward="true" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/DeviceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

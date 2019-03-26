@@ -1,7 +1,6 @@
 
 import com.smarthome.sso.MainApplication;
 import com.smarthome.sso.web.controller.SigninController;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -9,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,7 +16,6 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
-import sun.reflect.annotation.ExceptionProxy;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,9 +44,10 @@ public class UserAccessTest {
     @Test
     public void test_a_signUpUser() throws Exception {
         RequestBuilder request;
-        request = MockMvcRequestBuilders.post("/user/signup")
-                .param("name","test_default_username")
-                .param("pwd","test_default_password");
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("name","test_default_username");
+        params.add("pwd","test_default_password");
+        request = MockMvcRequestBuilders.post("/user/signup").params(params);
         mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(content().string("Signed up successfully."));
@@ -110,9 +108,38 @@ public class UserAccessTest {
     }
 
     @Test
-    public void test_f_innerCleanUser() throws Exception{
-        signinController.innerDeleteUser("test_default_username");
+    public void test_f_checkValidSessionId() throws Exception{
+        boolean correctSession = signinController.innerVerifySessionId(receivedSessionId);
+        assert(correctSession);
+        boolean wrongSession = signinController.innerVerifySessionId("wrong_sessionId");
+        assert(!wrongSession);
+    }
 
+    @Test
+    public void test_g_signOut() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",receivedSessionId);
+        request = post("/user/signout").params(params);
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("succeeded"))
+                .andReturn();
+        boolean obsoleteSessionId = signinController.innerVerifySessionId(receivedSessionId);
+        assert(!obsoleteSessionId);
+    }
+
+    @Test
+    public void test_h_innerCleanUser() throws Exception{
+        signinController.innerDeleteUser("test_default_username");
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("name","test_default_username");
+        params.add("pwd","test_default_password");
+        request = post("/user/signin").params(params);
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("failed"));
     }
 
 

@@ -73,10 +73,29 @@ public class UserService {
         return ServiceResult.SERVICE_FAIL;
     }
 
+    public ServiceResult tryLogOut(String sessionId){
+        return deleteToken(sessionId);
+    }
+
     public String createToken(Integer timeSpan, String username){
         String sessionId = UUID.randomUUID().toString();
-        redisTemplate.opsForValue().set(sessionId, username, timeSpan, TimeUnit.MINUTES);
+        try {
+            redisTemplate.opsForValue().set(sessionId, username, timeSpan, TimeUnit.MINUTES);
+        }
+        catch(Exception ex){
+            return "";
+        }
         return sessionId;
+    }
+
+    private ServiceResult deleteToken(String key){
+        try {
+            redisTemplate.delete(key);
+        }
+        catch(Exception ex){
+            return ServiceResult.SERVICE_FAIL;
+        }
+        return ServiceResult.SERVICE_SUCCESS;
     }
 
     public ServiceResult verifySessionId(String sessionId){

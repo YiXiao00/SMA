@@ -120,8 +120,27 @@ public class SigninController {
         return ResponseEntity.ok("failed");
     }
 
+    @PostMapping("/user/signout")
+    @ResponseBody
+    public ResponseEntity<?> logOut(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String currentSessionId = String.valueOf(request.getParameter("token"));
+        ServiceResult result = userService.tryLogOut(currentSessionId);
+        if (result == ServiceResult.SERVICE_SUCCESS){
+            return ResponseEntity.ok("succeeded");
+        }
+        return ResponseEntity.ok("failed");
+    }
+
     public void innerDeleteUser(String username){
         userService.deleteOneUserByUsername(username);
+    }
+
+    public boolean innerVerifySessionId(String sessionId){
+        ServiceResult result = userService.verifySessionId(sessionId);
+        if (result == ServiceResult.SERVICE_SUCCESS){
+            return true;
+        }
+        return false;
     }
 
 }
