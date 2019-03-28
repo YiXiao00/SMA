@@ -1,0 +1,320 @@
+.background_panel{
+    background-color: #F5F5F5;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    text-align: left;
+    font-size: 100%;
+    overflow: auto;
+}
+.topbar{
+     background-color: #343434;
+     display: block;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 50px;
+     box-shadow: 0 0 15px #101010;
+     z-index: 1;
+     text-align: left;
+     font-size: 100%;
+ }
+.leftbar{
+    background-color: #343434;
+    display: block;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 250px;
+    bottom: 0;
+    box-shadow: 0 0 15px #101010;
+    z-index: 0;
+    text-align: left;
+    font-size: 100%;
+    overflow: auto;
+}
+.default_panel{
+    display: block;
+    position: fixed;
+    top: 50px;
+    left: 250px;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    text-align: left;
+    font-size: 100%;
+    overflow: auto;
+}
+.top_title{
+    position: absolute;
+    font-size: 20px;
+    left: 62px;
+    top: 12px;
+    color: #FFF;
+}
+.top_version{
+    position: absolute;
+    font-size: 12px;
+    left: 260px;
+    top: 20px;
+    color: #808080;
+}
+.top_sep{
+    position: absolute;
+    font-size: 28px;
+    top: 6px;
+    left: 300px;
+    color: #FFF;
+}
+.top_username{
+    position: absolute;
+    font-size: 18px;
+    top: 15px;
+    left: 320px;
+    color: #EEE;
+}
+.left_navigation_icon{
+    position: absolute;
+    font-size: 24px;
+    width: 36px;
+    height: 36px;
+    padding: 7px 6px 5px 6px;
+    color: #FFF;
+    text-align: center;
+}
+.left_glance_button{
+    display: block;
+    position: absolute;
+    font-size: 18px;
+    height: 28px;
+    width: 100%;
+    top: 48px;
+    text-indent: 50px;
+    padding: 12px 0 8px 0;
+    text-align: left;
+    color: #EEE;
+}
+.left_home_button{
+    display: block;
+    position: absolute;
+    font-size: 18px;
+    height: 28px;
+    width: 100%;
+    top: 96px;
+    text-indent: 50px;
+    padding: 12px 0 8px 0;
+    text-align: left;
+    color: #EEE;
+}
+.left_device_list_button{
+    display: block;
+    position: absolute;
+    font-size: 18px;
+    height: 28px;
+    width: 100%;
+    top: 144px;
+    text-indent: 50px;
+    padding: 12px 0 8px 0;
+    text-align: left;
+    color: #EEE;
+    cursor: pointer;
+}
+.glance_notification{
+    display: block;
+    position: relative;
+    margin: 10px 20px;
+    text-align: left;
+}
+.glance_noti_title{
+    font-size: 28px;
+}
+.glance_noti_title_count_bg{
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background-color: #C00;
+    top: 0;
+    left: 140px;
+}
+.glance_noti_title_count_value{
+    position: absolute;
+    left: 148px;
+    top: 4px;
+    font-size: 15px;
+    color: #FFF;
+}
+.glance_home{
+    display: block;
+    position: relative;
+    margin: 10px 20px;
+    text-align: left;
+}
+.glance_home_title{
+    font-size: 28px;
+}
+.glance_device{
+    display: block;
+    position: relative;
+    margin: 10px 20px;
+    text-align: left;
+}
+.glance_device_title{
+    font-size: 28px;
+    cursor: pointer;
+}
+.glance_log{
+    display: block;
+    position: relative;
+    margin: 10px 20px;
+    text-align: left;
+}
+.glance_log_title{
+    font-size: 28px;
+}
+.glance_device_item{
+    display: block;
+    position: relative;
+    background-color: #FEFEFE;
+    height: 22px;
+    margin: 4px 20px;
+    padding: 10px 0;
+    text-indent: 62px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.glance_device_column{
+    display: block;
+    position: relative;
+    background-color: #FEFEFE;
+    height: 22px;
+    margin: 4px 20px;
+    padding: 10px 0;
+    text-indent: 62px;
+}
+.glance_device_column_text1{
+    position: relative;
+    font-size: 16px;
+}
+.glance_device_column_text2{
+    position: absolute;
+    font-size: 16px;
+    left: 200px;
+    top: 10px;
+}
+.glance_device_column_text3{
+    position: absolute;
+    font-size: 16px;
+    left: 400px;
+    top: 10px;
+}
+.glance_device_status{
+    position: absolute;
+    left: 200px;
+    top: 10px;
+    font-size: 18px;
+}
+.glance_page{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+}
+.device_page{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    overflow: auto;
+}
+.device_panel_title{
+    font-size: 28px;
+}
+.device_panel_btn_add{
+    font-size: 18px;
+    display: block;
+    position: absolute;
+    background-color: #333;
+    border: 1px solid #777;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    right: 20px;
+    top: 15px;
+}
+.device_content{
+    display: block;
+    position: relative;
+    margin: 10px;
+}
+.device_item{
+    display: block;
+    position: relative;
+    background-color: white;
+    margin: 10px;
+    height: 150px;
+    cursor: pointer;
+}
+.device_item_type{
+    font-size: 24px;
+    position: absolute;
+    left: 36px;
+    top: 8px;
+}
+.device_item_id{
+    font-size: 16px;
+    position: absolute;
+    left: 36px;
+    top: 42px;
+}
+.device_item_status{
+    font-size: 20px;
+    position: absolute;
+    left: 360px;
+    top: 12px;
+}
+.device_item_task_count{
+    font-size: 20px;
+    position: absolute;
+    left: 600px;
+    top: 12px;
+}
+.device_item_last_action{
+    font-size: 20px;
+    position: absolute;
+    left: 840px;
+    top: 12px;
+}
+.device_item_fi_s{
+    font-size: 16px;
+    position: absolute;
+    left: 36px;
+    top: 72px;
+}
+.device_item_fi_sp{
+    font-size: 16px;
+    position: absolute;
+    left: 36px;
+    top: 92px;
+}
+.device_item_samsung{
+    font-size: 16px;
+    position: absolute;
+    left: 36px;
+    top: 112px;
+}
+

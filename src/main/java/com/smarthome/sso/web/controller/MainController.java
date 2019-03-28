@@ -242,7 +242,7 @@ public class MainController {
                     String type = split[2];
                     User foundUser = userService.findOneUserByUsername(username);
 
-                    Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).build();
+                    Device newDevice = new Device(foundUser.getUserId(), type,"","","");
                     deviceService.addOneDevice(newDevice);
                     System.out.println("Added new device to user "+foundUser.getUserId()+" of type "+type);
                 }
@@ -287,7 +287,7 @@ public class MainController {
     //maps /user/dashboard to the corresponding file
     @RequestMapping(value="/user/dashboard", method = {RequestMethod.POST, RequestMethod.GET})
     public String getRoom(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        return "templates/room.html";
+        return "templates/room2.html";
     }
 
     //Constant checks every second to see whether a device needs to be toggled or tasks need to be updated

@@ -18,9 +18,9 @@
             //If you disabled the interceptor which prevents visiting dashboard without
             //session-cookie and connect to '/user/dashboard' directly, it will probably show nothing
             //because no sessionId fetched.
-            var getNameUri = "http://localhost:8090/user/getname"
+            var getNameUri = "http://localhost:8090/user/getname";
             $.post(getNameUri, function(data){
-                    name = data
+                    name = data;
                     $("#cookieBoard").text("Welcome: " + name);
                 }
             );

@@ -54,7 +54,7 @@ public class FiwareController {
         User foundUser = userService.findOneUserByUsername(username);
         String type = String.valueOf(request.getParameter("type"));
 
-        Device newDevice = Device.builder().userId(foundUser.getUserId()).type(type).build();
+        Device newDevice = new Device(foundUser.getUserId(), type,"","","");
         deviceService.addOneDevice(newDevice);
         System.out.println("Added new device to user "+foundUser.getUserId()+" of type "+type);
 
@@ -165,15 +165,17 @@ public class FiwareController {
         if (deviceList == null){
             return ResponseEntity.ok("");
         }
-        String s = "";
+        List<Device> result = new ArrayList<>();
+        //String s = "";
         for(int i=0; i<deviceList.size();i++){
             if(deviceList.get(i).getUserId().equals(foundUser.getUserId())) {
                 Device d = deviceList.get(i);
-                s = s + d.getType() + " deviceId " + d.getDeviceId() +" CurrentlyOn "+d.getPowerStatus() +" , ";
+                result.add(d);
+                //s = s + d.getType() + " deviceId " + d.getDeviceId() +" CurrentlyOn "+d.getPowerStatus() +" , ";
             }
         }
-        return ResponseEntity.ok(s);
-
+        //return ResponseEntity.ok(s);
+        return ResponseEntity.ok(result);
     }
 
 

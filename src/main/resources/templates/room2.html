@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Home Dashboard</title>
+    <link href="../templates/room2style.css" rel="stylesheet" type="text/css" />
+    <!--<link href="room2style.css" rel="stylesheet" type="text/css" />-->
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="../templates/room2script.js" type="text/javascript"></script>
+    <!--<script src="room2script.js" type="text/javascript"></script>-->
+</head>
+<body>
+<div class="background_panel" >
+    <div class="leftbar" >
+        <div class="left_navigation_icon">☰</div>
+        <div class="left_glance_button" >Glance</div>
+        <div class="left_home_button" >My Homes</div>
+        <span class="left_home_list_content" ></span>
+        <div class="left_device_list_button" >My Devices</div>
+        <span class="left_device_list_content" ></span>
+
+    </div>
+    <div class="default_panel" >
+        <div class="glance_page" >
+            <div class="glance_notification" >
+                <div class="glance_noti_title" >
+                    Notification
+                    <div class="glance_noti_title_count_bg"></div>
+                    <div class="glance_noti_title_count_value" >0</div>
+                </div>
+                <span class="glance_noti_content" ></span>
+                <hr />
+            </div>
+            <div class="glance_home" >
+                <div class="glance_home_title" >Home</div>
+                <span class="glance_home_content" ></span>
+                <hr />
+            </div>
+            <div class="glance_device" >
+                <div class="glance_device_title" >Device</div>
+                <div class="glance_device_column">
+                    <div class="glance_device_column_text1"><b>Type</b></div>
+                    <div class="glance_device_column_text2"><b>Status</b></div>
+                    <div class="glance_device_column_text3"><b>Last Action</b></div>
+                </div>
+                <span class="glance_device_content" >
+                <div class="glance_device_item">Device1<div class='glance_device_color'></div>
+                    <div class='glance_device_status'>true</div>
+                </div>
+                <div class="glance_device_item">Device2<div class='glance_device_color'></div>
+                    <div class='glance_device_status'>false</div>
+                </div>
+                </span>
+                <hr />
+            </div>
+            <div class="glance_log" >
+                <div class="glance_log_title" >Log</div>
+                <span class="glance_log_content" >
+                </span>
+                <hr />
+            </div>
+        </div>
+
+
+    <div class="device_page" >
+        <div class="device_panel_title" ><b>My Devices</b><hr/></div>
+        <div class="device_panel_btn_add">Add Device</div>
+        <span class="device_content" >
+            <div class="device_item">
+                <div class='device_item_type'>Device1</div>
+                <div class='device_item_id'>xxxxxxx-xxxxxxx-xxxxxxx</div>
+                <div class='device_item_status'>true</div>
+                <div class='device_item_fi_s'>fiware-service</div>
+                <div class='device_item_fi_sp'>fiware-service-path</div>
+                <div class='device_item_samsung'>SamsungID</div>
+                <div class='device_item_task_count'>0</div>
+                <div class='device_item_last_action'>-</div>
+            </div>
+            <div class="device_item">
+                <div class='device_item_type'>Device2</div>
+                <div class='device_item_id'>xxxxxxx-xxxxxxx-xxxxxxx</div>
+                <div class='device_item_status'>false</div>
+                <div class='device_item_fi_s'>fiware-service</div>
+                <div class='device_item_fi_sp'>fiware-service-path</div>
+                <div class='device_item_samsung'>SamsungID</div>
+                <div class='device_item_task_count'>0</div>
+                <div class='device_item_last_action'>-</div>
+            </div>
+        </span>
+
+    </div>
+    </div>
+</div>
+
+    <div class="topbar" >
+        <div class="top_title" >Smart Home Dashboard</div>
+        <div class="top_version" >beta</div>
+        <div class="top_sep" >|</div>
+        <div class="top_username" >Username</div>
+    </div>
+
+
+
+</body>
+</html>
