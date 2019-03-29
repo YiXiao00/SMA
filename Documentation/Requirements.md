@@ -39,4 +39,4 @@ The collection of data and control of Smart Home Devices through a middleware, w
 
 3. Devices should have the ability to have operations performed on them depending on the device. Certain devices should be able to turned on or off, or perform certain tasks immediately - eg. lowering power on Smart Toaster.
 
-4. Our middleware should also allow for tasks to be queued and performed at a set time. This should not require any further interaction after the task is scheduled. Queued tasks should be able to be cancelled and modified at any time before they are carried out. Eg. Queing up smart oven to start preheating at 20:00.
+4. Our middleware should also allow for tasks to be queued and performed at a set time. This should not require any further interaction after the task is scheduled. Queued tasks should be able to be cancelled and modified at any time before they are carried out. Eg. Queuing up smart oven to start preheating at 20:00.
