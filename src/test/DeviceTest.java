@@ -42,6 +42,7 @@ public class DeviceTest {
         mvc = MockMvcBuilders.standaloneSetup(signinController,fiwareController).build();
     }
 
+
     private void initializeUser() throws Exception {
         RequestBuilder request;
         LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
@@ -67,6 +68,16 @@ public class DeviceTest {
         params.add("type","test_default_device_type");
         request = MockMvcRequestBuilders.post("/device/add").params(params);
         mvc.perform(request).andExpect(status().isOk());
+    }
+
+    @Test
+    public void test_b_verifyDevice() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionID);
+        params.add("type","test_default_device_type");
+        request = MockMvcRequstBuilders.post("/device/verify").params(params);
+        mvc.perform(request).andExcept(status().isOk());
     }
 
     @Test

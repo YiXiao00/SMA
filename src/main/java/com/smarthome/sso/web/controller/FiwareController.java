@@ -88,6 +88,37 @@ public class FiwareController {
 
 
 
+    //Returns list of all devices and their owners, requires admin permission
+    @PostMapping("/device/verify")
+    @ResponseBody
+    public ResponseEntity<?> verifyDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
+
+        String deviceId = String.valueOf(request.getParameter("device"));
+        Device target = deviceService.findDeviceByDeviceId(deviceId);
+        String type = String.valueOf(request.getParameter("type"));
+
+        if(target==null){
+            return ResponseEntity.badRequest().body("Device ID not found");
+        }
+
+        if (!foundUser.getUserId().equals(target.getUserId())){
+            return ResponseEntity.badRequest().body("device does not belong to the user");
+        }
+
+        if(!type.equals(target.getType())){
+            return ResponseEntity.badRequest().body("Device type mismatch");
+        }
+
+        return ResponseEntity.ok("Device exists");
+
+
+
+
+    }
+
 
     //Returns list of all devices and their owners, requires admin permission
     @PostMapping("/device/all")
@@ -106,7 +137,6 @@ public class FiwareController {
             return ResponseEntity.badRequest().body("Needs admin permission");
         }
     }
-
 
 
 
