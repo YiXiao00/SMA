@@ -168,6 +168,9 @@
     font-size: 28px;
     cursor: pointer;
 }
+.glance_device_hide_id{
+    display: none;
+}
 .glance_log{
     display: block;
     position: relative;
@@ -317,4 +320,46 @@
     left: 36px;
     top: 112px;
 }
-
+.single_device_page{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    overflow: auto;
+}
+.single_device_title{
+    position: relative;
+    font-size: 28px;
+    margin: 0 50px;
+}
+.single_device_content{
+    display: block;
+    position: relative;
+    margin: 20px 10px 10px 10px;
+}
+.single_device_block_title{
+    position: relative;
+    font-size: 24px;
+    margin: 8px 0;
+}
+.single_device_back_btn{
+    position: absolute;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    border: 2px solid #444;
+    color: white;
+    top: 15px;
+    left: 20px;
+    cursor: pointer;
+}
+.single_device_back_btn_text{
+    position: absolute;
+    font-size: 24px;
+    color: #444;
+    top: 20px;
+    left: 27px;
+}

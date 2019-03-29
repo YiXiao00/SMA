@@ -62,10 +62,17 @@ public class FiwareController {
 
     }
 
-
-
-
-
+    @PostMapping("/device/get")
+    @ResponseBody
+    public ResponseEntity<?> getOneDevice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String deviceId = String.valueOf(request.getParameter("device"));
+        if (!innerMatchUserDevice(inputToken,deviceId)){
+            return ResponseEntity.ok("not match");
+        }
+        Device device = deviceService.findDeviceByDeviceId(deviceId);
+        return ResponseEntity.ok(device);
+    }
 
 
     //Deletes all devices, used for debugging

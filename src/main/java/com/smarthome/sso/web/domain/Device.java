@@ -27,19 +27,19 @@ public class Device {
 
     private boolean poweredOn = false;
 
-    private String FiwareService;
+    private String fiwareService;
 
-    private String FiwareServicePath;
+    private String fiwareServicePath;
 
-    private String SamsungID;
+    private String samsungID;
 
     /** Generate device without deviceId which will be generated automatically */
-    public Device(String userId, String type, String FiS, String FiSP, String sID){
+    public Device(String userId, String type, String fiwareService, String fiwareServicePath, String samsungID){
         this.userId = userId;
         this.type = type;
-        this.FiwareService = FiS;
-        this.FiwareServicePath = FiSP;
-        this.SamsungID = sID;
+        this.fiwareService = fiwareService;
+        this.fiwareServicePath = fiwareServicePath;
+        this.samsungID = samsungID;
     }
 
     //getters for all relevant attributes
