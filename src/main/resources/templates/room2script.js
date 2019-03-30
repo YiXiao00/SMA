@@ -35,7 +35,41 @@ $(document).ready(function() {
         var deviceId = $(this).children(".device_item_id").text();
         enterSingleDevicePage(deviceId);
     });
+
+    detailedDeviceList();
 });
+
+function detailedDeviceList(){
+    var uri = "http://localhost:8090/device/user/all";
+    $.post(uri,
+        {
+            token:sessionArg
+        }, function (data) {
+            var p = document.getElementsByClassName("device_item")[0];
+            var pChild = p.childNodes;
+            pChild[1].textContent = data[0]["type"];
+            pChild[3].textContent = data[0]["deviceId"];
+            pChild[5].textContent = data[0]["poweredOn"];
+            pChild[7].textContent = data[0]["FiS"];
+            pChild[9].textContent = data[0]["FiSP"];
+            pChild[11].textContent = data[0]["sID"];
+            for (var i =1; i<data.length;i++){
+                var y = p.cloneNode(true);
+                var yChild = y.childNodes;
+                yChild[1].textContent = data[i]["type"];
+                yChild[3].textContent = data[i]["deviceId"];
+                yChild[5].textContent = data[i]["poweredOn"]
+                yChild[7].textContent = data[i]["FiS"];
+                yChild[9].textContent = data[i]["FiSP"];
+                yChild[11].textContent = data[i]["sID"];
+                document.getElementsByClassName("device_content")[0].appendChild(y);
+
+
+            }
+        })
+
+
+}
 function getGlanceDeviceList(){
     var getDeviceUri = "/device/user/all";
     $.post(getDeviceUri,
