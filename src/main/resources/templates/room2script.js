@@ -27,6 +27,21 @@ $(document).ready(function() {
     $(".left_device_list_button").click(function(){
         enterDevicePage();
     });
+    $(".left_glance_button").click(function(){
+        enterGlance();
+    });
+    $(".left_home_button").click(function(){
+        enterHomes();
+    });
+    $(".left_navigation_icon").click(function(){
+        toggleLeftMenu();
+    });
+    $(".top_navigation_icon").click(function(){
+        toggleLeftMenu();
+    });
+
+
+
     $('.glance_device_content').on('click','.glance_device_item',function(){
         var deviceId = $(this).children(".glance_device_hide_id").text();
         enterSingleDevicePage(deviceId);
@@ -107,6 +122,20 @@ function enterDevicePage(){
     $(".single_device_page").hide();
     $(".device_page").fadeIn("fast");
 }
+
+function enterGlance(){
+
+    $(".device_page").hide();
+    $(".single_device_page").hide();
+    $(".glance_page").fadeIn("fast");
+
+
+}
+
+
+function enterHomes(){
+
+}
 function enterSingleDevicePage(deviceId){
     // clearInterval(glancePageTimer);
     $(".glance_page").hide();
@@ -114,3 +143,18 @@ function enterSingleDevicePage(deviceId){
     $(".single_device_page").fadeIn("fast");
     loadSingleDevicePage(deviceId);
 }
+
+function toggleLeftMenu(){
+    //alert($(".default_panel").css('left'));
+    if($(".left_bar").is(":visible")) {
+        $(".left_bar").hide();
+        $(".default_panel").css({left: 0});
+    }else{
+        $(".left_bar").show();
+        $(".default_panel").css({left: 250});
+
+    }
+
+}
+
+

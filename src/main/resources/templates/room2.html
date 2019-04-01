@@ -10,8 +10,8 @@
     <!--<script src="room2script.js" type="text/javascript"></script>-->
 </head>
 <body>
-<div class="background_panel" >
-    <div class="leftbar" >
+<div class="background_panel" >s
+    <div class="left_bar" >
         <div class="left_navigation_icon">☰</div>
         <div class="left_glance_button" >Glance</div>
         <div class="left_home_button" >My Homes</div>
@@ -63,10 +63,16 @@
             </div>
         </div>
 
-
     <div class="device_page" >
         <div class="device_panel_title" ><b>My Devices</b><hr/></div>
+        <span>
+        <div class = "popupForm">
+            <h1>Device name:</h1>
+            <input class="inputbox" type="text" name="newDevice" id="newDevice" value="Enter Device Here" onfocus="this.value=''"/>
+
+            <hr/></div>
         <div class="device_panel_btn_add">Add Device</div>
+        </span>
         <span class="device_content" >
             <div class="device_item">
                 <div class='device_item_type'>Device1</div>
@@ -115,6 +121,7 @@
 </div>
 
     <div class="topbar" >
+        <div class="top_navigation_icon">☰</div>
         <div class="top_title" >Smart Home Dashboard</div>
         <div class="top_version" >beta</div>
         <div class="top_sep" >|</div>

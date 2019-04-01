@@ -24,9 +24,9 @@
      text-align: left;
      font-size: 100%;
  }
-.leftbar{
+.left_bar{
     background-color: #343434;
-    display: block;
+    display: inline-block;
     position: fixed;
     top: 50px;
     left: 0;
@@ -86,7 +86,20 @@
     padding: 7px 6px 5px 6px;
     color: #FFF;
     text-align: center;
+    cursor: pointer;
 }
+
+.top_navigation_icon{
+    position: absolute;
+    font-size: 24px;
+    width: 36px;
+    height: 36px;
+    padding: 7px 6px 5px 6px;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+}
+
 .left_glance_button{
     display: block;
     position: absolute;
@@ -98,6 +111,7 @@
     padding: 12px 0 8px 0;
     text-align: left;
     color: #EEE;
+    cursor: pointer;
 }
 .left_home_button{
     display: block;
