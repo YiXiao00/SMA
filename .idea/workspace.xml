@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30c882d4-3ba6-407d-92ac-ca1557835fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/room2.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/room2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/room2script.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/room2script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/room2style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/room2style.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,6 +15,20 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/SMA$All_in_sso.ic" NAME="All in sso Coverage Results" MODIFIED="1553643872590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="742065113">
@@ -52,8 +65,8 @@
           <entry key="class" value="1" />
           <entry key="css" value="3" />
           <entry key="gitignore" value="1" />
-          <entry key="html" value="33" />
-          <entry key="java" value="94" />
+          <entry key="html" value="34" />
+          <entry key="java" value="97" />
           <entry key="js" value="2" />
           <entry key="json" value="1" />
           <entry key="png" value="1" />
@@ -65,9 +78,9 @@
         <counts>
           <entry key="CLASS" value="1" />
           <entry key="CSS" value="3" />
-          <entry key="HTML" value="33" />
+          <entry key="HTML" value="34" />
           <entry key="Image" value="1" />
-          <entry key="JAVA" value="94" />
+          <entry key="JAVA" value="97" />
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="2" />
           <entry key="PLAIN_TEXT" value="1" />
@@ -78,18 +91,18 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="269" />
-          <entry key="html" value="9082" />
+          <entry key="html" value="9090" />
           <entry key="java" value="14680" />
-          <entry key="js" value="1048" />
+          <entry key="js" value="1482" />
           <entry key="xml" value="32" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="269" />
-          <entry key="HTML" value="9082" />
+          <entry key="HTML" value="9090" />
           <entry key="JAVA" value="14680" />
-          <entry key="JavaScript" value="1048" />
+          <entry key="JavaScript" value="1482" />
           <entry key="XML" value="32" />
         </counts>
       </usages-collector>
@@ -100,17 +113,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="95" column="56" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="185" column="117" lean-forward="true" selection-start-line="185" selection-start-column="39" selection-end-line="185" selection-end-column="117" />
+            <state relative-caret-position="-8">
+              <caret line="82" column="53" selection-start-line="82" selection-start-column="53" selection-end-line="82" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -127,8 +131,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room2script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="142" column="18" selection-start-line="142" selection-start-column="9" selection-end-line="142" selection-end-column="18" />
+            <state relative-caret-position="221">
+              <caret line="70" column="33" lean-forward="true" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="154" selection-start-line="154" selection-end-line="154" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="42" column="5" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -148,7 +173,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>delete/</find>
       <find>/task/delete</find>
       <find>deleteTask</find>
       <find>forUser</find>
@@ -176,8 +200,9 @@
       <find>device_panel</find>
       <find>pop</find>
       <find>device</find>
-      <find>device_pane</find>
       <find>loadSingl</find>
+      <find>enterSingleDevicePage</find>
+      <find>device_pane</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -218,9 +243,9 @@
         <option value="$PROJECT_DIR$/src/main/resources/templates/room.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/room2.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/room2style.css" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/room2.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/room2script.js" />
       </list>
     </option>
@@ -255,10 +280,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="669" />
-    <option name="y" value="162" />
+    <option name="x" value="-7" />
     <option name="width" value="974" />
-    <option name="height" value="866" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -405,7 +429,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554206392903" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554209800777" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -599,7 +623,7 @@
       <workItem from="1553790985942" duration="8902000" />
       <workItem from="1553857102818" duration="5713000" />
       <workItem from="1553967718169" duration="8062000" />
-      <workItem from="1554200820491" duration="4372000" />
+      <workItem from="1554200820491" duration="7771000" />
     </task>
     <servers />
   </component>
@@ -636,7 +660,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250450000" />
+    <option name="totallyTimeSpent" value="253849000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -661,8 +685,8 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.809628" visible="true" weight="0.14533623" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.3373102" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.809628" weight="0.3449024" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" visible="true" weight="0.3373102" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3293348" />
@@ -679,7 +703,7 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.32942432" />
-      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Database" order="6" weight="0.32995737" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.32995737" />
@@ -692,8 +716,31 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java</url>
+          <line>154</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java</url>
+          <line>151</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java</url>
+          <line>152</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa6332.16549/MMTApiController.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/FiwareInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -904,23 +951,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2975">
-          <caret line="175" column="24" selection-start-line="175" selection-start-column="24" selection-end-line="175" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -930,8 +960,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="185" column="117" lean-forward="true" selection-start-line="185" selection-start-column="39" selection-end-line="185" selection-end-column="117" />
+        <state relative-caret-position="459">
+          <caret line="196" lean-forward="true" selection-start-line="196" selection-end-line="196" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="23" column="2" selection-start-line="23" selection-start-column="2" selection-end-line="25" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/domain/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="42" column="5" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/smarthome/sso/web/controller/FiwareController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="154" selection-start-line="154" selection-end-line="154" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -944,15 +998,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="95" column="56" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="56" />
+        <state relative-caret-position="-8">
+          <caret line="82" column="53" selection-start-line="82" selection-start-column="53" selection-end-line="82" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/room2script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="142" column="18" selection-start-line="142" selection-start-column="9" selection-end-line="142" selection-end-column="18" />
+        <state relative-caret-position="221">
+          <caret line="70" column="33" lean-forward="true" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
         </state>
       </provider>
     </entry>

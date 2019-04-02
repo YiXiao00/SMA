@@ -1,6 +1,7 @@
 var sessionArg;
 var cache_username;
 var glancePageTimer;
+var singleDeviceId;
 
 $(document).ready(function() {
     $(".device_page").hide();
@@ -67,8 +68,17 @@ $(document).ready(function() {
 
 function deleteDevice(){
 
-    if (confirm("Are you sure you want to delete device " + $(".single_device_info_type").textContent  + "?" )){
-        alert()
+    if (confirm("Are you sure you want to delete device " + $(".single_device_info_type").text()  + "?" )){
+        var uri = "http://localhost:8090/device/delete"
+        $.post(uri, {
+            token:sessionArg,
+            device:singleDeviceId
+        }, function (data) {
+            location.reload(true);
+
+
+        });
+
     }
 
 }
@@ -148,6 +158,14 @@ function loadSingleDevicePage(deviceId){
             device: deviceId
         }
         ,function(data){
+           singleDeviceId = data["deviceId"];
+           $(".single_device_title").text(data["type"]);
+           $(".single_device_info_type").text(data["type"]);
+           $(".single_device_info_id").text(data["deviceId"]);
+           $(".single_device_info_status").text(data["poweredOn"]);
+           $(".single_device_info_fi_s").text(data["FiS"]);
+           $(".single_device_info_fi_sp").text(data["FiSP"]);
+           $(".single_device_info_samsung").text(data["sID"]);
 
         }
     );

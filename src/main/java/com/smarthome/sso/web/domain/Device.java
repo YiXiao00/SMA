@@ -41,7 +41,6 @@ public class Device {
         this.fiwareServicePath = fiwareServicePath;
         this.samsungID = samsungID;
     }
-
     //getters for all relevant attributes
     public boolean getPowerStatus(){
         return poweredOn;
