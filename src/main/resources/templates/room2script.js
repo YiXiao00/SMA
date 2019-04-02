@@ -51,9 +51,45 @@ $(document).ready(function() {
         enterSingleDevicePage(deviceId);
     });
 
+    $(".device_panel_btn_add").click(function(){
+        openForm();
+    });
+
+    $(".deviceDelete").click(function(){
+        deleteDevice();
+    });
+
+
+
     detailedDeviceList();
 });
 
+
+function deleteDevice(){
+
+    if (confirm("Are you sure you want to delete device " + $(".single_device_info_type").textContent  + "?" )){
+        alert()
+    }
+
+}
+function openForm(){
+    if($(".popupForm").css("width")=="300px") {
+        if($("#newDevice").val()!="Enter Device Name"){
+            var uri = "http://localhost:8090/device/add"
+
+            $.post(uri,
+                {
+                    token:sessionArg,
+                    type:$("#newDevice").val()
+                }, function(data) {
+                    location.reload(true);
+                });
+
+        }
+    }
+
+    $('.transform').toggleClass('transform-active');
+}
 function detailedDeviceList(){
     var uri = "http://localhost:8090/device/user/all";
     $.post(uri,
