@@ -2,6 +2,7 @@ var sessionArg;
 var cache_username;
 var glancePageTimer;
 var singleDeviceId;
+var previous;
 
 $(document).ready(function() {
     $(".device_page").hide();
@@ -40,6 +41,11 @@ $(document).ready(function() {
     $(".top_navigation_icon").click(function(){
         toggleLeftMenu();
     });
+    $(".single_device_back_btn").click(function(){
+        returnFromSingle();
+    });
+
+
 
 
 
@@ -192,10 +198,23 @@ function enterHomes(){
 }
 function enterSingleDevicePage(deviceId){
     // clearInterval(glancePageTimer);
+    if($(".glance_page").is(":visible"))
+        previous=1;
+    if($(".device_page").is(":visible"))
+        previous=2;
     $(".glance_page").hide();
     $(".device_page").hide();
     $(".single_device_page").fadeIn("fast");
     loadSingleDevicePage(deviceId);
+}
+
+function returnFromSingle(){
+    if(previous==1){
+        enterGlance();
+    }
+    if(previous==2){
+        enterDevicePage();
+    }
 }
 
 function toggleLeftMenu(){
