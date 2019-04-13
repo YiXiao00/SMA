@@ -74,10 +74,35 @@ public class DeviceTest {
     public void test_b_verifyDevice() throws Exception{
         RequestBuilder request;
         LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("token",userSessionID);
+        params.add("token",userSessionId);
         params.add("type","test_default_device_type");
-        request = MockMvcRequstBuilders.post("/device/verify").params(params);
-        mvc.perform(request).andExcept(status().isOk());
+        request = MockMvcRequestBuilders.post("/device/verify").params(params);
+        mvc.perform(request).andExpect(status().isOk());
+    }
+
+    @Test
+    public void test_c_toggleDevice() throws Exception{
+
+    }
+
+    @Test
+    public void test_d_deviceChangeType() throws Exception{
+
+    }
+
+    @Test
+    public void test_e_removeDeviceOfUser() throws Exception{
+
+    }
+
+    @Test
+    public void test_f_deviceOfMultipleUser() throws Exception{
+
+    }
+
+    @Test
+    public void test_g_fiwareInfo() throws Exception{
+
     }
 
     @Test
