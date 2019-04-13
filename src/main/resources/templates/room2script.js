@@ -196,6 +196,37 @@ function loadSingleDevicePage(deviceId){
 
         }
     );
+
+    var uri = "http://localhost:8090/task/device/view";
+    $.post(uri,
+        {
+            token:sessionArg,
+            deviceId:deviceId
+        }, function (data) {
+            var p = document.getElementsByClassName("taskBlock")[0];
+            var pChild = p.childNodes;
+            if(data.length==0){
+                $(".taskBlock").hide();
+            }else {
+                pChild[1].textContent = "Id: ".concat(data[0]["taskId"]);
+                pChild[3].textContent = "Type: ".concat(data[0]["type"]);
+                pChild[5].textContent = "Repeat: ".concat(data[0]["duration"]);
+                pChild[7].textContent = "When: ".concat(data[0]["calendar"]);
+
+                for (var i = 1; i < data.length; i++) {
+                    var y = p.cloneNode(true);
+                    var yChild = y.childNodes;
+                    yChild[1].textContent = "Id: ".concat(data[i]["taskId"]);
+                    yChild[3].textContent = "Type: ".concat(data[i]["type"]);
+                    yChild[5].textContent = "Repeat: ".concat(data[i]["duration"]);
+                    yChild[7].textContent = "When: ".concat(data[i]["calendar"]);
+                    document.getElementsByClassName("taskBlock")[0].appendChild(y);
+
+
+                }
+            }
+        })
+
 }
 function enterDevicePage(){
     clearInterval(glancePageTimer);

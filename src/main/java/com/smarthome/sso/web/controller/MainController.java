@@ -158,6 +158,18 @@ public class MainController {
 
     }
 
+    //Returns task data for all of the user's device's tasks
+    @RequestMapping("/task/device/view")
+    @ResponseBody
+    public ResponseEntity<?> findDeviceTasks(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String username = userService.getUsernameFromSessionId(inputToken);
+        User foundUser = userService.findOneUserByUsername(username);
+        String deviceId = String.valueOf(request.getParameter("deviceId"));
+        List<Task> taskList = taskService.findTasksByDeviceId(deviceId);
+        return ResponseEntity.ok(taskList);
+
+    }
     //Deletes a certain type of task for the current user
     @PostMapping("/task/delete")
     @ResponseBody
