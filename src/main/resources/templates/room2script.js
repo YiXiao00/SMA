@@ -18,6 +18,10 @@ $(document).ready(function() {
             }
             cache_username = data;
             $(".top_username").text(cache_username);
+            var home_name = "Location: ".concat(cache_username).concat('\'s home');
+            $(".single_device_block_title_home").text(home_name);
+
+
         }
     );
     getGlanceDeviceList();

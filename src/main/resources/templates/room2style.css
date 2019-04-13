@@ -272,6 +272,65 @@
     font-size:18px;
 }
 
+
+.taskForm{
+    display: inline;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size:18px;
+    width: 200px;
+}
+.addTaskLine{
+    font-size:20px;
+}
+
+.addTask2Line{
+    font-size:20px;
+}
+.taskType{
+    font-size:18px;
+    width:100px;
+    height: 50px;
+    text-align:center;
+}
+
+.submitTask1{
+    font-size: 18px;
+    display: inline;
+    position: absolute;
+    background-color: #229922;
+    border: 1px solid #116611;
+    color: black;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 20px;
+
+}
+
+.submitTask2{
+    font-size: 18px;
+    display: inline;
+    position: absolute;
+    background-color: #229922;
+    border: 1px solid #116611;
+    color: black;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 20px;
+
+}
+
+
+
 .transform {
     transition: all 0.5s ease;
     width: 0px;
@@ -314,6 +373,40 @@
     cursor: pointer;
     right: 20px;
     top: 15px;
+}
+
+.addTask{
+    font-size: 18px;
+    display: inline-block;
+    position: absolute;
+    background-color: #A0A0A0;
+    border: 1px solid #777;
+    border: 1px solid #777;
+    color: white;
+    padding: 7px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-left: 20px;
+
+}
+.addTask2{
+    font-size: 18px;
+    display: inline-block;
+    position: absolute;
+    background-color: #808080;
+    border: 1px solid #777;
+    color: white;
+    padding: 7px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-left: 150px;
+
 }
 
 
@@ -400,7 +493,7 @@
 }
 .single_device_block_title{
     position: relative;
-    font-size: 24px;
+    font-size: 48px;
     margin: 8px 0;
 }
 .single_device_back_btn{

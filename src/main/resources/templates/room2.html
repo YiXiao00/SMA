@@ -104,15 +104,41 @@
                     <div class='single_device_info_last_action'>-</div>
                 </div>
                 <hr/>
-                <div class="single_device_binding_home" >
-                    <div class="single_device_block_title" >Home</div>
+                <div class="single_device_binding_taskSlot" style="visibility:visible" >
+                    <div class ="addTaskLine" style="display:none">
 
-                </div>
+                      <select id="taskType" class="taskType">
+                        <option value="toggle">Toggle</option>
+                     </select>
+                     In how long? (Seconds): <input class="taskForm" type="number" name="newTaskWhen" id="newTaskWhen" onfocus="this.value=''"/>
+                     Repeat? (0 for no, time in seconds otherwise): <input class="taskForm" type="number" name="newTaskRepeat" id="newTaskRepeat" value="" onfocus="this.value=''"/>
+                     <span class="submitTask1"> Submit </span>
+                    </div>
+                    <div class ="addTask2Line" style="display:block">
+                        Syntax: <input class="taskForm" type="text" id="newTask2Synax"/>
+                        <select id="task2Type" class="taskType">
+                            <option value="toggle">Toggle</option>
+                            <option value="turnOn">Turn On</option>
+                            <option value="turnOff">Turn off</option>
+                        </select>
+                               <span class="submitTask2"> Submit </span>
+                    </div>
+
                 <hr/>
-                <div class="single_device_task_block" >
-                    <div class="single_device_block_title" >Task</div>
-
                 </div>
+                <span>
+                <div class="single_device_task_block" >
+                    <span class="single_device_block_title" >Task</span>
+                    <span class="addTask">Add Task</span>
+                    <span class="addTask2">Add Task 2</span>
+                    <div class="taskBlock">
+                        <span class ="taskTime">Time</span>
+                        <span class ="taskRepeat">Repeat Interval</span>
+                        <span class ="taskTime">Time</span>
+
+                    </div>
+                </div>
+                </span>
             </span>
 
         </div>
