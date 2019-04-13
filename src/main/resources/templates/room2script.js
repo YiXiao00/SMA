@@ -79,6 +79,13 @@ $(document).ready(function() {
         openTask2Form();
     });
 
+    $(".submitTask1").click(function(){
+        submitTask1();
+    });
+    $(".submitTask2").click(function(){
+        submitTask2();
+    });
+
 
 
 
@@ -255,6 +262,41 @@ function openTask2Form(){
     $(".single_device_binding_taskSlot").show();
     $(".addTaskLine").hide();
     $(".addTask2Line").fadeIn("fast");
+}
+
+function submitTask1(){
+
+    var uri = "http://localhost:8090/task/add"
+    $.post(uri,
+        {
+            type:$("#taskType").val(),
+            in:$("#newTaskWhen").val(),
+            duration:$("#newTaskRepeat").val(),
+            device:singleDeviceId,
+            token:sessionArg
+        }, function(data){
+            location.reload();
+
+
+        }
+    )
+
+}
+
+function submitTask2(){
+
+    var uri = "http://localhost:8090/fiware/task/add"
+    $.post(uri,
+        {
+            type:$("#task2type").val(),
+            condition:$("#newTask2Syntax").val(),
+            device:singleDeviceId,
+            token:sessionArg
+        }, function(data){
+            location.reload();
+        }
+    )
+
 }
 
 
