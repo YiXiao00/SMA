@@ -70,6 +70,16 @@ $(document).ready(function() {
         deleteDevice();
     });
 
+    $(".addTask").click(function(){
+        openTaskForm();
+    });
+
+
+    $(".addTask2").click(function(){
+        openTask2Form();
+    });
+
+
 
 
     detailedDeviceList();
@@ -232,6 +242,19 @@ function toggleLeftMenu(){
 
     }
 
+}
+
+function openTaskForm(){
+    $(".single_device_binding_taskSlot").show();
+    $(".addTask2Line").hide();
+    $(".addTaskLine").fadeIn("fast");
+}
+
+
+function openTask2Form(){
+    $(".single_device_binding_taskSlot").show();
+    $(".addTaskLine").hide();
+    $(".addTask2Line").fadeIn("fast");
 }
 
 
