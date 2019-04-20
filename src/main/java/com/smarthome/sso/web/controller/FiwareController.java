@@ -74,6 +74,20 @@ public class FiwareController {
         return ResponseEntity.ok(device);
     }
 
+    @PostMapping("/device/change")
+    @ResponseBody
+    public ResponseEntity<?> changeDeviceType(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String deviceId = String.valueOf(request.getParameter("device"));
+        String newType = String.valueOf(request.getParameter("input"));
+        if (!innerMatchUserDevice(inputToken,deviceId)){
+            return ResponseEntity.ok("not match");
+        }
+        Device device = deviceService.findDeviceByDeviceId(deviceId);
+        device.setType(newType);
+        deviceService.addOneDevice(device);
+        return ResponseEntity.ok("finished");
+    }
 
     //Deletes all devices, used for debugging
     @PostMapping("/deleteAllDevices")
@@ -164,6 +178,15 @@ public class FiwareController {
         System.out.println("Device deleted");
         return ResponseEntity.ok("Device deleted");
 
+    }
+
+    public void innerDeleteDevices(String userSessionId){
+        List<Device> devices = deviceService.findDevicesByUserId(userSessionId);
+        for (Device d : devices){
+            deviceService.deleteDevice(d);
+            List<Task> taskList = taskService.findTasksByDeviceId(d.getDeviceId());
+            taskService.deleteTasks(taskList);
+        }
     }
 
 

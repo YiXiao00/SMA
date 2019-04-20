@@ -31,7 +31,7 @@ public class UserAccessTest {
 
     private MockMvc mvc;
 
-    private String receivedSessionId = "";
+    private static String receivedSessionId = "";
 
     @Autowired
     private SigninController signinController;

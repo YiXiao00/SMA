@@ -19,6 +19,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,7 +33,9 @@ public class DeviceTest {
 
     private MockMvc mvc;
 
-    private String userSessionId = "";
+    private static String userSessionId = "";
+
+    private static String defaultDeviceId = "";
 
     @Autowired
     private SigninController signinController;
@@ -70,43 +76,185 @@ public class DeviceTest {
         mvc.perform(request).andExpect(status().isOk());
     }
 
+//    @Test
+//    public void test_b1_verifyDevice() throws Exception{
+//        RequestBuilder request;
+//        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+//        params.add("token",userSessionId);
+//        params.add("type","test_default_device_type");
+//        request = MockMvcRequestBuilders.post("/device/verify").params(params);
+//        mvc.perform(request).andExpect(status().isOk());
+//    }
+
     @Test
-    public void test_b_verifyDevice() throws Exception{
+    public void test_b2_getDeviceId() throws Exception{
+        RequestBuilder request;
+        request = MockMvcRequestBuilders.post("/device/user/all").param("token", userSessionId);
+        MvcResult mvcResult = mvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+        String deviceString = mvcResult.getResponse().getContentAsString();
+        Pattern deviceIdPattern = Pattern.compile("deviceId\":\"(.*?)\"");
+        Matcher deviceIdMatcher = deviceIdPattern.matcher(deviceString);
+        if (deviceIdMatcher.find()){
+            String deviceIdSegment = deviceIdMatcher.group(1);
+            assert(deviceIdSegment.length() > 0);
+            defaultDeviceId = deviceIdSegment;
+        }
+        else{
+            assert(false);
+        }
+    }
+
+    @Test
+    public void test_c1_toggleDevice() throws Exception{
         RequestBuilder request;
         LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("token",userSessionId);
-        params.add("type","test_default_device_type");
-        request = MockMvcRequestBuilders.post("/device/verify").params(params);
-        mvc.perform(request).andExpect(status().isOk());
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/device/toggle").params(params);
+        mvc.perform(request).andExpect(status().isOk())
+                            .andExpect(content().string("Device toggled"));
     }
 
     @Test
-    public void test_c_toggleDevice() throws Exception{
-
+    public void test_c2_checkDeviceStatus() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/device/get").params(params);
+        MvcResult mvcResult = mvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+        String deviceString = mvcResult.getResponse().getContentAsString();
+        Pattern statusPattern = Pattern.compile("poweredOn\":(.*?),");
+        Matcher statusMatcher = statusPattern.matcher(deviceString);
+        if (statusMatcher.find()){
+            String status = statusMatcher.group(1);
+            assert("true".equals(status));
+            test_c1_toggleDevice();  // shut down device after test
+        }
+        else{
+            assert(false);
+        }
     }
 
     @Test
-    public void test_d_deviceChangeType() throws Exception{
-
+    public void test_d1_deviceChangeType() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        params.add("input","test_default_device_type2");
+        request = MockMvcRequestBuilders.post("/device/change").params(params);
+        mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("finished"));
     }
 
     @Test
-    public void test_e_removeDeviceOfUser() throws Exception{
+    public void test_d2_checkDeviceType() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/device/get").params(params);
+        MvcResult mvcResult = mvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+        String deviceString = mvcResult.getResponse().getContentAsString();
+        Pattern statusPattern = Pattern.compile("type\":\"(.*?)\"");
+        Matcher statusMatcher = statusPattern.matcher(deviceString);
+        if (statusMatcher.find()){
+            String status = statusMatcher.group(1);
+            assert("test_default_device_type2".equals(status));
+        }
+        else{
+            assert(false);
+        }
+    }
 
+    @Test
+    public void test_e1_removeDeviceOfUser() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/device/delete").params(params);
+        mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("Device deleted"));
+    }
+
+    @Test
+    public void test_e2_checkDeviceList() throws Exception{
+        RequestBuilder request;
+        request = MockMvcRequestBuilders.post("/device/user/all").param("token", userSessionId);
+        MvcResult mvcResult = mvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+        String deviceString = mvcResult.getResponse().getContentAsString();
+        assert(deviceString.length() <= 10);
     }
 
     @Test
     public void test_f_deviceOfMultipleUser() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("name","test_default_username2");
+        params.add("pwd","test_default_password2");
+        request = MockMvcRequestBuilders.post("/user/signup").params(params);
+        mvc.perform(request);
+        request = MockMvcRequestBuilders.post("/user/signin").params(params);
+        MvcResult mvcResult = mvc.perform(request).andReturn();
+        String user2SessionId = mvcResult.getResponse().getCookie("sessionId").getValue();
 
+        LinkedMultiValueMap<String,String> params2 = new LinkedMultiValueMap<>();
+        params2.add("token",user2SessionId);
+        params2.add("type","test_default_device_type2");
+        request = MockMvcRequestBuilders.post("/device/add").params(params2);
+        mvc.perform(request);
+
+        String device2Id = "";
+        request = MockMvcRequestBuilders.post("/device/user/all").param("token", user2SessionId);
+        mvcResult = mvc.perform(request).andReturn();
+        String device2String = mvcResult.getResponse().getContentAsString();
+        Pattern device2IdPattern = Pattern.compile("deviceId\":\"(.*?)\"");
+        Matcher device2IdMatcher = device2IdPattern.matcher(device2String);
+        if (device2IdMatcher.find()){
+            String deviceIdSegment = device2IdMatcher.group(1);
+            assert(deviceIdSegment.length() > 0);
+            device2Id = deviceIdSegment;
+        }
+        else{
+            assert(false);
+        }
+
+        LinkedMultiValueMap<String,String> params3 = new LinkedMultiValueMap<>();
+        params3.add("token",userSessionId);
+        params3.add("device",device2Id);
+        request = MockMvcRequestBuilders.post("/device/get").params(params3);
+        mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("not match"));
+
+        LinkedMultiValueMap<String,String> params4 = new LinkedMultiValueMap<>();
+        params4.add("token",user2SessionId);
+        params4.add("device",device2Id);
+        request = MockMvcRequestBuilders.post("/device/delete").params(params4);
+        mvc.perform(request).andExpect(status().isOk());
+        signinController.innerDeleteUser("test_default_username2");
     }
 
     @Test
     public void test_g_fiwareInfo() throws Exception{
-
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        request = MockMvcRequestBuilders.post("/fiware/info").params(params);
+        mvc.perform(request)
+            .andExpect(status().isOk());
     }
 
     @Test
-    public void test_z_innerClean_UserDeviceTask() throws Exception{
+    public void test_z_innerClean_UserDevice() throws Exception{
         disposeUser();
     }
 
