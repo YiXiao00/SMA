@@ -31,6 +31,9 @@ import java.util.List;
 @Controller
 @EnableScheduling
 public class MainController {
+
+    private Boolean task1Enable = true;
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -150,7 +153,7 @@ public class MainController {
         for (Device device : deviceList){
             List<Task> taskList = taskService.findTasksByDeviceId(device.getDeviceId());
             for (Task task : taskList){
-                s = s + task.getType() + " forUser " + username + " device " + task.getDeviceId() + " atTime " + task.getCalendar().getTime() + " for " + task.getDuration() + " , ";
+                s = s + task.getType() + " taskId " + task.getTaskId() + " device " + task.getDeviceId() + " atTime " + task.getCalendar().getTime() + " for " + task.getDuration() + " , ";
             }
         }
         //System.out.println(s);
@@ -200,6 +203,20 @@ public class MainController {
         taskService.deleteSelf();
         return ResponseEntity.ok("Deleted task list");
 
+    }
+
+    @PostMapping("/task/get")
+    @ResponseBody
+    public ResponseEntity<?> getOneTaskUsingTaskId(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String deviceId = String.valueOf(request.getParameter("device"));
+        String taskId = String.valueOf(request.getParameter("task"));
+
+        Task task = taskService.findTaskByTaskId(taskId);
+        if (task == null){return ResponseEntity.ok("not found");}
+        if (deviceId.equals(task.getDeviceId())){
+            return ResponseEntity.ok(task);
+        }
+        return ResponseEntity.ok("not match");
     }
 
     //Adds tasks to the database
@@ -302,9 +319,17 @@ public class MainController {
         return "templates/room2.html";
     }
 
+    public void innerDisableTask1Scheduler(){
+        task1Enable = false;
+    }
+    public void innerEnableTask1Scheduler(){
+        task1Enable = true;
+    }
+
     //Constant checks every second to see whether a device needs to be toggled or tasks need to be updated
     @Scheduled(fixedRate= 1000)
     public void printOutStatement() {
+        if (!task1Enable) return;
         List<Task> taskList = taskService.findAllTasksSortedByTime();
         Calendar now = Calendar.getInstance();
         for (Task task : taskList){
