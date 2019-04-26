@@ -1,30 +1,12 @@
 # Evaluation
-By taking the consideration of the usage of our application. The main user group should be targeted on families. And the main goal of our application is to enable users to manage their electricities more reasonably and environmental-friendly. With a online device anyone in a family can easily gain access to the control panel of the devices at home and taking a continuous monitoring on the energy consumption and some other detailed datasets. 
+In order to evaluate our project properly, we considered what methods would be most effective so we could tailor our methods for our project. The main aim from a consumer end is to allow users to manage their devices and tasks, and data (such as electricity consumption). This meant UI would be very important. We wanted to take feedback from people so we could create a user manual, making it so no one could get confused. We also wanted to evaluate how well the project fulfilled Alex's need, of being flexible and able to be adapted for a number of devices. Finally, we also wanted to evaluate how well the technical functions worked.
 
-One of the methods we used to evaluate our product was to interview a potential customer of the service. 
-We first interviewed Andrew, a student, who has smart devices in his home.
+We decided due to these three needs, a variety of testing methods would be used. We would speak to a number of people, including our client to get some feedback on how they felt about our project. We would ask questions concerning user interface, ease of use, how bug-free their experience had been and their thoughts on it as a whole. Interviews are fantastic opportunities to get feedback live, as you can see how someone is engaging with the software. UI problems , for example, are incredibly easy to notice when someone else is using the software. The form would also mean we could ask specific questions and follow up if there were ambiguous answers - as opposed to an online survey, which could lead to some "incomplete data".
 
-# Do you find the system easy to use?
+We would also implement unit testing, showing that our project worked as intended with suitable error checking and minimal side effects. We do not expect everything to be perfect, so we would like to assess ourselves and understand which parts have been done well and which could be improved a lot. Unit testing is a fantastic way to ensure the project is reliable and useful. Whilst implementing it, we realised we should have made it a significant part of our project from the start. It was always our intention to develop testing alongside our project, and this is something that unfortunately fell to the wayside.
 
-"Yes it is very simple. Getting an account set up was easy and quick. Once I logged in there was a very clean dashboard. I also liked how it was a web application so that I can manage my devices anytime anywhere, and don't need to have any downloaded software."
+# Interview One
 
-# What more would you like to see out of it?
+I spoke to my friend Eva, in an attempt to establish what she liked about the project and try and get some valuable feedback. I did not give her any instructions, only informing her it was a project for managing Smart Homes.
 
-"Well since smart devices are quite a high end product, I would have expected a nicer looking system. I think it could have looked sleeker and less plain."
-
-
-Andrew's feedback was very useful. He confirmed that the product was working as expected, and was able to provide some feedback as to what we should work on next. We are taking his advice now and making the application look better using CSS.
-
-# Second interviewee
-
-The second interviewee is a very importand family member, a grandma of one of our team member, who does not know technology so much but can use mobile phones well.
-
-# How do you like this system?
-
-"This system facilitated my life a lot, that I do not need to walk through the living room to turn on the dish washer and air conditioner. Since I have some disease with my legs, so I am looking forward to see this system come out."
-
-# How do you think about the navigation of our system, is it easy to use?
-
-"To be honest, I do not really understand how to manage my devices and how can I make a appointment with the system."
-
-Grandma's oppinion is about improving the navigation and praticallity about our system. To achieve this, we have improved some functions and add explanations to certain functions.
+The signup and login were fine. She appreciated the choice to use cookies rather than have to constantly re-enter the username and password. She noted there was no way to delete her account from the UI. She did note the different styles between the sign up page and the actual dashboard, something that was more
