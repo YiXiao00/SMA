@@ -36,6 +36,7 @@ public class TaskTest {
     private static String userSessionId = "";
     private static String defaultDeviceId = "";
     private static String task1Id = "";
+    private static String task2Id = "";
 
     @Autowired
     private MainController mainController;
@@ -78,7 +79,15 @@ public class TaskTest {
     }
 
     private void disposeUserDeviceTask() throws Exception{
-
+        mainController.innerDeleteAllTask1OfDevice(defaultDeviceId);
+        fiwareController.innerDeleteAllTask2OfDevice(defaultDeviceId);
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/device/delete").params(params);
+        mvc.perform(request);
+        signinController.innerDeleteUser("test_default_username");
     }
 
     @Test
@@ -328,47 +337,138 @@ public class TaskTest {
 
     @Test
     public void test_f_addTask2() throws Exception{
+        fiwareController.innerDisableTask2Scheduler();
 
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        params.add("type","Toggle");
+        params.add("condition","[Humidity,>,0.35]");
+        request = MockMvcRequestBuilders.post("/fiware/task/add").params(params);
+        mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("task2 added"));
     }
 
     @Test
     public void test_g_viewTask2() throws Exception{
-
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/fiware/task/view").params(params);
+        MvcResult mvcResult = mvc.perform(request).andExpect(status().isOk())
+                .andReturn();
+        String resultString = mvcResult.getResponse().getContentAsString();
+        Pattern idPattern = Pattern.compile("taskId\":\"(.*?)\",");
+        Matcher idMatcher = idPattern.matcher(resultString);
+        if (idMatcher.find()){
+            task2Id = idMatcher.group(1);
+            assert(task2Id.length() > 5);
+        }
+        else{
+            assert(false);
+        }
     }
 
     @Test
-    public void test_h_changeTask2() throws Exception{
-
+    public void test_h1_changeTask2() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        params.add("taskId",task2Id);
+        params.add("type","TurnOn");
+        params.add("condition","[Humidity,>,0.4]");
+        request = MockMvcRequestBuilders.post("/fiware/task/patch").params(params);
+        mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("finished"));
     }
 
     @Test
-    public void test_i_deleteTask2() throws Exception{
-
+    public void test_h2_verifyChangedTask2() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/fiware/task/view").params(params);
+        MvcResult mvcResult = mvc.perform(request).andExpect(status().isOk())
+                .andReturn();
+        String resultString = mvcResult.getResponse().getContentAsString();
+        Pattern typePattern = Pattern.compile("type\":\"(.*?)\",");
+        Matcher typeMatcher = typePattern.matcher(resultString);
+        if (typeMatcher.find()){
+            String typeString = typeMatcher.group(1);
+            assert("TurnOn".equals(typeString));
+        }
+        else{
+            assert(false);
+        }
+        Pattern syntaxPattern = Pattern.compile("trigger\":\"(.*?)\",");
+        Matcher syntaxMatcher = syntaxPattern.matcher(resultString);
+        if (syntaxMatcher.find()){
+            String syntaxString = syntaxMatcher.group(1);
+            assert("[Humidity,>,0.4]".equals(syntaxString));
+        }
+        else{
+            assert(false);
+        }
     }
 
     @Test
-    public void test_j_multipleTask2() throws Exception{
-
+    public void test_i1_deleteTask2() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        params.add("taskId",task2Id);
+        request = MockMvcRequestBuilders.post("/fiware/task/delete").params(params);
+        mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("finished"));
     }
 
     @Test
-    public void test_k_addTask2Failure() throws Exception{
-
+    public void test_i2_verifyDeletedTask2() throws Exception{
+        RequestBuilder request;
+        LinkedMultiValueMap<String,String> params = new LinkedMultiValueMap<>();
+        params.add("token",userSessionId);
+        params.add("device",defaultDeviceId);
+        request = MockMvcRequestBuilders.post("/fiware/task/view").params(params);
+        MvcResult mvcResult = mvc.perform(request).andExpect(status().isOk())
+                .andReturn();
+        String resultString = mvcResult.getResponse().getContentAsString();
+        assert(resultString.length() <= 10);
+        task2Id = "";
     }
 
-    @Test
-    public void test_l_task2ContradictSyntax() throws Exception{
+    /**
+     *
+     *     @Test
+     *     public void test_j_multipleTask2() throws Exception{
+     *
+     *     }
+     *
+     *     @Test
+     *     public void test_k_addTask2Failure() throws Exception{
+     *
+     *     }
+     *
+     *     @Test
+     *     public void test_l_task2ContradictSyntax() throws Exception{
+     *
+     *     }
+     *
+     *     @Test
+     *     public void test_m_task1AndTask2() throws Exception{
+     *
+     *     }
+     *
+     * */
 
-    }
-
-    @Test
-    public void test_m_task1AndTask2() throws Exception{
-
-    }
 
     @Test
     public void test_z_innerClean_UserDeviceAllTasks() throws Exception{
-
+        disposeUserDeviceTask();
     }
 
 }

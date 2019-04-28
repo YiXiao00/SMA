@@ -26,6 +26,10 @@ public class TaskService {
         tRepo.delete(t);
     }
 
+    public void deleteTask2(Task2 task2){
+        task2Repository.delete(task2);
+    }
+
     public void deleteTasks(List<Task> tasks){
         tRepo.deleteAll(tasks);
     }
@@ -34,8 +38,16 @@ public class TaskService {
         return tRepo.findByTaskId(taskId);
     }
 
+    public Task2 findTask2ByTaskId(String taskId){
+        return task2Repository.findByTaskId(taskId);
+    }
+
     public List<Task> findTasksByDeviceId(String deviceId){
         return tRepo.findByDeviceId(deviceId);
+    }
+
+    public List<Task2> findTask2sByDeviceId(String deviceId){
+        return task2Repository.findTask2sByDeviceId(deviceId);
     }
 
     public ServiceResult deleteOneTaskByTaskId(String id){
