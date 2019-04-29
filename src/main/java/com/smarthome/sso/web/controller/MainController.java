@@ -197,6 +197,13 @@ public class MainController {
 
     }
 
+    public void innerDeleteAllTask1OfDevice(String deviceId) throws Exception{
+        List<Task> tasks = taskService.findTasksByDeviceId(deviceId);
+        for (Task task : tasks){
+            taskService.deleteTask(task);
+        }
+    }
+
     @PostMapping("/task/get")
     @ResponseBody
     public ResponseEntity<?> getOneTaskUsingTaskId(HttpServletRequest request, HttpServletResponse response) throws Exception{

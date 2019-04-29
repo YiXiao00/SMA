@@ -24,6 +24,8 @@ import java.util.List;
 @Controller
 public class FiwareController {
 
+    private Boolean task2Enable = true;
+
     @Autowired
     private FiwareService fiwareService;
     @Autowired
@@ -36,10 +38,18 @@ public class FiwareController {
     public boolean innerMatchUserDevice(String inputToken, String deviceId){
         String username = userService.getUsernameFromSessionId(inputToken);
         User foundUser = userService.findOneUserByUsername(username);
-
         Device target = deviceService.findDeviceByDeviceId(deviceId);
 
         if (!foundUser.getUserId().equals(target.getUserId())){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean innerMatchDeviceTask(String deviceId, String task2Id){
+        Task2 task2 = taskService.findTask2ByTaskId(task2Id);
+        if (task2 == null){return false;}
+        if (!task2.getDeviceId().equals(deviceId)){
             return false;
         }
         return true;
@@ -256,16 +266,85 @@ public class FiwareController {
     @PostMapping("/fiware/task/add")
     @ResponseBody
     public ResponseEntity<?> addTask2(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
         String inputType = String.valueOf(request.getParameter("type"));
         String deviceId = String.valueOf(request.getParameter("device"));
         String conditionString = String.valueOf(request.getParameter("condition"));
+        if (!innerMatchUserDevice(inputToken,deviceId)){
+            return ResponseEntity.ok("device does not belong to the user");
+        }
         Task2 task2 = new Task2(inputType,deviceId,conditionString);
         taskService.addTask2(task2);
         return ResponseEntity.ok("task2 added");
     }
 
+    @PostMapping("/fiware/task/view")
+    @ResponseBody
+    public ResponseEntity<?> viewTask2(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String deviceId = String.valueOf(request.getParameter("device"));
+        if (!innerMatchUserDevice(inputToken,deviceId)){
+            return ResponseEntity.ok("device does not belong to the user");
+        }
+        List<Task2> list = taskService.findTask2sByDeviceId(deviceId);
+        return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/fiware/task/patch")
+    @ResponseBody
+    public ResponseEntity<?> changeTask2(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String deviceId = String.valueOf(request.getParameter("device"));
+        String task2Id = String.valueOf(request.getParameter("taskId"));
+        String newType = String.valueOf(request.getParameter("type"));
+        String newSyntax = String.valueOf(request.getParameter("condition"));
+        if (!innerMatchUserDevice(inputToken,deviceId)){
+            return ResponseEntity.ok("device does not belong to the user");
+        }
+        if (!innerMatchDeviceTask(deviceId,task2Id)){
+            return ResponseEntity.ok("task does not belong to the device");
+        }
+        Task2 task2 = taskService.findTask2ByTaskId(task2Id);
+        task2.setType(newType);
+        task2.setTrigger(newSyntax);
+        taskService.addTask2(task2);
+        return ResponseEntity.ok("finished");
+    }
+
+    @PostMapping("/fiware/task/delete")
+    @ResponseBody
+    public ResponseEntity<?> deleteTask2(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String inputToken = String.valueOf(request.getParameter("token"));
+        String deviceId = String.valueOf(request.getParameter("device"));
+        String task2Id = String.valueOf(request.getParameter("taskId"));
+        if (!innerMatchUserDevice(inputToken,deviceId)){
+            return ResponseEntity.ok("device does not belong to the user");
+        }
+        if (!innerMatchDeviceTask(deviceId,task2Id)){
+            return ResponseEntity.ok("task does not belong to the device");
+        }
+        Task2 task2 = taskService.findTask2ByTaskId(task2Id);
+        taskService.deleteTask2(task2);
+        return ResponseEntity.ok("finished");
+    }
+
+    public void innerDisableTask2Scheduler(){
+        task2Enable = false;
+    }
+    public void innerEnableTask2Scheduler(){
+        task2Enable = true;
+    }
+
+    public void innerDeleteAllTask2OfDevice(String deviceId) throws Exception{
+        List<Task2> tasks = taskService.findTask2sByDeviceId(deviceId);
+        for (Task2 task : tasks){
+            taskService.deleteTask2(task);
+        }
+    }
+
     @Scheduled(fixedRate= 15000)
     public void checkFiwareTasks() throws Exception{
+        if (!task2Enable) return;
         List<Task2> taskList = taskService.findAllTask2s();
         HashMap<String,FiwareInfo> deviceHashMap = new HashMap<>();
         for (Task2 task2 : taskList){
