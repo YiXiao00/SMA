@@ -102,7 +102,6 @@ public class FiwareController {
 
 
 
-    //Returns list of all devices and their owners, requires admin permission
     @PostMapping("/device/verify")
     @ResponseBody
     public ResponseEntity<?> verifyDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -138,6 +137,7 @@ public class FiwareController {
     @PostMapping("/device/all")
     @ResponseBody
     public ResponseEntity<?> showAllDevices(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        /*
         String admin = String.valueOf(request.getParameter("admin"));
         if(admin.equals("admin")) {
             List<Device> dList = deviceService.findAllDevices();
@@ -148,8 +148,9 @@ public class FiwareController {
             }
             return ResponseEntity.ok(s);
         }else{
-            return ResponseEntity.badRequest().body("Needs admin permission");
-        }
+        */
+            return ResponseEntity.badRequest().body("Cannot display all devices for privacy reasons.");
+        //}
     }
 
 

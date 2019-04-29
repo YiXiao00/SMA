@@ -142,11 +142,11 @@
     border-radius: 50%;
     background-color: #C00;
     top: 0;
-    left: 140px;
+    left: 150px;
 }
 .glance_noti_title_count_value{
     position: absolute;
-    left: 148px;
+    left: 158px;
     top: 4px;
     font-size: 15px;
     color: #FFF;

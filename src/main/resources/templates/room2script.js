@@ -217,9 +217,11 @@ function loadSingleDevicePage(deviceId){
               deviceId:deviceId
           }, function (data) {
               var p = document.getElementsByClassName("taskBlock")[0];
-
-              var pChild = p.childNodes;
               taskCount = data.length
+              alert(data.length)
+              alert(taskCount)
+              alert(taskCount + "setAs")
+              var pChild = p.childNodes;
 
               if(data.length==0){
                   $(".taskBlock").hide();
@@ -245,6 +247,7 @@ function loadSingleDevicePage(deviceId){
 
     alert("deviceGet")
     var uri = "/device/get";
+    setTimeout(
     $.post(uri,
         {
             token: sessionArg,
@@ -256,7 +259,9 @@ function loadSingleDevicePage(deviceId){
            $(".single_device_info_type").text(data["type"]);
            $(".single_device_info_id").text(data["deviceId"]);
            $(".single_device_info_status").text(data["poweredOn"]);
-          $(".single_device_task_count").text(taskCount);
+           alert(taskCount + "currently is ")
+           alert(taskCount)
+          $(".single_device_info_task_count").text(taskCount);
            if(data["FiS"]!=""){
             $(".single_device_info_fi_s").text(data["FiS"]);
           }
@@ -269,7 +274,7 @@ function loadSingleDevicePage(deviceId){
 
 
         }
-    );
+    ), 500);
 
 
 }

@@ -113,16 +113,8 @@ public class MainController {
     @RequestMapping("/delete")
     @ResponseBody
     public ResponseEntity<?> deleteAllDatabases(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String admin = String.valueOf(request.getParameter("admin"));
-        if(admin.equals("admin")) {
-            userService.deleteSelf();
-            deviceService.deleteSelf();
-            taskService.deleteSelf();
-            System.out.println("All databases reset");
-            return ResponseEntity.ok("Deleted");
-        }else{
-            return ResponseEntity.badRequest().body("Needs admin permission");
-        }
+            return ResponseEntity.badRequest().body("No, you can't delete all databases.");
+
     }
 
     //Returns a list of all tasks with their associated user, device and time
