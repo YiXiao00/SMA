@@ -1,30 +1,31 @@
-# Alex Mavromatis
-Alex works as a research associate for the high performance network group at University of Bristol. He proposed the initial project and has been our guide for both a general outline of the project and what technical elements should be utilised (eg. he informed us that we should use MongoDB for this project). He is our main client for this project, and we have been fortunate to have his consistent feedback as we work on the project. We have been able to receive useful feedback on features from conception to full implementation. Alex has an investment not only in a good project being made but the data being collected properly such that it can be utilised for research. There is also the potential the project to potentially be adapted in the future, so he has been paying attention to the structure of the project so it can be changed and adapted in the future.
-
-# Theo Tryfonas
-Theo is a reader in Smart Cities in the department of Civil Engineering. His research focuses both on Smart Cities and the IoT. He also proposed the initial project and though we have not met with him as frequently as we have met with Alex, his insights and ideas have been incredibly useful in helping us to start the project. Theo also has an investment not only in a good project being made but the data being collected properly such that it can be utilised for research.
-
-# Samsung
+# Requiements
+First of all, for this part of report, we would like to talk about stakeholders of out project.
+## Clients
+### Alex Mavromatis
+Alex works as a research associate for the high performance network group at University of Bristol. He proposed the initial project and has been our guide for both a general outline of the project and what technical elements should be utilised (eg. he informed us that we should use MongoDB for this project). He is our main client for this project, and we have been fortunate to have his consistent feedback as we work on the project. We have been able to receive useful feedback on features from conception to full implementation. Alex has an investment not only in a good project being made but the data being collected properly such that it can be utilised for research. There is also a potential that the project will be adapted in the future, so he has been paying attention to the structure of the project so it can be changed and adapted in the future.
+### Theo Tryfonas
+Theo is a leader in Smart Cities in the department of Civil Engineering. His research focuses both on Smart Cities and the IoT. He also proposed the initial project and though we have not met with him as frequently as we have met with Alex, his insights and ideas have been incredibly useful in helping us to start the project.
+### Samsung
 Samsung is one of the market leaders in terms of smart technology. Many of the devices in the Smart Project Lab are Samsung and it is incredibly important our middleware is created in such a way that properly looks after Samsung usage data. Not only are we collecting data, we are offering remote functionality to the devices that makes them even more useful - but we need to be careful with security and ensure the IoT data is sent correctly.
-
-# University of Bristol
+### University of Bristol
 Both of our clients we have been meeting with are members of Research Groups at the UoB, so we have a responsibility to them through our clients. Many of the devices we test on are owned by the University, so we need to ensured information is stored correctly. Many of the interests of the University are represented by Alex.
 
-# Smart Home Owners
-Smart Home owners rely on us building a functional piece of software with a simple to understand and easy to use front end. They rely on the consistency of our software to allow them to plan around it - they can take full advantage of our software if it is always available. Misuse of smart devices could also potentially pose a safety hazard, especially if the devices involved are security devices. Since we are aimed at building a flexible platform that can handle many types of devices, we need to ensure that our program is designed as such to allow all cases. We have to assume every device we are dealing with is essential. Furthermore, they also put trust in us to take care of their data properly - storing passwords and identifying information securely and ensuring that only they have control over Smart Devices in their home. Security is a huge concern for many Smart Home users, so making sure they feel safe in their homes is a priority.
+## End-Users
+### Smart Home Owners
+Smart Home owners rely on us building a functional piece of software with a simple to understand and easy to use front end. They rely on the consistency of our software to allow them to plan around it - they can take full advantage of our software if it is always available. Misuse of smart devices could also potentially pose a safety hazard, especially if the devices involved are security devices. Since we are aimed at building a flexible platform that can handle many types of devices, we need to ensure that our program is designed as such to allow all cases. We have to assume every device we are dealing with is essential. Furthermore, they also put trust in us to take care of their data properly - storing passwords and identifying information securely and ensuring that only they have control over Smart Devices in their home. Security is a huge concern for many Smart Home users, so making sure they feel safe in their homes is a priority. In spite of security, usability and navigation of the system is also a important thing to be paid attention to. Since the end users are in group of family, so some of the devices will be controlled by old people or young child. So a tidy and easily understood UI is required when developing this system.
 
-# Use Case Diagram
+### Use Case Diagram
 
 ![alt text](UseCaseDiagram.png "Use Case Diagram")
 
-# Main Goal:
+### Main Goal:
 
 Giving users the ability to interact with their Smart Home Devices through a front end, using middleware to communicate with devices to allow for data collection, manual control and tasks to be set.
 
 
-# Smaller Goal - Data Collection:
+### Smaller Goal - Data Collection:
 
-1.  Data relating to usage (how often is the device on, what times is it normally on) should be able to be collected from the devices - either calculated by the device or by our middleware depending on the data. The data being collected and stored should be visible to the user, as should where it is being sent.
+1. Data relating to usage (how often is the device on, what times is it normally on) should be able to be collected from the devices - either calculated by the device or by our middleware depending on the data. Also the data can be collected directly by user manually type in when using the web application. The data being collected and stored should be visible to the user, as should where it is being sent.
 
 2. Other important data, such as usernames and passwords for user accounts should be stored securely to make sure only the user in question can impact their own devices. Data such as device and user ids should be generated by the middleware.
 
@@ -32,7 +33,7 @@ Giving users the ability to interact with their Smart Home Devices through a fro
 
 4. Sufficient care must be taken with any identifying device information, or any sensitive information such as passwords. Sufficient care may mean salting, encrypting or any other security procedure to protect the users of our middleware.
 
-# Smaller Goal - Device Control:
+### Smaller Goal - Device Control:
 
 1. Using our front end, a user should be able to view all devices attached to their Smart Home (and only devices attached to their smart home). They should be able to view information such as Device ID’s, names and associated tasks. They should be able to remove devices from their account and add others - with sufficient security measures to ensure they are only adding devices in their home. Depending on the situation in which our middleware is being used, we may need to ensure the device is linked to a real device. This option could be available, but currently devices can be added by name only.
 
@@ -41,3 +42,7 @@ Giving users the ability to interact with their Smart Home Devices through a fro
 3. Devices should have the ability to have operations performed on them depending on the device. Certain devices should be able to turned on or off, or perform certain tasks immediately - eg. lowering power on Smart Toaster. These should vary by the device. Turning on/off is the only universal task.
 
 4. Our middleware should also allow for tasks to be queued and performed at a set time. This should not require any further interaction after the task is scheduled. Queued tasks should be able to be cancelled and modified at any time before they are carried out. Eg. Queuing up smart oven to start preheating at 20:00. These can repeat after set intervals.
+
+### Smaller Goal - Data analysis
+
+1.
