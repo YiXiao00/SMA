@@ -70,6 +70,10 @@ $(document).ready(function() {
         deleteDevice();
     });
 
+    $(".deviceToggle").click(function(){
+        toggleDevice();
+    });
+
     $(".addTask").click(function(){
         openTaskForm();
     });
@@ -109,8 +113,22 @@ function deleteDevice(){
     }
 
 }
+
+function toggleDevice(){
+  var uri = "http://localhost:8090/device/toggle"
+  $.post(uri, {
+      token:sessionArg,
+      device:singleDeviceId
+  }, function (data) {
+      location.reload(true);
+
+
+  });
+}
 function openForm(){
-    if($(".popupForm").css("width")=="300px") {
+    var unitWidth = $(".popupForm").css("width").replace(/px$/, "");
+    alert(unitWidth)
+    if(unitWidth>50) {
         if($("#newDevice").val()!="Enter Device Name"){
             var uri = "http://localhost:8090/device/add"
 
@@ -133,7 +151,13 @@ function detailedDeviceList(){
         {
             token:sessionArg
         }, function (data) {
-            var p = document.getElementsByClassName("device_item")[0];
+
+          var p = document.getElementsByClassName("device_item")[0];
+            if(data==""){
+                $(".device_item").hide();
+                return;
+
+            }
             var pChild = p.childNodes;
             pChild[1].textContent = data[0]["type"];
             pChild[3].textContent = data[0]["deviceId"];
@@ -168,6 +192,11 @@ function getGlanceDeviceList(){
         var tmpHtml = "";
         for (var index in data){
             var deviceItem = data[index];
+            if(deviceItem["poweredOn"]==true)
+              deviceItem["poweredOn"] = "On"
+            if(deviceItem["poweredOn"]==false)
+              deviceItem["poweredOn"]= "Off"
+
             var itemHtml = "<div class='glance_device_item'>" + deviceItem["type"] + "<div class='glance_device_color'></div>" +
                 "<div class='glance_device_status'>" + deviceItem["poweredOn"] + "</div>" +
                 "<div class='glance_device_hide_id'>" + deviceItem["deviceId"] + "</div></div>";
@@ -178,6 +207,43 @@ function getGlanceDeviceList(){
     );
 }
 function loadSingleDevicePage(deviceId){
+
+      var taskCount = 0
+      var uri = "http://localhost:8090/task/device/view";
+      alert("taskView")
+      $.post(uri,
+          {
+              token:sessionArg,
+              deviceId:deviceId
+          }, function (data) {
+              var p = document.getElementsByClassName("taskBlock")[0];
+
+              var pChild = p.childNodes;
+              taskCount = data.length
+
+              if(data.length==0){
+                  $(".taskBlock").hide();
+              }else {
+                  pChild[1].textContent = "Id: ".concat(data[0]["taskId"]);
+                  pChild[3].textContent = "Type: ".concat(data[0]["type"]);
+                  pChild[5].textContent = "Repeat: ".concat(data[0]["duration"]);
+                  pChild[7].textContent = "When: ".concat(data[0]["calendar"]);
+
+                  for (var i = 1; i < data.length; i++) {
+                      var y = p.cloneNode(true);
+                      var yChild = y.childNodes;
+                      yChild[1].textContent = "Id: ".concat(data[i]["taskId"]);
+                      yChild[3].textContent = "Type: ".concat(data[i]["type"]);
+                      yChild[5].textContent = "Repeat: ".concat(data[i]["duration"]);
+                      yChild[7].textContent = "When: ".concat(data[i]["calendar"]);
+                      document.getElementsByClassName("taskBlock")[0].appendChild(y);
+
+
+                  }
+              }
+          })
+
+    alert("deviceGet")
     var uri = "/device/get";
     $.post(uri,
         {
@@ -190,42 +256,21 @@ function loadSingleDevicePage(deviceId){
            $(".single_device_info_type").text(data["type"]);
            $(".single_device_info_id").text(data["deviceId"]);
            $(".single_device_info_status").text(data["poweredOn"]);
-           $(".single_device_info_fi_s").text(data["FiS"]);
-           $(".single_device_info_fi_sp").text(data["FiSP"]);
-           $(".single_device_info_samsung").text(data["sID"]);
+          $(".single_device_task_count").text(taskCount);
+           if(data["FiS"]!=""){
+            $(".single_device_info_fi_s").text(data["FiS"]);
+          }
+           if(data["FiSP"]!=""){
+            $(".single_device_info_fi_sp").text(data["FiSP"]);
+          }
+           if(data["sID"]!=""){
+            $(".single_device_info_samsung").text(data["sID"]);
+          }
+
 
         }
     );
 
-    var uri = "http://localhost:8090/task/device/view";
-    $.post(uri,
-        {
-            token:sessionArg,
-            deviceId:deviceId
-        }, function (data) {
-            var p = document.getElementsByClassName("taskBlock")[0];
-            var pChild = p.childNodes;
-            if(data.length==0){
-                $(".taskBlock").hide();
-            }else {
-                pChild[1].textContent = "Id: ".concat(data[0]["taskId"]);
-                pChild[3].textContent = "Type: ".concat(data[0]["type"]);
-                pChild[5].textContent = "Repeat: ".concat(data[0]["duration"]);
-                pChild[7].textContent = "When: ".concat(data[0]["calendar"]);
-
-                for (var i = 1; i < data.length; i++) {
-                    var y = p.cloneNode(true);
-                    var yChild = y.childNodes;
-                    yChild[1].textContent = "Id: ".concat(data[i]["taskId"]);
-                    yChild[3].textContent = "Type: ".concat(data[i]["type"]);
-                    yChild[5].textContent = "Repeat: ".concat(data[i]["duration"]);
-                    yChild[7].textContent = "When: ".concat(data[i]["calendar"]);
-                    document.getElementsByClassName("taskBlock")[0].appendChild(y);
-
-
-                }
-            }
-        })
 
 }
 function enterDevicePage(){
@@ -329,5 +374,3 @@ function submitTask2(){
     )
 
 }
-
-

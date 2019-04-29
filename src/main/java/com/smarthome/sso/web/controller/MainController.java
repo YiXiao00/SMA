@@ -344,7 +344,7 @@ public class MainController {
                 if (task.getDuration() != 0){
                     Calendar shutdownTime = task.getCalendar();
                     shutdownTime.add(Calendar.SECOND,task.getDuration());
-                    Task shutdownTask = new Task(task.getType(),task.getDeviceId(),shutdownTime,0);
+                    Task shutdownTask = new Task(task.getType(),task.getDeviceId(),shutdownTime,task.getDuration());
                     taskService.addOneTask(shutdownTask);
                 }
             }

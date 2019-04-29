@@ -113,7 +113,7 @@
     color: #EEE;
     cursor: pointer;
 }
-.left_home_button{
+.left_device_list_button{
     display: block;
     position: absolute;
     font-size: 18px;
@@ -125,19 +125,7 @@
     text-align: left;
     color: #EEE;
 }
-.left_device_list_button{
-    display: block;
-    position: absolute;
-    font-size: 18px;
-    height: 28px;
-    width: 100%;
-    top: 144px;
-    text-indent: 50px;
-    padding: 12px 0 8px 0;
-    text-align: left;
-    color: #EEE;
-    cursor: pointer;
-}
+
 .glance_notification{
     display: block;
     position: relative;
@@ -183,7 +171,11 @@
     cursor: pointer;
 }
 .glance_device_hide_id{
-    display: none;
+    display: inline;
+    position: absolute;
+    left: 400px;
+    top: 10px;
+    font-size: 18px;
 }
 .glance_log{
     display: block;
@@ -419,6 +411,22 @@
     top: 15px;
 }
 
+.deviceToggle{
+    font-size: 18px;
+    display: inline;
+    position: absolute;
+    background-color: #505050;
+    border: 1px solid #777;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    right: 20px;
+    top: 115px;
+}
+
 .addTask{
     font-size: 18px;
     display: inline-block;
@@ -463,6 +471,7 @@
     display: block;
     position: relative;
     background-color: white;
+    color: black;
     margin: 10px;
     height: 150px;
     cursor: pointer;

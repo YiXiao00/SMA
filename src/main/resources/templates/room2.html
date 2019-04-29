@@ -14,8 +14,6 @@
     <div class="left_bar" >
         <div class="left_navigation_icon">☰</div>
         <div class="left_glance_button" >Glance</div>
-        <div class="left_home_button" >My Homes</div>
-        <span class="left_home_list_content" ></span>
         <div class="left_device_list_button" >My Devices</div>
         <span class="left_device_list_content" ></span>
 
@@ -24,7 +22,7 @@
         <div class="glance_page" >
             <div class="glance_notification" >
                 <div class="glance_noti_title" >
-                    Notification
+                    Notifications
                     <div class="glance_noti_title_count_bg"></div>
                     <div class="glance_noti_title_count_value" >0</div>
                 </div>
@@ -41,15 +39,15 @@
                 <div class="glance_device_column">
                     <div class="glance_device_column_text1"><b>Type</b></div>
                     <div class="glance_device_column_text2"><b>Status</b></div>
-                    <div class="glance_device_column_text3"><b>Last Action</b></div>
+                    <div class="glance_device_column_text3"><b>Id</b></div>
                 </div>
                 <span class="glance_device_content" >
                 <div class="glance_device_item">Device1<div class='glance_device_color'></div>
-                    <div class='glance_device_status'>true</div>
+                    <div class='glance_device_status'>On</div>
                     <div class="glance_device_hide_id">xxxxx-xxxx</div>
                 </div>
                 <div class="glance_device_item">Device2<div class='glance_device_color'></div>
-                    <div class='glance_device_status'>false</div>
+                    <div class='glance_device_status'>False</div>
                     <div class="glance_device_hide_id">xxxxx-xxxx</div>
                 </div>
                 </span>
@@ -76,12 +74,11 @@
             <div class="device_item">
                 <div class='device_item_type'>Device1</div>
                 <div class='device_item_id'>xxxxxxx-xxxxxxx-xxxxxxx</div>
-                <div class='device_item_status'>true</div>
-                <div class='device_item_fi_s'>fiware-service</div>
-                <div class='device_item_fi_sp'>fiware-service-path</div>
-                <div class='device_item_samsung'>SamsungID</div>
-                <div class='device_item_task_count'>0</div>
-                <div class='device_item_last_action'>-</div>
+                Turned on: <div class='device_item_status'>true</div>
+                Fiware Service: <div class='device_item_fi_s'>N/A</div>
+                Service Path: <div class='device_item_fi_sp'>N/A</div>
+                SamsungID: <div class='device_item_samsung'>N/A</div>
+                Task Count: <div class='device_item_task_count'>0</div>
             </div>
         </span>
 
@@ -93,14 +90,15 @@
             <span class="single_device_content" >
                 <div class="single_device_info_block" >
                     <div id = d1 class="single_device_block_title" >Device Information</div>
-                    <div class='single_device_info_type'>Device1</div>
-                    <div class='single_device_info_id'>xxxxxxx-xxxxxxx-xxxxxxx</div>
-                    <div class='single_device_info_status'>true</div>
-                    <div class='single_device_info_fi_s'>fiware-service</div>
-                    <div class='single_device_info_fi_sp'>fiware-service-path</div>
-                    <div class='single_device_info_samsung'>SamsungID</div>
-                    <div class='single_device_info_task_count'>0</div>
+                    Name: <span class='single_device_info_type'>Device1</span> <div></div>
+                    Id: <span class='single_device_info_id'>xxxxxxx-xxxxxxx-xxxxxxx</span> <div></div>
+                    Turned on: <span class='single_device_info_status'>true</span> <div></div>
+                    Fiware Service: <span class='single_device_info_fi_s'>N/A</span> <div></div>
+                    Service Path: <span class='single_device_info_fi_sp'>N/A</span> <div></div>
+                    SamsungID: <span class='single_device_info_samsung'>N/A</span> <div></div>
+                    Assigned Tasks: <span class='single_device_info_task_count'>0</span> <div></div>
                     <div class="deviceDelete">Delete Device</div>
+                    <div class="deviceToggle">Toggle Device</div>
                     <div class='single_device_info_last_action'>-</div>
                 </div>
                 <hr/>
