@@ -19,7 +19,7 @@ She found the two types of tasks very confusing, and we realised this was someth
 
 She concluded by saying the UI felt slick and well made, but the lack of actual connected features made it feel strange. However, she felt the program had a solid basis and if we were able to correctly connect it with devices it would work well. She could see the appeal in her home but ultimately said a mobile app would be the most effective way forwards: "I don't want to log on to my laptop every time I want to turn down my volume, especially when I'm carrying a smartphone with me."
 
-#Interview One - Key points
+# Interview One - Key points
 
 The UI felt slick and professional, but also scalable. She liked how each device had their own page, and suggested this would make it easier to customise each device. She suggested each device could have a more stylised page. She said our choice to use CSS and animations really made it stand out. The need for a mobile app was addressed, and this is certainly something that would be a long term goal.
 
@@ -30,7 +30,7 @@ One point of definite note is the confusion between two types of task, and how t
 The response to the project was positive, but the need for greater functionality was needed. If, hypothetically, we wanted to demonstrate or pitch it then it would not suffice in it's current state. Adding devices that could be interacted with, and seeing them change in real time would be a more impressive experience.
 
 
-#Client Feedback
+# Client Feedback
 
 Not just at the end, but throughout the project we were fortunate to receive detailed and useful feedback from our client. Alex was able to highlight ways in which we could grow and develop the project, and luckily saved us from spending time on features that weren't important for the final goal. Due to his technical experience, we could get unique insights on how we should approach developing the project.
 
@@ -43,7 +43,7 @@ One of the things that was emphasised throughout the project was the need for it
 
 In the end, Alex was happy with the project that came out. There were features we did not fully get to add, but he stressed that we had built a solid and robust basis to which this features can be added later. It was more important to build upon solid foundations then have a poorly connected mess of random features. We learnt a lot about the design process and the importance of having a feedback loop. Going through design -> feedback -> implementation is a useful way to build a strong and stable project. It also helps keep everyone on the same page, so we didn't have 4 quarters of a project we needed to stitch together at the end.
 
-#Unit Testing
+# Unit Testing
 
 There's a lot of technical elements to our project, which may potentially be used for real Smart Homes - potentially even for security devices. It is important that there are minimal side effects and every action the user can make is carefully constructed to ensure there is no way for a user to accidentally wipe their entire database.
 
@@ -53,7 +53,7 @@ These tests range from very simple (does signing up a user allow you to sign in 
 
 We did not implement unit testing as we want along, and in hindsight that was a bad decision. Implementing every function with appropriate unit testing would have allowed us to build a project with more confidence. We ended up having some unfortunate side effects that were overlooked, but could have been caught if we had dealt with them properly.
 
-#Conclusions and reflections
+# Conclusions and reflections
 
 It is difficult to condense over 6 months of work, progress and setbacks into a few paragraphs but there are some very clear lessons we have learnt as a team that we will be implementing into future projects and tasks. This was the first large project we have undertaken, and we can learn the most from focusing on the setbacks and problems rather than the things that went well. We have identified some key issues, and what steps would be useful to take in the feature.
 
