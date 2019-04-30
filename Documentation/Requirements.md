@@ -50,4 +50,4 @@ Giving users the ability to interact with their Smart Home Devices through a fro
 
 ### Date analysis
 
-1) The data we collected from IoTplatform should be read 
+1) The data we collected from middleware should be recognized by the system and transform into orders to control the device. 
