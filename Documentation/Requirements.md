@@ -1,29 +1,28 @@
 # Requiements
-First of all, for this part of report, we would like to talk about stakeholders of out project.
+There are a variety of stakeholders with different levels of investment and different expectations from our project. They engage with the project in different ways and understanding their requirements and expectations is pivotal to building a solid project.
 ## Clients
 ### Alex Mavromatis
-Alex works as a research associate for the high performance network group at University of Bristol. He proposed the initial project and has been our guide for both a general outline of the project and what technical elements should be utilised (eg. he informed us that we should use MongoDB for this project). He is our main client for this project, and we have been fortunate to have his consistent feedback as we work on the project. We have been able to receive useful feedback on features from conception to full implementation. Alex has an investment not only in a good project being made but the data being collected properly such that it can be utilised for research. There is also a potential that the project will be adapted in the future, so he has been paying attention to the structure of the project so it can be changed and adapted in the future.
+Alex works as a research associate for the high performance network group at University of Bristol. He proposed the initial project and we have met with him regularly. He has been our guide for both a general outline of the project and what technical elements should be utilised.
 ### Theo Tryfonas
 Theo is a leader in Smart Cities in the department of Civil Engineering. His research focuses both on Smart Cities and the IoT. He also proposed the initial project and though we have not met with him as frequently as we have met with Alex, his insights and ideas have been incredibly useful in helping us to start the project.
 ### Samsung
-Samsung is one of the market leaders in terms of smart technology. Many of the devices in the Smart Project Lab are Samsung and it is incredibly important our middleware is created in such a way that properly looks after Samsung usage data. Not only are we collecting data, we are offering remote functionality to the devices that makes them even more useful - but we need to be careful with security and ensure the IoT data is sent correctly.
+Samsung is one of the market leaders in terms of smart technology. Many of the devices in the Smart Project Lab are Samsung and it is incredibly important our middleware is created in such a way that properly looks after Samsung usage data.
 ### University of Bristol
-Both of our clients we have been meeting with are members of Research Groups at the UoB, so we have a responsibility to them through our clients. Many of the devices we test on are owned by the University, so we need to ensured information is stored correctly. Many of the interests of the University are represented by Alex.
-
+Both of our clients we have been meeting with are members of Research Groups at the University, so we have a responsibility to them through our clients. Many of the devices we test on are owned by the University, so we need to ensured information is stored correctly.
 ## End-Users
 ### Smart Home Owners
-Smart Home owners rely on us building a functional piece of software with a simple to understand and easy to use front end. They rely on the consistency of our software to allow them to plan around it - they can take full advantage of our software if it is always available. Misuse of smart devices could also potentially pose a safety hazard, especially if the devices involved are security devices. Since we are aimed at building a flexible platform that can handle many types of devices, we need to ensure that our program is designed as such to allow all cases. We have to assume every device we are dealing with is essential. Furthermore, they also put trust in us to take care of their data properly - storing passwords and identifying information securely and ensuring that only they have control over Smart Devices in their home. Security is a huge concern for many Smart Home users, so making sure they feel safe in their homes is a priority. In spite of security, usability and navigation of the system is also a important thing to be paid attention to. Since the end users are in group of family, so some of the devices will be controlled by old people or young child. So a tidy and easily understood UI is required when developing this system.
+Smart Home owners rely on us building a functional piece of software with a simple to understand and easy to use front end. They rely on the consistency of our software to allow them to plan around it - they can take full advantage of our software if it is always available. Misuse of smart devices could also potentially pose a safety hazard, especially if the devices involved are security devices.
 
 ## Use Case Diagram
 
 ![alt text](UseCaseDiagram.png "Use Case Diagram")
 
-## Main Goal:
+A client may interact with the project very differently to a user. We have designed the project to work on two levels, so a user can interact with it but the client can change features and expand the usefulness to specific devices. An example of this would be the devices we were initially given. These were sensors, specific to research to measure humidity. This would be less useful to a user, but the features to turn off above a certain humidity are near identical to the logic an oven would use to turn off at a certain temperature.
 
-Giving users the ability to interact with their Smart Home Devices through a front end, using middleware to communicate with devices to allow for data collection, manual control and tasks to be set.
+![alt text](ClientUseCase.png "Client Use Case")
 
 
-## smaller Goal
+## Goals
 ### Data collection           
 
 1) Data relating to usage (how often is the device on, what times is it normally on) should be able to be collected from the devices - either calculated by the device or by our middleware depending on the data. Also the data can be collected directly by user manually type in when using the web application. The data being collected and stored should be visible to the user, as should where it is being sent.
@@ -34,6 +33,10 @@ Giving users the ability to interact with their Smart Home Devices through a fro
 
 4) Sufficient care must be taken with any identifying device information, or any sensitive information such as passwords. Sufficient care may mean salting, encrypting or any other security procedure to protect the users of our middleware.
 
+Alternatives: If the client wishes to change the system to collect a piece of information not currently being stored, they can expand and adapt the functions we have provided in order to allow for collection of this data.
+
+Exceptional: If the client wishes to collect data that is not able to be collected (either the information is not available and cannot be calculated, or cannot be stored for privacy reasons) our program will not be able to facilitate this collection.
+
 ### Device Control:
 
 1) Using our front end, a user should be able to view all devices attached to their Smart Home (and only devices attached to their smart home). They should be able to view information such as Device ID’s, names and associated tasks. They should be able to remove devices from their account and add others with sufficient security measures to ensure they are only adding devices in their home. Depending on the situation in which our middleware is being used, we may need to ensure the device is linked to a real device. This option could be available, but currently devices can be added by name only.
@@ -42,12 +45,67 @@ Giving users the ability to interact with their Smart Home Devices through a fro
 
 4) Our middleware should also allow for tasks to be queued and performed at a set time. This should not require any further interaction after the task is scheduled. Queued tasks should be able to be cancelled and modified at any time before they are carried out. Eg. Queuing up smart oven to start preheating at 20:00. These can repeat after set intervals.
 
-### Proper Front end 
+Alternative: If the task is unable to be completed (it is disconnected from the network or not functioning), the program will wait for confirmation from the device to update its state. For example, if someone attempts to turn a device on and it is not responding the act of issuing the "Turn On" command will not be enough to change it from the users perspective. It will only change once there is confirmation from the device.
+
+Exceptional: If a Task is created with illegal syntax, the program will disregard it and will not attempt to apply the incorrect syntax.
+
+### Proper Front end
 
 1) The front end should have a username and password system, stored securely on a database with security measures to protect user passwords as defined under part 4) of Data Collection. Upon login with correct details, the user should be provided a cookie with a unique session key. These cookies should only last a certain amount of time, but whilst active should allow the user to access their page without needing to verify their identity on every page.
 
-2) The UI design will be very important thing for developing a durable system. Since the user group is mainly family members, so every age group should be  taken care of. Therefore the navigation and interaction with the system should be taken into consideration while developing.
+2) The UI should be clear and easy to navigate, with unambiguous options and a logical flow. This is difficult to properly assess, and will likely require and interview to get an idea of how well it actually works. It is important that this is accessible as the aim is for it to be available to Smart Home customers - not just experts.
 
-### Date analysis
+Alternative: If a cookie expires, the user is required to sign back in and they will not be able to access the dashboard if they fail to.
 
-1) The data we collected from middleware should be recognized by the system and transform into orders to control the device. 
+Exceptional: If there are issues in connecting to the middleware, the front end will not fully load and the user will not be able to submit commands. If any commands are issued, the functions in the backend verify the information is correct. If the initial functions have not properly completed, the functions issued will be invalid and will be detected by the backend.
+
+### Front end and middleware interaction
+
+1) The user uses buttons, fields and forms to interact with the front end. When certain buttons are clicked, these are translated into post requests - using the information given in fields and forms. For fields, these are checked to make sure they haven't been left blank.
+
+2)- This request is sent to a URI. The Front End has performed checks on certain piece of data, and others are covered by the function. This is because some things can be checked (is a id valid?) but others cannot (typos in device names). If the request passes error checking, it then performs a set of interactions with the database depending on the URI.
+
+Alternative: If any of the error checking fails, the request is stopped. If it fails in the front end, the request never even happens. If it fails in the function, it responds with a bad response and doesn't perform the database operations.
+
+Exceptional: If the user enters an incorrect name for the device, they will have to delete it and re-enter it. There is no way for our system to detect mistakes in device names.
+
+### Key Goal: Creating a device and tasks
+
+1. User signs up or logs in to their accounts
+2. User navigates to the "My Devices" page by either the side menu or clicking on "My Devices"
+3. User selects "Add Device", causing the form to appear
+4. User enters device name
+5. User submits
+(Alternative: If Step 4 was not done, return to Step 3)
+6. Page reloads, user clicks on their new devices
+7. User selects "Add Task 1"
+8. User selects task, time and how often it should repeat
+9. A POST request is made to the backend, which checks the parameters provided.
+(Alternative: If parameters are incorrect, bad response issued and nothing happens)
+10. New task is added to databases
+11. Page reloads and user can view their new task and device, with the options to delete either or manually toggle device
+
+
+### Requirements
+## Functional requirements
+# User
+1. A user should be able to register with a unique username and a password
+2. A registered user should be able to sign in with the correct username and password
+3. Upon sign in or signing up the user should be issued a cookie containing a session token
+4. The aforementioned session token should be stored by the program and allow the user continuing access without needing to sign in
+5. Upon deletion, all the users associated devices and tasks should be deleted
+# Devices
+1. A user should be able to add a device to their project
+2. Functionality should vary by device, but a default device will be able to turned on and off manually.
+3. Devices should be able to be deleted, and upon deletion all associated tasks should be deleted.
+4. The user should be able to view all information about a device on the Single Device page
+# Tasks
+1. The user should be able to add tasks to any devices
+2. Tasks should be able to be deleted
+3. When it is a tasks time to be executed, it should perform the associated instruction.
+4. If the task is set to repeat, it should create a new task with a new time. If not, it should delete the task.
+## Non functional Requirements
+1. The program should take no more than 5 seconds to load any page
+2. The program should be created in such a way it is scalable and has no hard limit on devices or tasks
+3. The program should be reliable. All functions should be checked in such a way that the user cannot accidentally crash the program.
+4. The program should be designed in such a way our client is able to change it so it can handle other devices and tasks.
