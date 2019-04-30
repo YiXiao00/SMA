@@ -19,7 +19,7 @@ She found the two types of tasks very confusing, and we realised this was someth
 
 She concluded by saying the UI felt slick and well made, but the lack of actual connected features made it feel strange. However, she felt the program had a solid basis and if we were able to correctly connect it with devices it would work well. She could see the appeal in her home but ultimately said a mobile app would be the most effective way forwards: "I don't want to log on to my laptop every time I want to turn down my volume, especially when I'm carrying a smartphone with me."
 
-#Interview One - Key points
+# Interview One - Key points
 
 The UI felt slick and professional, but also scalable. She liked how each device had their own page, and suggested this would make it easier to customise each device. She suggested each device could have a more stylised page. She said our choice to use CSS and animations really made it stand out. The need for a mobile app was addressed, and this is certainly something that would be a long term goal.
 
@@ -30,13 +30,20 @@ One point of definite note is the confusion between two types of task, and how t
 The response to the project was positive, but the need for greater functionality was needed. If, hypothetically, we wanted to demonstrate or pitch it then it would not suffice in it's current state. Adding devices that could be interacted with, and seeing them change in real time would be a more impressive experience.
 
 
-#Client Feedback
+# Client Feedback
 
 Not just at the end, but throughout the project we were fortunate to receive detailed and useful feedback from our client. Alex was able to highlight ways in which we could grow and develop the project, and luckily saved us from spending time on features that weren't important for the final goal. Due to his technical experience, we could get unique insights on how we should approach developing the project.
 
-(more here)
+We tried to meet fortnightly with our client, and our aim was to have something new to show each time. This would not only give the meetings some purpose, but would force us to design the project in a modular fashion. We wanted to constantly have something running to show, rather than working on different features and wrapping them in a UI at the end.
 
-#Unit Testing
+There were pros and cons to this approach. Constantly having a running project was useful, and it made expressing what we had been working to Alex a lot easier. It also meant we had a very clear sense of how things were progressing and what could be improved. However, it did limit our ability to work on some aspects and it led to our first UI draft being somewhat overdesigned and a visual mess. Towards the end of the project, we did a complete overhaul of the UI design now we knew what features we had to add in. This resulted in something much slicker and cleaner. A better approach would have been to design the UI with all our features as the first thing, giving ourselves something to build towards. Obviously things change in development, but this would have been a useful step.
+
+One of the things that was emphasised throughout the project was the need for it to work not just as a project but as a proof of concept - such that it could be expanded in the future. After the project was completed, we asked how well we had done in regards to this aim. Alex said that the design of our application allowed it to scale, and he was confident the database and wrappers were properly designed. This was good to hear, as we could only assess our project our perspective. Having someone who works so closely with Smart Homes give a ringing endorsement was an indication that we had achieved our aims. Even if there were still improvements to be made, the core of our project was solid and we had ultimately achieved our aim.
+
+
+In the end, Alex was happy with the project that came out. There were features we did not fully get to add, but he stressed that we had built a solid and robust basis to which this features can be added later. It was more important to build upon solid foundations then have a poorly connected mess of random features. We learnt a lot about the design process and the importance of having a feedback loop. Going through design -> feedback -> implementation is a useful way to build a strong and stable project. It also helps keep everyone on the same page, so we didn't have 4 quarters of a project we needed to stitch together at the end.
+
+# Unit Testing
 
 There's a lot of technical elements to our project, which may potentially be used for real Smart Homes - potentially even for security devices. It is important that there are minimal side effects and every action the user can make is carefully constructed to ensure there is no way for a user to accidentally wipe their entire database.
 
@@ -45,3 +52,13 @@ The user is only able to interact with the database through a series of POST req
 These tests range from very simple (does signing up a user allow you to sign in at the user) to more complex edge cases. Implementing these allows us to feel confident in our functions. Users will use all functions available in whatever way they please, so these have to be watertight and not negatively impact one another.
 
 We did not implement unit testing as we want along, and in hindsight that was a bad decision. Implementing every function with appropriate unit testing would have allowed us to build a project with more confidence. We ended up having some unfortunate side effects that were overlooked, but could have been caught if we had dealt with them properly.
+
+# Conclusions and reflections
+
+It is difficult to condense over 6 months of work, progress and setbacks into a few paragraphs but there are some very clear lessons we have learnt as a team that we will be implementing into future projects and tasks. This was the first large project we have undertaken, and we can learn the most from focusing on the setbacks and problems rather than the things that went well. We have identified some key issues, and what steps would be useful to take in the feature.
+
+We failed to properly distribute tasks and roles amongst team members. We are all relatively inexperienced, so no one had any strong specialities. We wanted everyone to get experience with every aspect of the development process, but this later devolved into confusion over which aspects we should be working on. No one was an expect on any particular area, and our design process was messier than we expected. If we divided the project more clearly into front end, middleware ,database interaction and testing then each could have had individual tasks assigned (rather than just having all tasks assigned to the whole project). We neglected the importance of logistical planning overall, as no one had any experience in it. Still, by trying and making mistakes we have learned invaluable lessons we can attempt to implement in our next project. Another way this manifested was in a lack of a clear timeline. If we had taken the time to break things into realistic chunks, it would have been easier to see a clear progression and make accurate estimates as to how long things would take. Open Project was a very good resource we perhaps failed to use to its full effectiveness, but towards the end of the project the usefulness of it became clear.
+
+We spoke previously of the fact we needed to redo the UI, as towards the end of the project it had become a confusing mess of features without any aesthetic or logical coherence. This is a symptom of another problem - namely our lack of collective vision. We all felt initially intimidated by the large scope of the project, and had no idea how it would actually look or work at the beginning. This is painfully obvious in our design. We designed from the databases and middleware and built the front end as a response to that rather than an important factor in its own right. We had a client who could have helped us to work out what a final product would look at, and taking the time to get a proper idea for what the project should be would have saved us a lot of time. It is much easier and useful to design the middleware if we know both of the ends it will be interacting with, rather than one. Taking the time to understand what we are working towards, rather than aimlessly adding features is a pivotal step.
+
+Ultimately, we are very happy with not only how the project concluded but how our personal development throughout it did as well. Progress is not linear, and though the Software Project Engineering unit has been challenging we have learned a lot we are able to implement in future projects. These insights are not limited to the programming itself, they also include the technologies we choose, how we interact with our client and how we distribute the work amongst ourselves. These are skills that would have been difficult to learn without trying, and in some aspects making mistakes and learning from them. We are ultimately happy with how the project has concluded, and the lessons we have learnt along the way.
