@@ -61,7 +61,7 @@ Document Date: 30/4/2019
 
 **Passed: 34/34**
 
-**Coverage:**£¨configurations, maintenance and private functions included£©<br>Classes: 83%<br>Method: 66%<br>Line: 59%
+**Coverage:**(configurations, maintenance and private functions included)<br>Classes: 83%<br>Method: 66%<br>Line: 59%
 
 ### User-Access Tests
 
