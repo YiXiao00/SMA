@@ -2,6 +2,8 @@
 
 Project Name: Smart Home Application
 
+Testing Tools: JUnit with Spring Boot, MockMVC
+
 Document Date: 30/4/2019
 
 ## Testing Plan Scope
@@ -39,24 +41,78 @@ Document Date: 30/4/2019
 
 |Function|Description|
 |---|---|
-|addTask1_instant||
-|viewTask1_instant||
-|invokeTask1_instance||
-|addTask1_duration||
-|invokeTask1_duration||
-|deleteTask1||
-|addTask1Failure||
-|multipleTask1||
-|addTask2||
-|viewTask2||
-|changeTask2||
-|verifyChangedTask2||
-|deleteTask2||
-|verifyDeletedTask2||
-|innerClean_UserDeviceAllTasks||
+|addTask1_instant|Register scheduled task without duration arg|
+|viewTask1_instant|Return the current scheduled task list|
+|invokeTask1_instance|Turn on the scheduling system and check the task status|
+|addTask1_duration|Register scheduled task with duration arg|
+|invokeTask1_duration|Turn on the scheduling system and add shut-down task automatically|
+|deleteTask1|Delete one scheduled task which has not been invoked|
+|addTask1Failure|Add a scheduled task with invalid arguments|
+|multipleTask1|Add scheduled tasks and check the sorting|
+|addTask2|Register monitored task for current fiware|
+|viewTask2|Return the current monitored task list|
+|changeTask2|Patch one specific monitored task|
+|verifyChangedTask2|Return the changed monitored task|
+|deleteTask2|Delete one monitored task|
+|verifyDeletedTask2|Return the list of monitored tasks after deletion|
+|innerClean_UserDeviceAllTasks|Remove all tasks, devices and users after this test|
 
 ## Test Cases and Results
+
+**Passed: 34/34**
+
+**Coverage:**£¨configurations, maintenance and private functions included£©<br>Classes: 83%<br>Method: 66%<br>Line: 59%
+
+### User-Access Tests
+
+|Function|Input Value|Expected|Test Result|
+|---|---|---|---|
+|signUpUser|name = "test_default_username"<br>pwd = "test_default_password"|"Signed up successfully."|Passed|
+|signUpDuplicateUser|name = "test_default_username"<br>pwd = "test_default_password"|"The username has been used by another user."|Passed|
+|signInEmptyUser|name = "test_empty_username"<br>pwd = "test_empty_password"|"failed"|Passed|
+|signInWrongPassword|name = "test_default_username"<br>pwd = "test_wrong_password"|"failed"|Passed|
+|signInCorrectUser|name = "test_default_username"<br>pwd = "test_default_password"|"succeeded"<br>Response.Cookie["sessionId"].Length > 0|Passed|
+|checkValidSessionId|sessionId|sessionId != "wrong_sessionId"|Passed|
+|signOut|token = sessionId|"succeeded"|Passed|
+|innerCleanUser||200/OK|Passed|
+
+### Smart Device Tests
+
+|Function|Input Value|Expected|Test Result|
+|---|---|---|---|
+|addDevice|token = userSessionId<br>type = "test_default_device_type"|200/OK|Passed|
+|getDeviceId|token = userSessionId|Response.String["deviceId"].Length > 0|Passed|
+|toggleDevice|token = userSessionId<br>device = defaultDeviceId|"Device toggled"|Passed|
+|checkDeviceStatus|token = userSessionId<br>device = defaultDeviceId|Response.String["poweredOn"] == "true"|Passed|
+|deviceChangeType|token = userSessionId<br>device = defaultDeviceId<br>input = "test_default_device_type2"|"finished"|Passed|
+|checkDeviceType|token = userSessionId<br>device = defaultDeviceId|Response.String["type"] == "test_default_device_type2"|Passed|
+|removeDeviceOfUser|token = userSessionId<br>device = defaultDeviceId|"Device deleted"|Passed|
+|checkDeviceList|token = userSessionId|Response.String.Length <= 10|Passed|
+|deviceOfMultipleUser|token = userSessionId<br>device = deviceOfUser2Id|"not match"|Passed|
+|fiwareInfo||200/OK|Passed|
+|innerClean_UserDevice||200/OK|Passed|
+
+### Task System Tests
+
+|Function|Input Value|Expected|Test Result|
+|---|---|---|---|
+|addTask1_instant|token = userSessionId<br>device = defaultDeviceId<br>type = "test_default_task1_type"<br>in = "0"<br>duration = "0"|"Task added"|Passed|
+|viewTask1_instant|token = userSessionId<br>device = defaultDeviceId|Response.String["taskId"].Length > 0<br>Response.String["poweredOn"] == "false"|Passed|
+|invokeTask1_instance|token = userSessionId<br>device = defaultDeviceId<br>task = task1Id|"not found"<br>Response.String["poweredOn"] == "true"|Passed|
+|addTask1_duration|token = userSessionId<br>device = defaultDeviceId<br>type = "test_default_task1_type"<br>in = "0"<br>duration = "5"|"Task added"<br>Response.String["taskId"].Length > 0|Passed|
+|invokeTask1_duration|token = userSessionId<br>device = defaultDeviceId<br>task = task1Id|"not found"<br>Response.String["taskId"].Length > 0 && Response.String["taskId"] != task1Id<br>Response.String["poweredOn"] == "true"|Passed|
+|deleteTask1|token = userSessionId<br>task = task1Id|"finished"|Passed|
+|addTask1Failure|token = user2SessionId<br>device = defaultDeviceId<br>type = "test_default_task1_type"<br>in = "0"<br>duration = "0"|"device not belongs to the user"|Passed|
+|multipleTask1|**Params1:**<br>token = userSessionId<br>device = defaultDeviceId<br>type = "test_default_task1_type_late"<br>in = "5"<br>duration = "0"<br>**Params2:**<br>token = userSessionId<br>device = defaultDeviceId<br>type = "test_default_task1_type_early"<br>in = "0"<br>duration = "0"|Response.String["type"] == "test_default_task1_type_late"|Passed|
+|addTask2|token = userSessionId<br>device = defaultDeviceId<br>type = "Toggle"<br>condition = "[Humidity,>,0.35]"|"task2 added"|Passed|
+|viewTask2|token = userSessionId<br>device = defaultDeviceId|Response.String["taskId"].Length > 5|Passed|
+|changeTask2|token = userSessionId<br>device = defaultDeviceId<br>taskId = task2Id<br>type = "TurnOn"<br>condition = "[Humidity,>,0.4]"|"finished"|Passed|
+|verifyChangedTask2|token = userSessionId<br>device = defaultDeviceId|Response.String["type"] == "TurnOn" && Response.String["trigger"] == "[Humidity,>,0.4]"|Passed|
+|deleteTask2|token = userSessionId<br>device = defaultDeviceId<br>taskId = task2Id|"finished"|Passed|
+|verifyDeletedTask2|token = userSessionId<br>device = defaultDeviceId|Response.String.Length <= 10|Passed|
+|innerClean_UserDeviceAllTasks||200/OK|Passed|
 
 
 ## Additional Documents
 
+*The external apis of "fiware-service" are not included in this testing.*
