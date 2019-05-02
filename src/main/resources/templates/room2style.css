@@ -78,6 +78,22 @@
     left: 320px;
     color: #EEE;
 }
+.log_out_btn{
+    display: block;
+    position: absolute;
+    font-size: 18px;
+    height: 28px;
+    width: 120px;
+    right: 20px;
+    top: 5px;
+    text-indent: 0;
+    padding: 5px 0 0 0;
+    text-align: center;
+    color: #EEE;
+    background-color: #555;
+    border: 1px solid #EEE;
+    cursor: pointer;
+}
 .left_navigation_icon{
     position: absolute;
     font-size: 24px;

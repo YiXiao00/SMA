@@ -45,6 +45,9 @@ $(document).ready(function() {
     $(".top_navigation_icon").click(function(){
         toggleLeftMenu();
     });
+    $(".log_out_btn").click(function(){
+        logOutUser();
+    });
     $(".single_device_back_btn").click(function(){
         returnFromSingle();
     });
@@ -294,6 +297,17 @@ function enterGlance(){
 
 }
 
+function logOutUser(){
+    var uri = "/user/signout";
+    $.post(uri,
+        {
+            token:sessionArg
+        }, function (data) {
+            if (data === "succeeded"){
+                window.location.replace("http://localhost:8090/homepage");
+            }
+        })
+}
 
 function enterHomes(){
 

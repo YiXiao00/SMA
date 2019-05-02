@@ -84,8 +84,9 @@
                         name:$("#user").val(),
                         pwd:pwdHash
                     },function(data) {
-                    $("#msg").text(data);
-                    window.location.replace("http://localhost:8090/user/dashboard")
+                    if (data === "succeeded"){
+                        window.location.replace("http://localhost:8090/user/dashboard");
+                    }
                 });
 
             });
@@ -97,8 +98,9 @@
                         name:$("#user").val(),
                         pwd:pwdHash
                     },function(data) {
-                        $("#msg").text(data);
-                        window.location.replace("http://localhost:8090/user/dashboard")
+                        if (data === "Signed up successfully."){
+                            $("#btnsignin").click();
+                        }
 
                     });
             });
