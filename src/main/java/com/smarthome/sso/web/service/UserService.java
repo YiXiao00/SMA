@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -111,5 +112,26 @@ public class UserService {
         return record;
     }
 
+    private String convertByte2Hex(byte[] bytes){
+        StringBuffer stringBuffer = new StringBuffer();
+        String tmp = null;
+        for (int i = 0; i <= bytes.length-1; i++){
+            tmp = Integer.toHexString(bytes[i] & 0xFF);
+            if (tmp.length() == 1){
+                stringBuffer.append("0");
+            }
+            stringBuffer.append(tmp);
+        }
+        return stringBuffer.toString();
+    }
+
+    public String getSHA256(String content) throws Exception{
+        MessageDigest messageDigest;
+        String result = "";
+        messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(content.getBytes("UTF-8"));
+        result = convertByte2Hex(messageDigest.digest());
+        return result;
+    }
 
 }

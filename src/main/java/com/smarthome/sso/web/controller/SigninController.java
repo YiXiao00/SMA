@@ -80,10 +80,11 @@ public class SigninController {
 
         String name = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
+        String s_pwd = userService.getSHA256(pwd);
         if (userService.findOneUserByUsername(name) != null){
             return ResponseEntity.ok("The username has been used by another user.");
         }
-        User newUser = new User(name,pwd);
+        User newUser = new User(name,s_pwd);
         userService.addOneUser(newUser);
         return ResponseEntity.ok("Signed up successfully.");
     }
@@ -106,7 +107,8 @@ public class SigninController {
 
         String username = String.valueOf(request.getParameter("name"));
         String pwd = String.valueOf(request.getParameter("pwd"));
-        ServiceResult result = userService.tryLogIn(username,pwd);
+        String s_pwd = userService.getSHA256(pwd);
+        ServiceResult result = userService.tryLogIn(username,s_pwd);
 
 
         if (result == ServiceResult.SERVICE_SUCCESS){
