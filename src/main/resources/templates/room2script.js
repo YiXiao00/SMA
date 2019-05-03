@@ -130,7 +130,6 @@ function toggleDevice(){
 }
 function openForm(){
     var unitWidth = $(".popupForm").css("width").replace(/px$/, "");
-    alert(unitWidth)
     if(unitWidth>50) {
         if($("#newDevice").val()!="Enter Device Name"){
             var uri = "http://localhost:8090/device/add"
@@ -213,7 +212,6 @@ function loadSingleDevicePage(deviceId){
 
       var taskCount = 0
       var uri = "http://localhost:8090/task/device/view";
-      alert("taskView")
       $.post(uri,
           {
               token:sessionArg,
@@ -221,9 +219,6 @@ function loadSingleDevicePage(deviceId){
           }, function (data) {
               var p = document.getElementsByClassName("taskBlock")[0];
               taskCount = data.length
-              alert(data.length)
-              alert(taskCount)
-              alert(taskCount + "setAs")
               var pChild = p.childNodes;
 
               if(data.length==0){
@@ -248,7 +243,6 @@ function loadSingleDevicePage(deviceId){
               }
           })
 
-    alert("deviceGet")
     var uri = "/device/get";
     setTimeout(
     $.post(uri,
@@ -262,8 +256,6 @@ function loadSingleDevicePage(deviceId){
            $(".single_device_info_type").text(data["type"]);
            $(".single_device_info_id").text(data["deviceId"]);
            $(".single_device_info_status").text(data["poweredOn"]);
-           alert(taskCount + "currently is ")
-           alert(taskCount)
           $(".single_device_info_task_count").text(taskCount);
            if(data["FiS"]!=""){
             $(".single_device_info_fi_s").text(data["FiS"]);
@@ -334,7 +326,6 @@ function returnFromSingle(){
 }
 
 function toggleLeftMenu(){
-    //alert($(".default_panel").css('left'));
     if($(".left_bar").is(":visible")) {
         $(".left_bar").hide();
         $(".default_panel").css({left: 0});
